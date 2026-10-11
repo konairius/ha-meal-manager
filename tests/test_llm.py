@@ -49,4 +49,23 @@ def test_parse_recipe_rejects_excluded_or_empty() -> None:
 
 
 def test_parse_ingredient_plain() -> None:
-    assert parse_ingredient("1,5 l milk").quantity == 1.5
+    milk = parse_ingredient("0,25 l milk")
+    assert (milk.quantity, milk.unit, milk.name) == (250, "ml", "milk")
+
+
+def test_rejects_whole_dish_amounts() -> None:
+    """A model answer like '5 | unit | lemon' per portion (10 lemons for two) is not used."""
+    data = {
+        "title": "Lemon Garlic Butter Salmon",
+        "minutes": 30,
+        "kcal": 450,
+        "health": 3,
+        "ingredients": "150 | g | salmon fillet\n5 | unit | lemon\n1 | clove | garlic",
+        "steps": "Bake.",
+    }
+    assert parse_recipe(data, REQUEST) is None
+    data["ingredients"] = "150 | g | salmon fillet\n1/2 | unit | lemon\n1 | cloves | garlic"
+    recipe = parse_recipe(data, REQUEST)
+    lemon = recipe.ingredients[1]
+    assert (lemon.quantity, lemon.unit) == (0.5, "pcs")
+    assert recipe.ingredients[2].unit == "clove"

@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Final
 
 DOMAIN: Final = "meal_manager"
-VERSION: Final = "0.1.1"
+VERSION: Final = "0.1.2"
 
 URL_BASE: Final = "/meal_manager_static"
 CARD_FILE: Final = "meal-manager-card.js"

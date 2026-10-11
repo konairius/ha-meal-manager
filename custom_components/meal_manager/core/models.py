@@ -47,6 +47,14 @@ def nice_quantity(quantity: float) -> float:
     return max(0.25, round(quantity * 4) / 4) if quantity > 0 else 0.0
 
 
+_PLURAL_UNITS = {"clove": "cloves", "pinch": "pinches", "slice": "slices"}
+
+
+def unit_label(unit: str, quantity: float) -> str:
+    """'clove' -> 'cloves' for more than one."""
+    return _PLURAL_UNITS.get(unit, unit) if quantity > 1 else unit
+
+
 @dataclass(frozen=True, slots=True)
 class Ingredient:
     """One ingredient, quantity is per portion."""
@@ -60,8 +68,9 @@ class Ingredient:
 
     def display(self) -> str:
         """E.g. 'rice 180 g' (name first, so shopping lists sort by name)."""
-        quantity = f"{nice_quantity(self.quantity):g}" if self.quantity else ""
-        return " ".join(p for p in (self.name, quantity, self.unit) if p)
+        amount = nice_quantity(self.quantity)
+        quantity = f"{amount:g}" if self.quantity else ""
+        return " ".join(p for p in (self.name, quantity, unit_label(self.unit, amount)) if p)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Ingredient:

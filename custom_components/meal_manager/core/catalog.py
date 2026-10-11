@@ -9,6 +9,7 @@ import re
 from typing import Any
 
 from .models import MealRequest, MealType, Recipe
+from .quantities import is_plausible
 
 # Randomness added to every score so plans vary; larger = more variety, less precision.
 VARIETY = 1.5
@@ -34,6 +35,8 @@ def parse_recipes(items: Iterable[Any], source: str) -> tuple[list[Recipe], list
                 raise ValueError("meal_types is empty")
             if not 1 <= recipe.effort <= 3 or not 1 <= recipe.health <= 5 or recipe.kcal <= 0:
                 raise ValueError("effort must be 1-3, health 1-5, kcal > 0")
+            if implausible := [i.name for i in recipe.ingredients if not is_plausible(i)]:
+                raise ValueError(f"implausible amount per portion for {', '.join(implausible)}")
         except (KeyError, TypeError, ValueError) as err:
             errors.append(f"{source} recipe #{index + 1}: {err}")
             continue
