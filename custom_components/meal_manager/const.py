@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Final
 
 DOMAIN: Final = "meal_manager"
-VERSION: Final = "0.1.1"
+VERSION: Final = "0.1.2"
 
 URL_BASE: Final = "/meal_manager_static"
 CARD_FILE: Final = "meal-manager-card.js"
@@ -26,6 +26,8 @@ CONF_SHOW_PANEL: Final = "show_panel"
 CONF_AUTO_NEW_PLAN: Final = "auto_new_plan"
 CONF_DEFAULT_DAYS: Final = "default_days"
 CONF_AVOID_RECENT: Final = "avoid_recent"
+CONF_SEASON: Final = "season"
+SEASON_MODES: Final = ("strict", "prefer", "off")
 
 DEFAULT_GENERAL: Final = {
     CONF_AI_TASK_ENTITY: None,
@@ -35,6 +37,7 @@ DEFAULT_GENERAL: Final = {
     CONF_AUTO_NEW_PLAN: True,
     CONF_DEFAULT_DAYS: 7,
     CONF_AVOID_RECENT: 10,
+    CONF_SEASON: "strict",
 }
 
 EVENT_PREFIX: Final = f"{DOMAIN}_"

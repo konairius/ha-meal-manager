@@ -21,6 +21,7 @@ from .const import (
     CONF_AVOID_RECENT,
     CONF_DEFAULT_DAYS,
     CONF_PREFERENCES,
+    CONF_SEASON,
     CONF_SHOPPING_LIST,
     CONF_SHOW_PANEL,
     DEFAULT_GENERAL,
@@ -29,6 +30,7 @@ from .const import (
     OPT_GENERAL,
     OPT_OVERRIDES,
     OPT_SLOTS,
+    SEASON_MODES,
 )
 from .core.settings import (
     DAY_SCOPED,
@@ -196,6 +198,13 @@ class MealManagerOptionsFlow(OptionsFlow):
                 vol.Required(CONF_AVOID_RECENT, default=current[CONF_AVOID_RECENT]): (
                     selector.NumberSelector(
                         selector.NumberSelectorConfig(min=0, max=50, mode=selector.NumberSelectorMode.BOX)
+                    )
+                ),
+                vol.Required(CONF_SEASON, default=current[CONF_SEASON]): selector.SelectSelector(
+                    selector.SelectSelectorConfig(
+                        options=list(SEASON_MODES),
+                        mode=selector.SelectSelectorMode.DROPDOWN,
+                        translation_key=CONF_SEASON,
                     )
                 ),
                 vol.Required(CONF_AUTO_NEW_PLAN, default=current[CONF_AUTO_NEW_PLAN]): bool,

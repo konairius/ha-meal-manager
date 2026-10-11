@@ -28,6 +28,14 @@ class PlanStatus(StrEnum):
     COMPLETED = "completed"
 
 
+class SeasonMode(StrEnum):
+    """How strictly seasonal produce is respected."""
+
+    STRICT = "strict"  # never plan out-of-season produce, unless nothing else fits
+    PREFER = "prefer"  # rather plan seasonal dishes
+    OFF = "off"
+
+
 EFFORT_LABELS = {1: "low", 2: "medium", 3: "high"}
 
 
@@ -60,7 +68,8 @@ class Ingredient:
 
     def display(self) -> str:
         """E.g. 'rice 180 g' (name first, so shopping lists sort by name)."""
-        quantity = f"{nice_quantity(self.quantity):g}" if self.quantity else ""
+        amount = nice_quantity(self.quantity)
+        quantity = f"{amount:g}" if self.quantity else ""
         return " ".join(p for p in (self.name, quantity, self.unit) if p)
 
     @classmethod
@@ -137,6 +146,7 @@ class MealRequest:
     kcal_target: int | None  # per person, None = no target
     exclude: frozenset[str] = frozenset()  # normalized titles that must not be used
     avoid: frozenset[str] = frozenset()  # normalized titles that should rather not be used
+    season: SeasonMode = SeasonMode.OFF
 
 
 @dataclass(slots=True)

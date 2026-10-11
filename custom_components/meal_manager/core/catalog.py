@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 from collections.abc import Iterable
+from dataclasses import replace
 import math
 import random
 import re
 from typing import Any
 
 from .models import MealRequest, MealType, Recipe
+from .quantities import is_plausible, to_metric
+from .season import SeasonMode, recipe_out_of_season
 
 # Randomness added to every score so plans vary; larger = more variety, less precision.
 VARIETY = 1.5
@@ -30,10 +33,13 @@ def parse_recipes(items: Iterable[Any], source: str) -> tuple[list[Recipe], list
             data.setdefault("id", f"{source}:{_slug(str(data['title']))}")
             data["source"] = source
             recipe = Recipe.from_dict(data)
+            recipe = replace(recipe, ingredients=tuple(to_metric(i) for i in recipe.ingredients))
             if not recipe.meal_types:
                 raise ValueError("meal_types is empty")
             if not 1 <= recipe.effort <= 3 or not 1 <= recipe.health <= 5 or recipe.kcal <= 0:
                 raise ValueError("effort must be 1-3, health 1-5, kcal > 0")
+            if implausible := [i.name for i in recipe.ingredients if not is_plausible(i)]:
+                raise ValueError(f"implausible amount per portion for {', '.join(implausible)}")
         except (KeyError, TypeError, ValueError) as err:
             errors.append(f"{source} recipe #{index + 1}: {err}")
             continue
@@ -62,6 +68,10 @@ class RecipeCatalog:
         candidates = [
             r for r in self._recipes if request.meal_type in r.meal_types and r.key not in request.exclude
         ]
+        if request.season is SeasonMode.STRICT:
+            month = request.day.month
+            # Strict, unless nothing in season fits at all.
+            candidates = [r for r in candidates if not recipe_out_of_season(r, month)] or candidates
         if not candidates:
             return None
         return min(candidates, key=lambda r: self.score(r, request) + self._rng.random() * VARIETY)
@@ -79,6 +89,8 @@ class RecipeCatalog:
                 penalty += 2
         if recipe.key in request.avoid:
             penalty += 3
+        if request.season is not SeasonMode.OFF and recipe_out_of_season(recipe, request.day.month):
+            penalty += 6
         return penalty
 
 

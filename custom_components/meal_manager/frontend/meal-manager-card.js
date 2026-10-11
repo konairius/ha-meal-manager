@@ -500,7 +500,7 @@ class MealManagerView extends HTMLElement {
       ? `<div class="details">
           <div class="meta">${esc(this._t("health", { n: meal.health }))}${meal.tags.length ? " · " + esc(meal.tags.join(", ")) : ""}</div>
           ${meal.ingredients.length ? `<h3>${this._t("ingredients")}</h3><ul>${meal.ingredients
-            .map((i) => `<li>${esc([i.quantity || "", i.unit, i.name].filter(Boolean).join(" "))}</li>`)
+            .map((i) => `<li>${esc([i.quantity || "", i.unit === "pcs" ? "" : i.unit, i.name].filter(Boolean).join(" "))}</li>`)
             .join("")}</ul>` : ""}
           ${meal.steps.length ? `<h3>${this._t("steps")}</h3><ol>${meal.steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>` : ""}
           ${meal.cooked ? "" : `<div class="row-actions">

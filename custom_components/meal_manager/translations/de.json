@@ -30,14 +30,16 @@
           "shopping_list": "Einkaufsliste",
           "default_days": "Tage pro Plan",
           "avoid_recent": "Zuletzt gekochte Gerichte vermeiden",
-          "auto_new_plan": "Neuen Plan vorschlagen, wenn alles gekocht ist",
-          "show_panel": "Essensplan in der Seitenleiste anzeigen"
+          "show_panel": "Essensplan in der Seitenleiste anzeigen",
+          "season": "Saisonale Zutaten",
+          "auto_new_plan": "Neuen Plan vorschlagen, wenn alles gekocht ist"
         },
         "data_description": {
           "ai_task_entity": "Leer lassen, um nur die mitgelieferten Rezepte zu nutzen. Wenn gesetzt, erzeugt diese Entität (z. B. ein lokales Ollama-Modell) die Gerichte, die mitgelieferten Rezepte sind der Ersatz.",
           "preferences": "Freitext für die AI-Task-Entität: Ernährung, Abneigungen, Küchen, Geräte.",
           "shopping_list": "To-do-Liste, die die Zutaten erhält.",
-          "avoid_recent": "Anzahl der zuletzt gekochten Gerichte, die in neuen Plänen vermieden werden."
+          "avoid_recent": "Anzahl der zuletzt gekochten Gerichte, die in neuen Plänen vermieden werden.",
+          "season": "Saisonkalender für Mitteleuropa: Streng lässt Gerichte mit frischen Zutaten außerhalb der Saison weg (z. B. Spargel im Oktober), Bevorzugen stuft sie nur herab."
         }
       },
       "defaults": {
@@ -241,6 +243,13 @@
         "lunch": "Mittagessen",
         "dinner": "Abendessen",
         "snack": "Snack"
+      }
+    },
+    "season": {
+      "options": {
+        "strict": "Nur saisonal",
+        "prefer": "Saisonal bevorzugen",
+        "off": "Saison ignorieren"
       }
     }
   },
