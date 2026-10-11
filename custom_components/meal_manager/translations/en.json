@@ -42,7 +42,7 @@
       },
       "defaults": {
         "title": "Default settings",
-        "description": "Each setting can be a fixed value, an entity, or both (the value is then the fallback). Empty = built-in default (2 portions, medium effort, health 3, no calorie target, 3 meals).",
+        "description": "Each setting can be a fixed value, an entity, or both (the value is then the fallback). Empty = built-in default (2 portions, medium effort, health 3, no calorie target).",
         "sections": {
           "portions": {
             "name": "Portions",
@@ -95,7 +95,12 @@
               "entity_id": "Take the value from this entity's state, e.g. the calorie need from a fitness app or zone.home for the number of people at home.",
               "attribute": "Read this attribute of the entity instead of its state."
             }
-          },
+          }
+        }
+      },
+      "slots": {
+        "title": "Meals of the day",
+        "sections": {
           "meals_per_day": {
             "name": "Meals per day",
             "data": {
@@ -104,61 +109,64 @@
               "attribute": "Attribute (optional)"
             },
             "data_description": {
-              "value": "Used directly, or as fallback when the entity is unavailable.",
-              "entity_id": "Take the value from this entity's state, e.g. the calorie need from a fitness app or zone.home for the number of people at home.",
-              "attribute": "Read this attribute of the entity instead of its state."
+              "value": "Empty = all enabled meals (up to 3).",
+              "entity_id": "Take the number from this entity's state."
             }
-          }
-        }
-      },
-      "slots": {
-        "title": "Meals of the day",
-        "sections": {
+          },
           "breakfast": {
             "name": "Breakfast",
             "data": {
+              "enabled": "Plan this meal",
               "time": "Time",
               "share": "Share of daily calories",
               "priority": "Priority"
             },
             "data_description": {
+              "enabled": "Off = this meal is never suggested.",
               "priority": "With fewer meals per day, the meals with the lowest priority number are kept."
             }
           },
           "lunch": {
             "name": "Lunch",
             "data": {
+              "enabled": "Plan this meal",
               "time": "Time",
               "share": "Share of daily calories",
               "priority": "Priority"
             },
             "data_description": {
+              "enabled": "Off = this meal is never suggested.",
               "priority": "With fewer meals per day, the meals with the lowest priority number are kept."
             }
           },
           "dinner": {
             "name": "Dinner",
             "data": {
+              "enabled": "Plan this meal",
               "time": "Time",
               "share": "Share of daily calories",
               "priority": "Priority"
             },
             "data_description": {
+              "enabled": "Off = this meal is never suggested.",
               "priority": "With fewer meals per day, the meals with the lowest priority number are kept."
             }
           },
           "snack": {
             "name": "Snack",
             "data": {
+              "enabled": "Plan this meal",
               "time": "Time",
               "share": "Share of daily calories",
               "priority": "Priority"
             },
             "data_description": {
+              "enabled": "Off = this meal is never suggested.",
               "priority": "With fewer meals per day, the meals with the lowest priority number are kept."
             }
           }
-        }
+        },
+        "description": "Untick meals you never want planned. Meals per day limits the number further (it can come from an entity and be overridden per weekday); then the enabled meals with the lowest priority number are kept. For one meal a day, either untick all but one meal or set meals per day to 1."
       },
       "add_override": {
         "title": "Override",
@@ -193,7 +201,8 @@
       "invalid_value": "This value is not valid for the setting.",
       "scope_required": "Choose a weekday, a meal or both. Use Default settings for everything else.",
       "day_scoped": "Calories and meals per day apply to the whole day; choose any meal.",
-      "value_required": "Enter a value or choose an entity."
+      "value_required": "Enter a value or choose an entity.",
+      "no_meal_enabled": "Enable at least one meal."
     }
   },
   "selector": {

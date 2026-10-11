@@ -36,8 +36,8 @@ Everything is edited under *Settings → Devices & services → Meal Manager →
 | Menu | Contents |
 | --- | --- |
 | General | Optional AI Task entity and household preferences, shopping list, days per plan, how many recently cooked dishes to avoid, automatic new plan, sidebar panel |
-| Default settings | Value and/or entity (+ attribute) for every setting |
-| Meals of the day | Time, share of the daily calories and priority of breakfast, lunch, dinner and snack |
+| Default settings | Value and/or entity (+ attribute) for portions, effort, health and calories |
+| Meals of the day | Meals per day, and per meal (breakfast, lunch, dinner, snack): whether it is planned at all, time, share of the daily calories and priority |
 | Add / remove override | A value and/or entity for one setting on a weekday, a meal, or both |
 
 ### How settings are resolved
@@ -61,8 +61,11 @@ days and where each one came from.
 | `calories` | per day | kcal per person per day; 0 = no target | none |
 | `meals_per_day` | per day | 1 – 4 | 3 |
 
-**Meals per day** keeps the meals with the lowest priority number (defaults: dinner 1, lunch 2,
-breakfast 3, snack 4), so with two meals a day you get lunch and dinner.
+Only meals ticked as *Plan this meal* are ever suggested (by default breakfast, lunch and dinner;
+snack is off). **Meals per day** then keeps the enabled meals with the lowest priority number
+(defaults: dinner 1, lunch 2, breakfast 3, snack 4), so with two meals a day you get lunch and
+dinner. For one meal a day, untick all but that meal, or set meals per day to 1 (which keeps dinner),
+for example only on weekdays with a weekday override.
 
 ### Your own recipes
 

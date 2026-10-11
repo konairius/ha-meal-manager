@@ -51,7 +51,12 @@ CONF_REMOVE = "remove"
 CONF_TIME = "time"
 CONF_SHARE = "share"
 CONF_PRIORITY = "priority"
+CONF_ENABLED = "enabled"
+CONF_MEALS_PER_DAY = "meals_per_day"
 ANY = "any"
+
+# Settings on the "Default settings" page; meals per day lives on "Meals of the day".
+DEFAULT_FIELDS = tuple(s for s in Setting if s is not Setting.MEALS_PER_DAY)
 
 
 def value_selector(setting: Setting) -> selector.Selector:
@@ -205,8 +210,11 @@ class MealManagerOptionsFlow(OptionsFlow):
         errors: dict[str, str] = {}
         settings = self._settings
         if user_input is not None:
-            defaults: dict[str, Any] = {}
-            for setting in Setting:
+            # Meals per day is edited on the "Meals of the day" page.
+            defaults: dict[str, Any] = {
+                str(k): v.to_dict() for k, v in settings.defaults.items() if k not in DEFAULT_FIELDS
+            }
+            for setting in DEFAULT_FIELDS:
                 source = source_from_input(user_input.get(str(setting), {}))
                 if source.value is not None and not is_valid(setting, source.value):
                     errors[str(setting)] = "invalid_value"
@@ -221,7 +229,7 @@ class MealManagerOptionsFlow(OptionsFlow):
                     vol.Schema(source_fields(setting, settings.defaults.get(setting, ValueSource()))),
                     {"collapsed": False},
                 )
-                for setting in Setting
+                for setting in DEFAULT_FIELDS
             }
         )
         return self.async_show_form(step_id="defaults", data_schema=schema, errors=errors)
@@ -229,7 +237,10 @@ class MealManagerOptionsFlow(OptionsFlow):
     # -------------------------------------------------------------------- slots
 
     async def async_step_slots(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
-        slots = {s.name: s for s in self._settings.slots}
+        """Which meals are planned, how many per day, their time, calorie share and priority."""
+        settings = self._settings
+        slots = {s.name: s for s in settings.slots}
+        errors: dict[str, str] = {}
         if user_input is not None:
             updated = []
             for name, slot in slots.items():
@@ -237,40 +248,58 @@ class MealManagerOptionsFlow(OptionsFlow):
                 updated.append(
                     {
                         **slot.to_dict(),
+                        "enabled": bool(values.get(CONF_ENABLED, slot.enabled)),
                         "time": str(values.get(CONF_TIME, slot.time))[:5],
                         "share": float(values.get(CONF_SHARE, slot.share)),
                         "priority": int(values.get(CONF_PRIORITY, slot.priority)),
                     }
                 )
-            return self._save(OPT_SLOTS, updated)
-
-        schema = vol.Schema(
-            {
-                vol.Required(name): section(
-                    vol.Schema(
-                        {
-                            vol.Required(CONF_TIME, default=f"{slot.time}:00"): selector.TimeSelector(),
-                            vol.Required(CONF_SHARE, default=slot.share): selector.NumberSelector(
-                                selector.NumberSelectorConfig(
-                                    min=0,
-                                    max=100,
-                                    unit_of_measurement="%",
-                                    mode=selector.NumberSelectorMode.BOX,
-                                )
-                            ),
-                            vol.Required(CONF_PRIORITY, default=slot.priority): selector.NumberSelector(
-                                selector.NumberSelectorConfig(
-                                    min=1, max=len(slots), mode=selector.NumberSelectorMode.BOX
-                                )
-                            ),
-                        }
-                    ),
-                    {"collapsed": False},
+            per_day = source_from_input(user_input.get(CONF_MEALS_PER_DAY, {}))
+            if not any(s["enabled"] for s in updated):
+                errors["base"] = "no_meal_enabled"
+            elif per_day.value is not None and not is_valid(Setting.MEALS_PER_DAY, per_day.value):
+                errors[CONF_MEALS_PER_DAY] = "invalid_value"
+            else:
+                defaults = {str(k): v.to_dict() for k, v in settings.defaults.items()}
+                if per_day.is_empty:
+                    defaults.pop(str(Setting.MEALS_PER_DAY), None)
+                else:
+                    defaults[str(Setting.MEALS_PER_DAY)] = per_day.to_dict()
+                return self.async_create_entry(
+                    data={**self._options, OPT_SLOTS: updated, OPT_DEFAULTS: defaults}
                 )
-                for name, slot in slots.items()
-            }
-        )
-        return self.async_show_form(step_id="slots", data_schema=schema)
+
+        per_day_source = settings.defaults.get(Setting.MEALS_PER_DAY, ValueSource())
+        fields: dict[Any, Any] = {
+            vol.Required(CONF_MEALS_PER_DAY): section(
+                vol.Schema(source_fields(Setting.MEALS_PER_DAY, per_day_source)),
+                {"collapsed": False},
+            )
+        }
+        for name, slot in slots.items():
+            fields[vol.Required(name)] = section(
+                vol.Schema(
+                    {
+                        vol.Required(CONF_ENABLED, default=slot.enabled): bool,
+                        vol.Required(CONF_TIME, default=f"{slot.time}:00"): selector.TimeSelector(),
+                        vol.Required(CONF_SHARE, default=slot.share): selector.NumberSelector(
+                            selector.NumberSelectorConfig(
+                                min=0,
+                                max=100,
+                                unit_of_measurement="%",
+                                mode=selector.NumberSelectorMode.BOX,
+                            )
+                        ),
+                        vol.Required(CONF_PRIORITY, default=slot.priority): selector.NumberSelector(
+                            selector.NumberSelectorConfig(
+                                min=1, max=len(slots), mode=selector.NumberSelectorMode.BOX
+                            )
+                        ),
+                    }
+                ),
+                {"collapsed": not slot.enabled},
+            )
+        return self.async_show_form(step_id="slots", data_schema=vol.Schema(fields), errors=errors)
 
     # ---------------------------------------------------------------- overrides
 

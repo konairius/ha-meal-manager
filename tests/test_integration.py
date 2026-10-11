@@ -213,10 +213,64 @@ async def test_options_flow_defaults(hass: HomeAssistant) -> None:
             "effort": {"value": "1"},
             "health": {},
             "calories": {"entity_id": "sensor.kcal", "value": 1800},
-            "meals_per_day": {"value": 2},
         },
     )
     assert result["type"] is FlowResultType.CREATE_ENTRY
     await hass.async_block_till_done()
     assert entry.options["defaults"]["calories"] == {"value": 1800, "entity_id": "sensor.kcal"}
     assert "health" not in entry.options["defaults"]
+
+
+async def test_options_flow_one_meal_per_day(hass: HomeAssistant) -> None:
+    entry = await setup(hass)
+
+    async def submit(data):
+        result = await hass.config_entries.options.async_init(entry.entry_id)
+        result = await hass.config_entries.options.async_configure(
+            result["flow_id"], {"next_step_id": "slots"}
+        )
+        assert result["type"] is FlowResultType.FORM
+        return await hass.config_entries.options.async_configure(result["flow_id"], data)
+
+    def meal(enabled: bool, time: str, priority: int) -> dict:
+        return {"enabled": enabled, "time": time, "share": 25, "priority": priority}
+
+    off = {
+        "meals_per_day": {},
+        "breakfast": meal(False, "07:30:00", 3),
+        "lunch": meal(False, "12:30:00", 2),
+        "dinner": meal(False, "18:30:00", 1),
+        "snack": meal(False, "15:30:00", 4),
+    }
+    result = await submit(off)
+    assert result["errors"] == {"base": "no_meal_enabled"}
+
+    result = await submit({**off, "dinner": meal(True, "19:00:00", 1)})
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    await hass.async_block_till_done()
+
+    response = await hass.services.async_call(
+        DOMAIN, "generate_plan", {"days": 3}, blocking=True, return_response=True
+    )
+    assert response["meals"] == 3
+    draft = entry.runtime_data.planner.state.draft
+    assert {m.slot for m in draft.meals} == {"dinner"}
+
+    # Meals per day on the same page, here from an entity with a fallback.
+    hass.states.async_set("input_number.meals", "2")
+    result = await submit(
+        {
+            **off,
+            "meals_per_day": {"entity_id": "input_number.meals", "value": 1},
+            "lunch": meal(True, "12:30:00", 2),
+            "dinner": meal(True, "18:30:00", 1),
+            "breakfast": meal(True, "07:30:00", 3),
+        }
+    )
+    assert result["type"] is FlowResultType.CREATE_ENTRY
+    await hass.async_block_till_done()
+    assert entry.options["defaults"]["meals_per_day"] == {"value": 1, "entity_id": "input_number.meals"}
+    response = await hass.services.async_call(
+        DOMAIN, "generate_plan", {"days": 1}, blocking=True, return_response=True
+    )
+    assert response["meals"] == 2

@@ -7,6 +7,8 @@ from datetime import date
 import pytest
 
 from custom_components.meal_manager.core.settings import (
+    DEFAULT_SLOTS,
+    MealSlot,
     Override,
     PlannerSettings,
     Setting,
@@ -117,3 +119,25 @@ def test_round_trip() -> None:
         overrides=[Override(Setting.PORTIONS, ValueSource(value=4), weekday=6, slot="dinner")],
     )
     assert PlannerSettings.from_dict(settings.to_dict()) == settings
+
+
+def test_disabled_meals_are_never_planned() -> None:
+    slots = tuple(
+        MealSlot(s.name, s.meal_type, s.time, s.share, s.priority, enabled=s.name == "lunch")
+        for s in DEFAULT_SLOTS
+    )
+    r = resolver(PlannerSettings(slots=slots, defaults={Setting.CALORIES: ValueSource(value=2000)}))
+    assert [s.name for s in r.slots_for(MONDAY)] == ["lunch"]
+    assert r.kcal_targets(MONDAY, r.slots_for(MONDAY)) == {"lunch": 2000}
+
+
+def test_one_meal_per_day_keeps_top_priority() -> None:
+    r = resolver(PlannerSettings(defaults={Setting.MEALS_PER_DAY: ValueSource(value=1)}))
+    assert [s.name for s in r.slots_for(MONDAY)] == ["dinner"]
+
+
+def test_snack_is_off_by_default_and_old_options_load() -> None:
+    r = resolver(PlannerSettings(defaults={Setting.MEALS_PER_DAY: ValueSource(value=4)}))
+    assert [s.name for s in r.slots_for(MONDAY)] == ["breakfast", "lunch", "dinner"]
+    old = {"name": "snack", "meal_type": "snack", "time": "15:30:00", "share": 10, "priority": 4}
+    assert MealSlot.from_dict(old).enabled is True
