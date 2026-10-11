@@ -173,6 +173,7 @@ class MealSlot:
     time: str  # HH:MM
     share: float  # relative share of the daily calories
     priority: int  # lower = kept first when there are fewer meals per day
+    enabled: bool = True  # disabled meals are never planned
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -181,6 +182,7 @@ class MealSlot:
             "time": self.time,
             "share": self.share,
             "priority": self.priority,
+            "enabled": self.enabled,
         }
 
     @classmethod
@@ -191,6 +193,7 @@ class MealSlot:
             time=str(data["time"])[:5],
             share=float(data["share"]),
             priority=int(data["priority"]),
+            enabled=bool(data.get("enabled", True)),
         )
 
 
@@ -198,7 +201,7 @@ DEFAULT_SLOTS: tuple[MealSlot, ...] = (
     MealSlot("breakfast", MealType.BREAKFAST, "07:30", 25, 3),
     MealSlot("lunch", MealType.LUNCH, "12:30", 35, 2),
     MealSlot("dinner", MealType.DINNER, "18:30", 35, 1),
-    MealSlot("snack", MealType.SNACK, "15:30", 10, 4),
+    MealSlot("snack", MealType.SNACK, "15:30", 10, 4, enabled=False),
 )
 
 
@@ -289,9 +292,13 @@ class SettingsResolver:
         return None
 
     def slots_for(self, day: date) -> list[MealSlot]:
-        """The meal slots of a day, ordered by time."""
+        """The planned meal slots of a day, ordered by time.
+
+        Only enabled meals are planned; meals per day keeps the ones with the lowest priority.
+        """
         count = self.resolve(Setting.MEALS_PER_DAY, day).value
-        chosen = sorted(self._settings.slots, key=lambda s: (s.priority, s.time))[:count]
+        enabled = [s for s in self._settings.slots if s.enabled]
+        chosen = sorted(enabled, key=lambda s: (s.priority, s.time))[:count]
         return sorted(chosen, key=lambda s: s.time)
 
     def kcal_targets(self, day: date, slots: list[MealSlot]) -> dict[str, int | None]:

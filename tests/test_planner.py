@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import date, datetime, timedelta
 
 import pytest
@@ -9,6 +10,7 @@ import pytest
 from custom_components.meal_manager.core.models import PlannerState, PlanStatus
 from custom_components.meal_manager.core.planner import MealPlanner, PlannerError, PlannerOptions
 from custom_components.meal_manager.core.settings import (
+    DEFAULT_SLOTS,
     PlannerSettings,
     Setting,
     SettingsResolver,
@@ -136,7 +138,10 @@ async def test_ban_by_title() -> None:
 
 
 async def test_runs_out_of_recipes() -> None:
-    planner, events, _ = make(PlannerSettings(defaults={Setting.MEALS_PER_DAY: ValueSource(value=4)}))
+    slots = tuple(replace(s, enabled=True) for s in DEFAULT_SLOTS)
+    planner, events, _ = make(
+        PlannerSettings(slots=slots, defaults={Setting.MEALS_PER_DAY: ValueSource(value=4)})
+    )
     with pytest.raises(PlannerError, match="no_recipe"):
         await planner.generate_draft(days=6)  # only 5 snacks exist
     assert events.names() == ["generation_failed"]

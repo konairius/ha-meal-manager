@@ -42,7 +42,7 @@
       },
       "defaults": {
         "title": "Standardeinstellungen",
-        "description": "Jede Einstellung kann ein fester Wert, eine Entität oder beides sein (der Wert ist dann der Ersatz). Leer = eingebauter Standard (2 Portionen, mittlerer Aufwand, Gesundheit 3, kein Kalorienziel, 3 Mahlzeiten).",
+        "description": "Jede Einstellung kann ein fester Wert, eine Entität oder beides sein (der Wert ist dann der Ersatz). Leer = eingebauter Standard (2 Portionen, mittlerer Aufwand, Gesundheit 3, kein Kalorienziel).",
         "sections": {
           "portions": {
             "name": "Portionen",
@@ -95,7 +95,12 @@
               "entity_id": "Wert aus dem Zustand dieser Entität, z. B. der Kalorienbedarf aus einer Fitness-App oder zone.home für die Anzahl der Personen zu Hause.",
               "attribute": "Dieses Attribut der Entität statt ihres Zustands lesen."
             }
-          },
+          }
+        }
+      },
+      "slots": {
+        "title": "Mahlzeiten des Tages",
+        "sections": {
           "meals_per_day": {
             "name": "Mahlzeiten pro Tag",
             "data": {
@@ -104,61 +109,64 @@
               "attribute": "Attribut (optional)"
             },
             "data_description": {
-              "value": "Wird direkt verwendet oder als Ersatz, wenn die Entität nicht verfügbar ist.",
-              "entity_id": "Wert aus dem Zustand dieser Entität, z. B. der Kalorienbedarf aus einer Fitness-App oder zone.home für die Anzahl der Personen zu Hause.",
-              "attribute": "Dieses Attribut der Entität statt ihres Zustands lesen."
+              "value": "Leer = alle aktiven Mahlzeiten (bis zu 3).",
+              "entity_id": "Anzahl aus dem Zustand dieser Entität."
             }
-          }
-        }
-      },
-      "slots": {
-        "title": "Mahlzeiten des Tages",
-        "sections": {
+          },
           "breakfast": {
             "name": "Frühstück",
             "data": {
+              "enabled": "Diese Mahlzeit planen",
               "time": "Uhrzeit",
               "share": "Anteil der Tageskalorien",
               "priority": "Priorität"
             },
             "data_description": {
+              "enabled": "Aus = diese Mahlzeit wird nie vorgeschlagen.",
               "priority": "Bei weniger Mahlzeiten pro Tag bleiben die mit der niedrigsten Prioritätszahl."
             }
           },
           "lunch": {
             "name": "Mittagessen",
             "data": {
+              "enabled": "Diese Mahlzeit planen",
               "time": "Uhrzeit",
               "share": "Anteil der Tageskalorien",
               "priority": "Priorität"
             },
             "data_description": {
+              "enabled": "Aus = diese Mahlzeit wird nie vorgeschlagen.",
               "priority": "Bei weniger Mahlzeiten pro Tag bleiben die mit der niedrigsten Prioritätszahl."
             }
           },
           "dinner": {
             "name": "Abendessen",
             "data": {
+              "enabled": "Diese Mahlzeit planen",
               "time": "Uhrzeit",
               "share": "Anteil der Tageskalorien",
               "priority": "Priorität"
             },
             "data_description": {
+              "enabled": "Aus = diese Mahlzeit wird nie vorgeschlagen.",
               "priority": "Bei weniger Mahlzeiten pro Tag bleiben die mit der niedrigsten Prioritätszahl."
             }
           },
           "snack": {
             "name": "Snack",
             "data": {
+              "enabled": "Diese Mahlzeit planen",
               "time": "Uhrzeit",
               "share": "Anteil der Tageskalorien",
               "priority": "Priorität"
             },
             "data_description": {
+              "enabled": "Aus = diese Mahlzeit wird nie vorgeschlagen.",
               "priority": "Bei weniger Mahlzeiten pro Tag bleiben die mit der niedrigsten Prioritätszahl."
             }
           }
-        }
+        },
+        "description": "Mahlzeiten abwählen, die nie geplant werden sollen. Mahlzeiten pro Tag begrenzt die Anzahl zusätzlich (auch per Entität und pro Wochentag änderbar); dann bleiben die aktiven Mahlzeiten mit der niedrigsten Prioritätszahl. Für eine Mahlzeit am Tag entweder alle bis auf eine abwählen oder Mahlzeiten pro Tag auf 1 setzen."
       },
       "add_override": {
         "title": "Abweichung",
@@ -193,7 +201,8 @@
       "invalid_value": "Dieser Wert ist für die Einstellung ungültig.",
       "scope_required": "Wochentag, Mahlzeit oder beides wählen. Für alles andere die Standardeinstellungen nutzen.",
       "day_scoped": "Kalorien und Mahlzeiten pro Tag gelten für den ganzen Tag; beliebige Mahlzeit wählen.",
-      "value_required": "Wert eingeben oder Entität wählen."
+      "value_required": "Wert eingeben oder Entität wählen.",
+      "no_meal_enabled": "Mindestens eine Mahlzeit aktivieren."
     }
   },
   "selector": {
