@@ -190,9 +190,6 @@ const STYLE = `
   .toast { position: sticky; bottom: 8px; margin-top: 8px; padding: 10px 12px; border-radius: 8px; background: var(--primary-text-color); color: var(--card-background-color); font-size: 0.9rem; }
 `;
 
-const PLURAL_UNITS = { clove: "cloves", pinch: "pinches", slice: "slices" };
-const unitLabel = (unit, quantity) => (quantity > 1 && PLURAL_UNITS[unit]) || unit;
-
 const CHECK = '<svg viewBox="0 0 24 24"><path d="M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>';
 
 class MealManagerView extends HTMLElement {
@@ -503,7 +500,7 @@ class MealManagerView extends HTMLElement {
       ? `<div class="details">
           <div class="meta">${esc(this._t("health", { n: meal.health }))}${meal.tags.length ? " · " + esc(meal.tags.join(", ")) : ""}</div>
           ${meal.ingredients.length ? `<h3>${this._t("ingredients")}</h3><ul>${meal.ingredients
-            .map((i) => `<li>${esc([i.quantity || "", unitLabel(i.unit, i.quantity), i.name].filter(Boolean).join(" "))}</li>`)
+            .map((i) => `<li>${esc([i.quantity || "", i.unit === "pcs" ? "" : i.unit, i.name].filter(Boolean).join(" "))}</li>`)
             .join("")}</ul>` : ""}
           ${meal.steps.length ? `<h3>${this._t("steps")}</h3><ol>${meal.steps.map((s) => `<li>${esc(s)}</li>`).join("")}</ol>` : ""}
           ${meal.cooked ? "" : `<div class="row-actions">

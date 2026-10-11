@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import date
 
+import pytest
+
 from custom_components.meal_manager.core.llm import build_instructions, parse_ingredient, parse_recipe
-from custom_components.meal_manager.core.models import MealRequest, MealType
+from custom_components.meal_manager.core.models import MealRequest, MealType, SeasonMode
 
 REQUEST = MealRequest(
     day=date(2026, 10, 12),
@@ -31,14 +34,17 @@ def test_parse_recipe_tolerant() -> None:
             "minutes": "about 25 min",
             "kcal": 650.0,
             "health": 7,
-            "ingredients": "- 80 | g | rice\n2 tbsp curry paste\nsalt",
+            "ingredients": "- 80 | g | rice\n2. 30 | G | curry paste\n1/2 | pcs | onion",
             "steps": "1. Cook rice.\n2) Make curry.",
         },
         REQUEST,
     )
     assert recipe.effort == 2 and recipe.minutes == 25 and recipe.health == 5
-    assert [i.name for i in recipe.ingredients] == ["rice", "curry paste", "salt"]
-    assert recipe.ingredients[1].unit == "tbsp"
+    assert [(i.quantity, i.unit, i.name) for i in recipe.ingredients] == [
+        (80, "g", "rice"),
+        (30, "g", "curry paste"),
+        (0.5, "pcs", "onion"),
+    ]
     assert recipe.steps == ("Cook rice.", "Make curry.")
 
 
@@ -48,24 +54,52 @@ def test_parse_recipe_rejects_excluded_or_empty() -> None:
     assert parse_recipe("not a dict", REQUEST) is None
 
 
-def test_parse_ingredient_plain() -> None:
-    milk = parse_ingredient("0,25 l milk")
-    assert (milk.quantity, milk.unit, milk.name) == (250, "ml", "milk")
+@pytest.mark.parametrize(
+    "line",
+    [
+        "5 | unit | lemon",
+        "2 | tbsp | olive oil",
+        "1 | clove | garlic",
+        "0,25 l milk",
+        "salt",
+        "x | g | rice",
+        "0 | g | rice",
+    ],
+)
+def test_parse_ingredient_rejects_anything_but_metric(line: str) -> None:
+    assert parse_ingredient(line) is None
 
 
-def test_rejects_whole_dish_amounts() -> None:
-    """A model answer like '5 | unit | lemon' per portion (10 lemons for two) is not used."""
+def test_rejects_wrong_units_and_whole_dish_amounts() -> None:
+    """'5 | unit | lemon' is a malformed answer, '5 | pcs | lemon' an implausible one: both retried."""
     data = {
         "title": "Lemon Garlic Butter Salmon",
         "minutes": 30,
         "kcal": 450,
         "health": 3,
-        "ingredients": "150 | g | salmon fillet\n5 | unit | lemon\n1 | clove | garlic",
+        "ingredients": "150 | g | salmon fillet\n5 | unit | lemon\n1 | pcs | garlic clove",
         "steps": "Bake.",
     }
     assert parse_recipe(data, REQUEST) is None
-    data["ingredients"] = "150 | g | salmon fillet\n1/2 | unit | lemon\n1 | cloves | garlic"
+    data["ingredients"] = "150 | g | salmon fillet\n5 | pcs | lemon"
+    assert parse_recipe(data, REQUEST) is None
+    data["ingredients"] = "150 | g | salmon fillet\n15 | ml | lemon juice\n1 | pcs | garlic clove"
     recipe = parse_recipe(data, REQUEST)
-    lemon = recipe.ingredients[1]
-    assert (lemon.quantity, lemon.unit) == (0.5, "pcs")
-    assert recipe.ingredients[2].unit == "clove"
+    assert [i.unit for i in recipe.ingredients] == ["g", "ml", "pcs"]
+
+
+def test_out_of_season_dish_is_rejected_when_strict() -> None:
+    data = {
+        "title": "Salmon with asparagus",
+        "minutes": 30,
+        "ingredients": "150 | g | salmon fillet\n150 | g | green asparagus",
+    }
+    assert parse_recipe(data, replace(REQUEST, season=SeasonMode.STRICT)) is None
+    assert parse_recipe(data, replace(REQUEST, season=SeasonMode.PREFER)) is not None
+    assert parse_recipe(data, replace(REQUEST, day=date(2026, 5, 4), season=SeasonMode.STRICT)) is not None
+
+
+def test_instructions_name_metric_units_and_season() -> None:
+    text = build_instructions(replace(REQUEST, season=SeasonMode.STRICT), "")
+    assert "g, ml, pcs" in text and "October" in text and "asparagus" in text
+    assert "October" not in build_instructions(REQUEST, "")

@@ -28,6 +28,14 @@ class PlanStatus(StrEnum):
     COMPLETED = "completed"
 
 
+class SeasonMode(StrEnum):
+    """How strictly seasonal produce is respected."""
+
+    STRICT = "strict"  # never plan out-of-season produce, unless nothing else fits
+    PREFER = "prefer"  # rather plan seasonal dishes
+    OFF = "off"
+
+
 EFFORT_LABELS = {1: "low", 2: "medium", 3: "high"}
 
 
@@ -47,14 +55,6 @@ def nice_quantity(quantity: float) -> float:
     return max(0.25, round(quantity * 4) / 4) if quantity > 0 else 0.0
 
 
-_PLURAL_UNITS = {"clove": "cloves", "pinch": "pinches", "slice": "slices"}
-
-
-def unit_label(unit: str, quantity: float) -> str:
-    """'clove' -> 'cloves' for more than one."""
-    return _PLURAL_UNITS.get(unit, unit) if quantity > 1 else unit
-
-
 @dataclass(frozen=True, slots=True)
 class Ingredient:
     """One ingredient, quantity is per portion."""
@@ -70,7 +70,7 @@ class Ingredient:
         """E.g. 'rice 180 g' (name first, so shopping lists sort by name)."""
         amount = nice_quantity(self.quantity)
         quantity = f"{amount:g}" if self.quantity else ""
-        return " ".join(p for p in (self.name, quantity, unit_label(self.unit, amount)) if p)
+        return " ".join(p for p in (self.name, quantity, self.unit) if p)
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> Ingredient:
@@ -146,6 +146,7 @@ class MealRequest:
     kcal_target: int | None  # per person, None = no target
     exclude: frozenset[str] = frozenset()  # normalized titles that must not be used
     avoid: frozenset[str] = frozenset()  # normalized titles that should rather not be used
+    season: SeasonMode = SeasonMode.OFF
 
 
 @dataclass(slots=True)

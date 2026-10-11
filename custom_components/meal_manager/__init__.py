@@ -25,6 +25,7 @@ from .const import (
     CONF_AVOID_RECENT,
     CONF_DEFAULT_DAYS,
     CONF_PREFERENCES,
+    CONF_SEASON,
     CONF_SHOW_PANEL,
     DEFAULT_GENERAL,
     DOMAIN,
@@ -35,6 +36,7 @@ from .const import (
     VERSION,
 )
 from .core.catalog import RecipeCatalog
+from .core.models import SeasonMode
 from .core.planner import MealPlanner, PlannerOptions
 from .core.ports import RecipeSource
 from .core.settings import PlannerSettings, SettingsResolver
@@ -98,6 +100,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: MealManagerConfigEntry) 
             default_days=int(general[CONF_DEFAULT_DAYS]),
             avoid_recent=int(general[CONF_AVOID_RECENT]),
             auto_new_plan=bool(general[CONF_AUTO_NEW_PLAN]),
+            season=SeasonMode(general[CONF_SEASON]),
         ),
     )
     await planner.async_load()

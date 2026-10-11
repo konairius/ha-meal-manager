@@ -7,7 +7,8 @@ import re
 from typing import Any
 
 from .models import EFFORT_LABELS, Ingredient, MealRequest, Recipe, normalize_title
-from .quantities import MAX_PER_PORTION, UNIT_ALIASES, is_plausible, normalize, parse_quantity
+from .quantities import METRIC_UNITS, is_plausible, parse_quantity
+from .season import SeasonMode, out_of_season, produce_out_of_season
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -36,6 +37,12 @@ def build_instructions(request: MealRequest, preferences: str = "") -> str:
         lines.append(f"Household preferences: {preferences.strip()}")
     if request.exclude:
         lines.append("Do not suggest any of: " + "; ".join(sorted(request.exclude)) + ".")
+    if request.season is not SeasonMode.OFF:
+        avoid = ", ".join(produce_out_of_season(request.day.month))
+        lines.append(
+            f"Season: it is {request.day:%B} in Central Europe. Use produce that is in season now;"
+            f" not in season: {avoid}."
+        )
     if request.avoid:
         lines.append("Avoid if possible (cooked recently): " + "; ".join(sorted(request.avoid)) + ".")
     lines += [
@@ -45,8 +52,9 @@ def build_instructions(request: MealRequest, preferences: str = "") -> str:
         "- kcal: calories per portion",
         "- health: 1 (indulgent) to 5 (very healthy)",
         "- ingredients: one per line, amounts for ONE person (not the whole dish), formatted"
-        " 'quantity | unit | name', e.g. '120 | g | spaghetti' or '0.5 | pcs | lemon'."
-        f" Units: {', '.join(MAX_PER_PORTION)}.",
+        " 'quantity | unit | name', e.g. '120 | g | spaghetti', '15 | ml | olive oil' or"
+        f" '0.5 | pcs | lemon'. Only metric units: {', '.join(METRIC_UNITS)}; no spoons, cups or"
+        " other units. Answers in any other format are rejected.",
         "- steps: one cooking step per line",
     ]
     return "\n".join(lines)
@@ -68,26 +76,20 @@ def _lines(raw: Any) -> list[str]:
     return [c for c in cleaned if c]
 
 
-_LEADING_QUANTITY = re.compile(r"^\s*([\d½⅓⅔¼¾⅛][\d.,/\s½⅓⅔¼¾⅛-]*)\s*(.*)$")
-
-
 def parse_ingredient(line: str) -> Ingredient | None:
-    """Parse 'quantity | unit | name' or a loose 'quantity [unit] name'; units are normalized."""
+    """Parse 'quantity | unit | name' with a metric unit; None when the line is malformed.
+
+    Nothing is guessed: "5 | unit | lemon" or "2 | tbsp | oil" is a wrong answer, so the whole
+    dish is rejected and asked for again.
+    """
     parts = [p.strip() for p in line.split("|")]
-    if len(parts) >= 3:
-        quantity = parse_quantity(parts[0])
-        return normalize(Ingredient(parts[2], 1 if quantity is None else quantity, parts[1]))
-    match = _LEADING_QUANTITY.match(line)
-    if not match:
-        return Ingredient(line.strip(), 1, "") if line.strip() else None
-    quantity = parse_quantity(match.group(1))
-    words = match.group(2).split(maxsplit=1)
-    unit = ""
-    if len(words) == 2 and words[0].casefold().rstrip(".") in UNIT_ALIASES:
-        unit, name = words
-    else:
-        name = match.group(2)
-    return normalize(Ingredient(name, 1 if quantity is None else quantity, unit))
+    if len(parts) != 3 or not parts[2]:
+        return None
+    quantity = parse_quantity(parts[0])
+    unit = parts[1].casefold()
+    if quantity is None or quantity <= 0 or unit not in METRIC_UNITS:
+        return None
+    return Ingredient(" ".join(parts[2].split()), quantity, unit)
 
 
 def parse_recipe(data: Any, request: MealRequest) -> Recipe | None:
@@ -99,7 +101,20 @@ def parse_recipe(data: Any, request: MealRequest) -> Recipe | None:
         return None
     minutes = int(_number(data.get("minutes"), 30))
     effort = 1 if minutes <= 20 else 2 if minutes <= 45 else 3
-    ingredients = [i for i in (parse_ingredient(line) for line in _lines(data.get("ingredients"))) if i]
+    lines = _lines(data.get("ingredients"))
+    parsed = [(line, parse_ingredient(line)) for line in lines]
+    if malformed := [line for line, ingredient in parsed if ingredient is None]:
+        _LOGGER.info("Rejecting %s: ingredients not as 'quantity | g/ml/pcs | name': %s", title, malformed)
+        return None
+    ingredients = [ingredient for _, ingredient in parsed if ingredient]
+    if not ingredients:
+        _LOGGER.info("Rejecting %s: no ingredients", title)
+        return None
+    if request.season is SeasonMode.STRICT and (
+        unseasonal := out_of_season((i.name for i in ingredients), request.day.month)
+    ):
+        _LOGGER.info("Rejecting %s: out of season: %s", title, ", ".join(unseasonal))
+        return None
     implausible = [i for i in ingredients if not is_plausible(i)]
     if implausible:
         _LOGGER.info(

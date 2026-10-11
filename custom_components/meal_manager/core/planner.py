@@ -20,6 +20,7 @@ from .models import (
     PlannedMeal,
     PlannerState,
     PlanStatus,
+    SeasonMode,
     normalize_title,
 )
 from .ports import EventSink, RecipeSource, StateStore
@@ -52,6 +53,7 @@ class PlannerOptions:
     default_days: int = 7
     avoid_recent: int = 10  # number of recently cooked dishes to avoid
     auto_new_plan: bool = True  # offer a new draft when every meal is cooked
+    season: SeasonMode = SeasonMode.STRICT  # seasonal produce (Central Europe)
 
 
 class MealPlanner:
@@ -171,7 +173,7 @@ class MealPlanner:
 
     async def _new_meal(self, plan: Plan, request: MealRequest, meal_id: str | None = None) -> PlannedMeal:
         exclude, avoid = self._exclusions(plan)
-        request = replace(request, exclude=exclude, avoid=avoid)
+        request = replace(request, exclude=exclude, avoid=avoid, season=self.options.season)
         recipe = await self._source.suggest(request)
         if recipe is None:
             raise PlannerError("no_recipe", slot=request.slot, day=request.day.isoformat())
