@@ -1,0 +1,396 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Meal Manager",
+        "description": "Plant Mahlzeiten lokal aus der mitgelieferten Rezeptsammlung. Portionen, Aufwand, Kalorien, Gesundheitsgrad und Mahlzeiten pro Tag danach unter Konfigurieren einstellen."
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Meal Manager ist bereits eingerichtet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Meal Manager",
+        "menu_options": {
+          "general": "Allgemein",
+          "defaults": "Standardeinstellungen",
+          "slots": "Mahlzeiten des Tages",
+          "add_override": "Abweichung hinzufügen oder ändern (pro Wochentag / Mahlzeit)",
+          "remove_override": "Abweichungen entfernen"
+        }
+      },
+      "general": {
+        "title": "Allgemein",
+        "data": {
+          "ai_task_entity": "Lokale AI-Task-Entität (optional)",
+          "preferences": "Vorlieben des Haushalts",
+          "shopping_list": "Einkaufsliste",
+          "default_days": "Tage pro Plan",
+          "avoid_recent": "Zuletzt gekochte Gerichte vermeiden",
+          "auto_new_plan": "Neuen Plan vorschlagen, wenn alles gekocht ist",
+          "show_panel": "Essensplan in der Seitenleiste anzeigen"
+        },
+        "data_description": {
+          "ai_task_entity": "Leer lassen, um nur die mitgelieferten Rezepte zu nutzen. Wenn gesetzt, erzeugt diese Entität (z. B. ein lokales Ollama-Modell) die Gerichte, die mitgelieferten Rezepte sind der Ersatz.",
+          "preferences": "Freitext für die AI-Task-Entität: Ernährung, Abneigungen, Küchen, Geräte.",
+          "shopping_list": "To-do-Liste, die die Zutaten erhält.",
+          "avoid_recent": "Anzahl der zuletzt gekochten Gerichte, die in neuen Plänen vermieden werden."
+        }
+      },
+      "defaults": {
+        "title": "Standardeinstellungen",
+        "description": "Jede Einstellung kann ein fester Wert, eine Entität oder beides sein (der Wert ist dann der Ersatz). Leer = eingebauter Standard (2 Portionen, mittlerer Aufwand, Gesundheit 3, kein Kalorienziel, 3 Mahlzeiten).",
+        "sections": {
+          "portions": {
+            "name": "Portionen",
+            "data": {
+              "value": "Fester Wert",
+              "entity_id": "Entität",
+              "attribute": "Attribut (optional)"
+            },
+            "data_description": {
+              "value": "Wird direkt verwendet oder als Ersatz, wenn die Entität nicht verfügbar ist.",
+              "entity_id": "Wert aus dem Zustand dieser Entität, z. B. der Kalorienbedarf aus einer Fitness-App oder zone.home für die Anzahl der Personen zu Hause.",
+              "attribute": "Dieses Attribut der Entität statt ihres Zustands lesen."
+            }
+          },
+          "effort": {
+            "name": "Aufwand",
+            "data": {
+              "value": "Fester Wert",
+              "entity_id": "Entität",
+              "attribute": "Attribut (optional)"
+            },
+            "data_description": {
+              "value": "Wird direkt verwendet oder als Ersatz, wenn die Entität nicht verfügbar ist.",
+              "entity_id": "Wert aus dem Zustand dieser Entität, z. B. der Kalorienbedarf aus einer Fitness-App oder zone.home für die Anzahl der Personen zu Hause.",
+              "attribute": "Dieses Attribut der Entität statt ihres Zustands lesen."
+            }
+          },
+          "health": {
+            "name": "Gesundheitsgrad",
+            "data": {
+              "value": "Fester Wert",
+              "entity_id": "Entität",
+              "attribute": "Attribut (optional)"
+            },
+            "data_description": {
+              "value": "Wird direkt verwendet oder als Ersatz, wenn die Entität nicht verfügbar ist.",
+              "entity_id": "Wert aus dem Zustand dieser Entität, z. B. der Kalorienbedarf aus einer Fitness-App oder zone.home für die Anzahl der Personen zu Hause.",
+              "attribute": "Dieses Attribut der Entität statt ihres Zustands lesen."
+            }
+          },
+          "calories": {
+            "name": "Kalorien pro Tag",
+            "data": {
+              "value": "Fester Wert",
+              "entity_id": "Entität",
+              "attribute": "Attribut (optional)"
+            },
+            "data_description": {
+              "value": "Wird direkt verwendet oder als Ersatz, wenn die Entität nicht verfügbar ist.",
+              "entity_id": "Wert aus dem Zustand dieser Entität, z. B. der Kalorienbedarf aus einer Fitness-App oder zone.home für die Anzahl der Personen zu Hause.",
+              "attribute": "Dieses Attribut der Entität statt ihres Zustands lesen."
+            }
+          },
+          "meals_per_day": {
+            "name": "Mahlzeiten pro Tag",
+            "data": {
+              "value": "Fester Wert",
+              "entity_id": "Entität",
+              "attribute": "Attribut (optional)"
+            },
+            "data_description": {
+              "value": "Wird direkt verwendet oder als Ersatz, wenn die Entität nicht verfügbar ist.",
+              "entity_id": "Wert aus dem Zustand dieser Entität, z. B. der Kalorienbedarf aus einer Fitness-App oder zone.home für die Anzahl der Personen zu Hause.",
+              "attribute": "Dieses Attribut der Entität statt ihres Zustands lesen."
+            }
+          }
+        }
+      },
+      "slots": {
+        "title": "Mahlzeiten des Tages",
+        "sections": {
+          "breakfast": {
+            "name": "Frühstück",
+            "data": {
+              "time": "Uhrzeit",
+              "share": "Anteil der Tageskalorien",
+              "priority": "Priorität"
+            },
+            "data_description": {
+              "priority": "Bei weniger Mahlzeiten pro Tag bleiben die mit der niedrigsten Prioritätszahl."
+            }
+          },
+          "lunch": {
+            "name": "Mittagessen",
+            "data": {
+              "time": "Uhrzeit",
+              "share": "Anteil der Tageskalorien",
+              "priority": "Priorität"
+            },
+            "data_description": {
+              "priority": "Bei weniger Mahlzeiten pro Tag bleiben die mit der niedrigsten Prioritätszahl."
+            }
+          },
+          "dinner": {
+            "name": "Abendessen",
+            "data": {
+              "time": "Uhrzeit",
+              "share": "Anteil der Tageskalorien",
+              "priority": "Priorität"
+            },
+            "data_description": {
+              "priority": "Bei weniger Mahlzeiten pro Tag bleiben die mit der niedrigsten Prioritätszahl."
+            }
+          },
+          "snack": {
+            "name": "Snack",
+            "data": {
+              "time": "Uhrzeit",
+              "share": "Anteil der Tageskalorien",
+              "priority": "Priorität"
+            },
+            "data_description": {
+              "priority": "Bei weniger Mahlzeiten pro Tag bleiben die mit der niedrigsten Prioritätszahl."
+            }
+          }
+        }
+      },
+      "add_override": {
+        "title": "Abweichung",
+        "description": "Abweichungen haben Vorrang vor den Standards. Reihenfolge: Wochentag + Mahlzeit > Mahlzeit > Wochentag > Standard. Kalorien und Mahlzeiten pro Tag gelten nur pro Wochentag.",
+        "data": {
+          "setting": "Einstellung",
+          "weekday": "Wochentag",
+          "slot": "Mahlzeit"
+        }
+      },
+      "override_value": {
+        "title": "{setting}: {scope}",
+        "data": {
+          "value": "Fester Wert",
+          "entity_id": "Entität",
+          "attribute": "Attribut (optional)"
+        },
+        "data_description": {
+          "value": "Wird direkt verwendet oder als Ersatz, wenn die Entität nicht verfügbar ist.",
+          "entity_id": "Wert aus dem Zustand dieser Entität, z. B. der Kalorienbedarf aus einer Fitness-App oder zone.home für die Anzahl der Personen zu Hause.",
+          "attribute": "Dieses Attribut der Entität statt ihres Zustands lesen."
+        }
+      },
+      "remove_override": {
+        "title": "Abweichungen entfernen",
+        "data": {
+          "remove": "Zu entfernende Abweichungen"
+        }
+      }
+    },
+    "error": {
+      "invalid_value": "Dieser Wert ist für die Einstellung ungültig.",
+      "scope_required": "Wochentag, Mahlzeit oder beides wählen. Für alles andere die Standardeinstellungen nutzen.",
+      "day_scoped": "Kalorien und Mahlzeiten pro Tag gelten für den ganzen Tag; beliebige Mahlzeit wählen.",
+      "value_required": "Wert eingeben oder Entität wählen."
+    }
+  },
+  "selector": {
+    "effort": {
+      "options": {
+        "1": "Gering (≤ 20 min)",
+        "2": "Mittel (≤ 45 min)",
+        "3": "Hoch"
+      }
+    },
+    "setting": {
+      "options": {
+        "portions": "Portionen",
+        "effort": "Aufwand",
+        "health": "Gesundheitsgrad",
+        "calories": "Kalorien pro Tag",
+        "meals_per_day": "Mahlzeiten pro Tag"
+      }
+    },
+    "weekday": {
+      "options": {
+        "any": "Jeder Tag",
+        "mon": "Montag",
+        "tue": "Dienstag",
+        "wed": "Mittwoch",
+        "thu": "Donnerstag",
+        "fri": "Freitag",
+        "sat": "Samstag",
+        "sun": "Sonntag"
+      }
+    },
+    "slot": {
+      "options": {
+        "any": "Jede Mahlzeit",
+        "breakfast": "Frühstück",
+        "lunch": "Mittagessen",
+        "dinner": "Abendessen",
+        "snack": "Snack"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "plan_status": {
+        "name": "Planstatus",
+        "state": {
+          "none": "Kein Plan",
+          "active": "Aktiv",
+          "completed": "Abgeschlossen"
+        }
+      },
+      "next_meal": {
+        "name": "Nächste Mahlzeit"
+      },
+      "today_breakfast": {
+        "name": "Heute Frühstück"
+      },
+      "today_lunch": {
+        "name": "Heute Mittagessen"
+      },
+      "today_dinner": {
+        "name": "Heute Abendessen"
+      },
+      "today_snack": {
+        "name": "Heute Snack"
+      }
+    },
+    "calendar": {
+      "meal_plan": {
+        "name": "Essensplan"
+      }
+    }
+  },
+  "exceptions": {
+    "not_loaded": {
+      "message": "Meal Manager ist nicht eingerichtet."
+    },
+    "invalid_days": {
+      "message": "Ein Plan kann 1 bis {max} Tage umfassen."
+    },
+    "no_recipe": {
+      "message": "Kein Rezept passt zu {slot} am {day}. Gesperrte Gerichte freigeben oder eigene Rezepte hinzufügen."
+    },
+    "no_draft": {
+      "message": "Es gibt keinen Planvorschlag."
+    },
+    "no_plan": {
+      "message": "Es gibt keinen aktiven Essensplan."
+    },
+    "meal_not_found": {
+      "message": "Mahlzeit {meal_id} wurde nicht gefunden."
+    },
+    "not_active": {
+      "message": "Nur Mahlzeiten des aktiven Plans können als gekocht markiert werden. Zuerst den Vorschlag übernehmen."
+    },
+    "already_cooked": {
+      "message": "Diese Mahlzeit ist bereits gekocht."
+    },
+    "title_required": {
+      "message": "Eine Mahlzeit oder ein Gerichtname wird benötigt."
+    },
+    "not_banned": {
+      "message": "{title} ist nicht gesperrt."
+    }
+  },
+  "services": {
+    "generate_plan": {
+      "name": "Plan erstellen",
+      "description": "Erstellt einen neuen Planvorschlag, der geprüft und übernommen werden kann.",
+      "fields": {
+        "start_date": {
+          "name": "Startdatum",
+          "description": "Erster Tag des Plans. Standard: heute oder der Tag nach dem aktiven Plan."
+        },
+        "days": {
+          "name": "Tage",
+          "description": "Anzahl der Tage. Standard: die eingestellten Tage pro Plan."
+        }
+      }
+    },
+    "accept_plan": {
+      "name": "Plan übernehmen",
+      "description": "Macht den Planvorschlag zum aktiven Plan."
+    },
+    "discard_plan": {
+      "name": "Plan verwerfen",
+      "description": "Verwirft den Planvorschlag."
+    },
+    "mark_cooked": {
+      "name": "Als gekocht markieren",
+      "description": "Markiert eine Mahlzeit als gekocht. Wenn alles gekocht ist, wird ein neuer Plan vorgeschlagen.",
+      "fields": {
+        "meal_id": {
+          "name": "Mahlzeit-ID",
+          "description": "ID der Mahlzeit."
+        },
+        "slot": {
+          "name": "Mahlzeit",
+          "description": "Mahlzeit des Tages (breakfast, lunch, dinner, snack) statt einer ID."
+        },
+        "date": {
+          "name": "Datum",
+          "description": "Tag der Mahlzeit. Standard: heute."
+        },
+        "cooked": {
+          "name": "Gekocht",
+          "description": "Ausschalten zum Rückgängigmachen."
+        }
+      }
+    },
+    "decline_meal": {
+      "name": "Mahlzeit ablehnen",
+      "description": "Ersetzt eine Mahlzeit durch einen anderen Vorschlag.",
+      "fields": {
+        "meal_id": {
+          "name": "Mahlzeit-ID",
+          "description": "ID der Mahlzeit."
+        }
+      }
+    },
+    "ban_meal": {
+      "name": "Gericht sperren",
+      "description": "Schlägt ein Gericht nie wieder vor und ersetzt es in den Plänen.",
+      "fields": {
+        "meal_id": {
+          "name": "Mahlzeit-ID",
+          "description": "ID einer geplanten Mahlzeit."
+        },
+        "title": {
+          "name": "Titel",
+          "description": "Name des Gerichts statt einer ID."
+        }
+      }
+    },
+    "unban_meal": {
+      "name": "Gericht freigeben",
+      "description": "Erlaubt ein gesperrtes Gericht wieder.",
+      "fields": {
+        "title": {
+          "name": "Titel",
+          "description": "Name des Gerichts."
+        }
+      }
+    },
+    "add_to_shopping_list": {
+      "name": "Zur Einkaufsliste hinzufügen",
+      "description": "Fügt die Zutaten aller ungekochten Mahlzeiten zusammengefasst einer To-do-Liste hinzu und gibt sie zurück.",
+      "fields": {
+        "draft": {
+          "name": "Vorschlag verwenden",
+          "description": "Den Planvorschlag statt des aktiven Plans verwenden."
+        },
+        "entity_id": {
+          "name": "To-do-Liste",
+          "description": "Standard: die eingestellte Einkaufsliste."
+        }
+      }
+    }
+  }
+}

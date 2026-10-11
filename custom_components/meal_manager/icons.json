@@ -1,0 +1,12 @@
+{
+  "services": {
+    "generate_plan": { "service": "mdi:calendar-plus" },
+    "accept_plan": { "service": "mdi:check-all" },
+    "discard_plan": { "service": "mdi:delete-outline" },
+    "mark_cooked": { "service": "mdi:pot-steam" },
+    "decline_meal": { "service": "mdi:swap-horizontal" },
+    "ban_meal": { "service": "mdi:cancel" },
+    "unban_meal": { "service": "mdi:restore" },
+    "add_to_shopping_list": { "service": "mdi:cart-plus" }
+  }
+}

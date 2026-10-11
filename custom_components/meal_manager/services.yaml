@@ -1,0 +1,66 @@
+generate_plan:
+  fields:
+    start_date:
+      selector:
+        date:
+    days:
+      selector:
+        number:
+          min: 1
+          max: 31
+          mode: box
+accept_plan:
+discard_plan:
+mark_cooked:
+  fields:
+    meal_id:
+      example: 3f2a9c1b7d4e
+      selector:
+        text:
+    slot:
+      example: dinner
+      selector:
+        select:
+          options:
+            - breakfast
+            - lunch
+            - dinner
+            - snack
+    date:
+      selector:
+        date:
+    cooked:
+      default: true
+      selector:
+        boolean:
+decline_meal:
+  fields:
+    meal_id:
+      required: true
+      selector:
+        text:
+ban_meal:
+  fields:
+    meal_id:
+      selector:
+        text:
+    title:
+      example: Spaghetti aglio e olio
+      selector:
+        text:
+unban_meal:
+  fields:
+    title:
+      required: true
+      selector:
+        text:
+add_to_shopping_list:
+  fields:
+    draft:
+      default: false
+      selector:
+        boolean:
+    entity_id:
+      selector:
+        entity:
+          domain: todo
