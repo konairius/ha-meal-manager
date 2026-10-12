@@ -47,6 +47,25 @@ def test_ordered_by_supermarket_section(catalog) -> None:
     assert [i.split(":")[0] for i in shop(catalog, *items)] == ["Zwiebeln", "Butter", "Spaghetti"]
 
 
+def test_variants_are_merged_and_translated(catalog) -> None:
+    items = (
+        Ingredient("yellow onion", 1, "pcs"),
+        Ingredient("onions", 1, "pcs"),
+        Ingredient("chestnut mushrooms", 150, "g"),
+        Ingredient("brown mushrooms", 150, "g"),
+        Ingredient("heavy cream", 150, "ml"),
+        Ingredient("fresh parsley", 10, "g"),
+        Ingredient("smoked bacon lardons", 80, "g"),
+    )
+    assert shop(catalog, *items) == [
+        "Champignons: 2 × Schale 250 g",
+        "Zwiebeln: 2 Stück",
+        "Petersilie: 1 × Bund",
+        "Speckwürfel: 1 × Packung 125 g",
+        "Sahne: 1 × Becher 200 ml",
+    ]
+
+
 def test_english_and_unknown_ingredients(catalog) -> None:
     assert shop(catalog, Ingredient("coconut milk", 150, "ml"), language="en") == [
         "coconut milk: 1 × can 400 ml"

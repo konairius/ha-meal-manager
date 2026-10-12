@@ -7,7 +7,7 @@ from typing import Final
 from .core.shopping import DEFAULT_PANTRY
 
 DOMAIN: Final = "meal_manager"
-VERSION: Final = "0.1.3"
+VERSION: Final = "0.1.4"
 
 URL_BASE: Final = "/meal_manager_static"
 CARD_FILE: Final = "meal-manager-card.js"
@@ -44,7 +44,7 @@ DEFAULT_GENERAL: Final = {
     CONF_AVOID_RECENT: 10,
     CONF_SEASON: "strict",
     CONF_PANTRY: ", ".join(DEFAULT_PANTRY),
-    CONF_SHOPPING_LANGUAGE: "auto",
+    CONF_SHOPPING_LANGUAGE: "de",
 }
 
 EVENT_PREFIX: Final = f"{DOMAIN}_"

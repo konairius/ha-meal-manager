@@ -44,11 +44,11 @@ from .const import (
     VERSION,
 )
 from .core.catalog import RecipeCatalog
+from .core.ingredients import IngredientCatalog
 from .core.models import SeasonMode
 from .core.planner import MealPlanner, PlannerOptions
 from .core.ports import RecipeSource
 from .core.settings import PlannerSettings, SettingsResolver
-from .core.shopping import IngredientInfo
 from .core.sources import FallbackSource
 
 PLATFORMS = [Platform.CALENDAR, Platform.SENSOR]
@@ -63,7 +63,7 @@ class MealManagerData:
     catalog: RecipeCatalog
     general: dict
     resolver: Callable[[], SettingsResolver]
-    ingredients: dict[str, IngredientInfo]
+    ingredients: IngredientCatalog
     todo: HaTodoShoppingList
 
 
@@ -89,10 +89,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: MealManagerConfigEntry) 
     general = general_options(entry)
     recipes = await hass.async_add_executor_job(load_recipes, hass.config.config_dir)
     catalog = RecipeCatalog(recipes)
+    ingredients = await hass.async_add_executor_job(load_ingredients)
     source: RecipeSource = catalog
     if general[CONF_AI_TASK_ENTITY]:
         source = FallbackSource(
-            AiTaskRecipeSource(hass, general[CONF_AI_TASK_ENTITY], general[CONF_PREFERENCES]),
+            AiTaskRecipeSource(hass, general[CONF_AI_TASK_ENTITY], general[CONF_PREFERENCES], ingredients),
             catalog,
         )
 
@@ -115,7 +116,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: MealManagerConfigEntry) 
         ),
     )
     await planner.async_load()
-    ingredients = await hass.async_add_executor_job(load_ingredients)
     entry.runtime_data = MealManagerData(
         planner=planner,
         catalog=catalog,

@@ -164,20 +164,29 @@ async def test_websocket_subscription(hass: HomeAssistant, hass_ws_client) -> No
 
 
 async def test_ai_task_source_with_fallback(hass: HomeAssistant) -> None:
+    """Unknown ingredients are rejected and asked for again with the reason; then the catalog."""
     answers = iter(
         [
             {
                 "title": "Model Porridge",
                 "minutes": 10,
+                "ingredients": "50 | g | steel cut oats\n200 | ml | milk",
+            },
+            {
+                "title": "Model Porridge",
+                "minutes": 10,
                 "kcal": 400,
                 "health": 4,
-                "ingredients": "50 | g | oats\n200 | ml | milk",
+                "ingredients": "50 | g | Rolled Oats\n200 | ml | whole milk",
                 "steps": "Cook.",
             },
         ]
     )
 
+    prompts = []
+
     async def fake_generate(hass, **kwargs):
+        prompts.append(kwargs["instructions"])
         try:
             data = next(answers)
         except StopIteration:
@@ -194,6 +203,9 @@ async def test_ai_task_source_with_fallback(hass: HomeAssistant) -> None:
     draft = entry.runtime_data.planner.state.draft
     assert draft.meals[0].recipe.title == "Model Porridge"
     assert draft.meals[0].recipe.source == "ai"
+    assert [i.name for i in draft.meals[0].recipe.ingredients] == ["rolled oats", "milk"]
+    assert "rolled oats (g)" in prompts[0]
+    assert "rejected: unknown ingredients (use only the listed ones): steel cut oats" in prompts[1]
     assert all(m.recipe.source == "builtin" for m in draft.meals[1:])
 
 

@@ -6,6 +6,7 @@ import logging
 import re
 from typing import Any
 
+from .ingredients import IngredientCatalog
 from .models import EFFORT_LABELS, Ingredient, MealRequest, Recipe, normalize_title
 from .quantities import METRIC_UNITS, is_plausible, parse_quantity
 from .season import SeasonMode, out_of_season, produce_out_of_season
@@ -24,7 +25,9 @@ HEALTH_HINT = {
 FIELDS = ("title", "minutes", "kcal", "health", "ingredients", "steps")
 
 
-def build_instructions(request: MealRequest, preferences: str = "") -> str:
+def build_instructions(
+    request: MealRequest, preferences: str = "", ingredients: IngredientCatalog | None = None
+) -> str:
     """Instructions for one dish."""
     lines = [
         f"Suggest one {request.meal_type} dish for {request.day:%A}.",
@@ -57,7 +60,19 @@ def build_instructions(request: MealRequest, preferences: str = "") -> str:
         " other units. Answers in any other format are rejected.",
         "- steps: one cooking step per line",
     ]
+    if ingredients:
+        lines.append(
+            "Use only these ingredients, spelled exactly like this and in the unit given in brackets"
+            f" (any other ingredient or unit is rejected): {ingredients.prompt_list()}."
+        )
     return "\n".join(lines)
+
+
+def retry_instructions(instructions: str, reason: str) -> str:
+    """The instructions again, with why the previous answer was rejected."""
+    return (
+        f"{instructions}\nYour previous answer was rejected: {reason}. Suggest a dish that follows all rules."
+    )
 
 
 _NUMBER = re.compile(r"-?\d+(?:[.,]\d+)?")
@@ -92,37 +107,53 @@ def parse_ingredient(line: str) -> Ingredient | None:
     return Ingredient(" ".join(parts[2].split()), quantity, unit)
 
 
-def parse_recipe(data: Any, request: MealRequest) -> Recipe | None:
+class RecipeRejected(ValueError):
+    """A model answer that cannot be used; the message says why (and is sent with the retry)."""
+
+
+def parse_recipe(
+    data: Any, request: MealRequest, ingredients: IngredientCatalog | None = None
+) -> Recipe | None:
     """Turn model output into a recipe. Returns None when unusable or excluded."""
+    try:
+        return check_recipe(data, request, ingredients)
+    except RecipeRejected as err:
+        _LOGGER.info("Rejecting model answer: %s", err)
+        return None
+
+
+def check_recipe(data: Any, request: MealRequest, ingredients: IngredientCatalog | None = None) -> Recipe:
+    """Turn model output into a recipe, or raise RecipeRejected with the reason.
+
+    With an ingredient catalog every ingredient must be a known one in its unit; names are
+    stored in their canonical spelling so plans and shopping lists merge them.
+    """
     if not isinstance(data, dict):
-        return None
+        raise RecipeRejected("not a recipe")
     title = str(data.get("title") or "").strip()
-    if not title or normalize_title(title) in request.exclude:
-        return None
+    if not title:
+        raise RecipeRejected("no title")
+    if normalize_title(title) in request.exclude:
+        raise RecipeRejected(f"{title} is excluded")
     minutes = int(_number(data.get("minutes"), 30))
     effort = 1 if minutes <= 20 else 2 if minutes <= 45 else 3
-    lines = _lines(data.get("ingredients"))
-    parsed = [(line, parse_ingredient(line)) for line in lines]
+    parsed = [(line, parse_ingredient(line)) for line in _lines(data.get("ingredients"))]
     if malformed := [line for line, ingredient in parsed if ingredient is None]:
-        _LOGGER.info("Rejecting %s: ingredients not as 'quantity | g/ml/pcs | name': %s", title, malformed)
-        return None
-    ingredients = [ingredient for _, ingredient in parsed if ingredient]
-    if not ingredients:
-        _LOGGER.info("Rejecting %s: no ingredients", title)
-        return None
-    if request.season is SeasonMode.STRICT and (
-        unseasonal := out_of_season((i.name for i in ingredients), request.day.month)
-    ):
-        _LOGGER.info("Rejecting %s: out of season: %s", title, ", ".join(unseasonal))
-        return None
-    implausible = [i for i in ingredients if not is_plausible(i)]
-    if implausible:
-        _LOGGER.info(
-            "Rejecting %s: implausible amounts per portion: %s",
-            title,
-            ", ".join(f"{i.quantity:g} {i.unit} {i.name}" for i in implausible),
+        raise RecipeRejected(
+            f"ingredients not written as 'quantity | g/ml/pcs | name': {'; '.join(malformed)}"
         )
-        return None
+    items = [ingredient for _, ingredient in parsed if ingredient]
+    if not items:
+        raise RecipeRejected("no ingredients")
+    if ingredients is not None:
+        items = _canonical(items, ingredients)
+    if request.season is SeasonMode.STRICT and (
+        unseasonal := out_of_season((i.name for i in items), request.day.month)
+    ):
+        raise RecipeRejected(f"out of season in {request.day:%B}: {', '.join(unseasonal)}")
+    if implausible := [i for i in items if not is_plausible(i)]:
+        amounts = ", ".join(f"{i.quantity:g} {i.unit} {i.name}" for i in implausible)
+        raise RecipeRejected(f"implausible amounts for one portion: {amounts}")
     return Recipe(
         id=f"ai:{normalize_title(title).replace(' ', '_')}",
         title=title,
@@ -131,7 +162,26 @@ def parse_recipe(data: Any, request: MealRequest) -> Recipe | None:
         minutes=minutes,
         health=min(5, max(1, int(_number(data.get("health"), request.health)))),
         kcal=max(1, int(_number(data.get("kcal"), request.kcal_target or 600))),
-        ingredients=tuple(ingredients),
+        ingredients=tuple(items),
         steps=tuple(_lines(data.get("steps"))),
         source="ai",
     )
+
+
+def _canonical(items: list[Ingredient], catalog: IngredientCatalog) -> list[Ingredient]:
+    result: list[Ingredient] = []
+    unknown: list[str] = []
+    wrong_unit: list[str] = []
+    for item in items:
+        name = catalog.resolve(item.name)
+        if name is None:
+            unknown.append(item.name)
+        elif item.unit != catalog[name].unit:
+            wrong_unit.append(f"{name} must be in {catalog[name].unit}, not {item.unit}")
+        else:
+            result.append(Ingredient(name, item.quantity, item.unit))
+    if unknown:
+        raise RecipeRejected(f"unknown ingredients (use only the listed ones): {', '.join(unknown)}")
+    if wrong_unit:
+        raise RecipeRejected("; ".join(wrong_unit))
+    return result

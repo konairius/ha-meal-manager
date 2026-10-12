@@ -8,10 +8,11 @@ supermarket section.
 
 from __future__ import annotations
 
-from collections.abc import Iterable, Mapping
+from collections.abc import Iterable
 from dataclasses import dataclass
 import math
 
+from .ingredients import IngredientCatalog, IngredientInfo, Package
 from .models import Ingredient
 
 # Supermarket walk; unknown ingredients go last.
@@ -59,24 +60,6 @@ _PIECES = {"en": "pcs", "de": "Stück"}
 
 
 @dataclass(frozen=True, slots=True)
-class Package:
-    """How an ingredient is sold, e.g. 400 ml per can."""
-
-    size: float
-    unit: str  # unit of the recipe amounts it covers: g, ml or pcs
-    labels: Mapping[str, str]  # language -> e.g. "Dose 400 ml"
-
-
-@dataclass(frozen=True, slots=True)
-class IngredientInfo:
-    """Translations, supermarket section and package of an ingredient."""
-
-    category: str = "other"
-    names: Mapping[str, str] | None = None  # language -> name
-    package: Package | None = None
-
-
-@dataclass(frozen=True, slots=True)
 class ShoppingItem:
     name: str
     amount: str  # e.g. "2 kg", "3 Stk.", "1 Bund"
@@ -118,20 +101,21 @@ def _amount(quantity: float, unit: str, package: Package | None, language: str) 
 
 def build_shopping_list(
     ingredients: Iterable[Ingredient],
-    catalog: Mapping[str, IngredientInfo],
+    catalog: IngredientCatalog,
     pantry: frozenset[str] = frozenset(DEFAULT_PANTRY),
     language: str = "en",
 ) -> list[ShoppingItem]:
     """Merge, filter, round, translate and order the ingredients of the meals to shop for."""
     totals: dict[tuple[str, str], float] = {}
     for item in ingredients:
-        key = (" ".join(item.name.casefold().split()), item.unit)
+        name = catalog.resolve(item.name) or " ".join(item.name.casefold().split())
+        key = (name, item.unit)
         totals[key] = totals.get(key, 0.0) + item.quantity
 
     items: list[ShoppingItem] = []
     for (name, unit), quantity in totals.items():
         info = catalog.get(name, IngredientInfo())
-        local = (info.names or {}).get(language) or name
+        local = info.names.get(language) or name
         if {name, local.casefold(), info.category} & pantry or quantity <= 0:
             continue
         category = info.category if info.category in CATEGORIES else "other"

@@ -7,7 +7,14 @@ from datetime import date
 
 import pytest
 
-from custom_components.meal_manager.core.llm import build_instructions, parse_ingredient, parse_recipe
+from custom_components.meal_manager.core.llm import (
+    RecipeRejected,
+    build_instructions,
+    check_recipe,
+    parse_ingredient,
+    parse_recipe,
+    retry_instructions,
+)
 from custom_components.meal_manager.core.models import MealRequest, MealType, SeasonMode
 
 REQUEST = MealRequest(
@@ -103,3 +110,29 @@ def test_instructions_name_metric_units_and_season() -> None:
     text = build_instructions(replace(REQUEST, season=SeasonMode.STRICT), "")
     assert "g, ml, pcs" in text and "October" in text and "asparagus" in text
     assert "October" not in build_instructions(REQUEST, "")
+
+
+@pytest.fixture(scope="module")
+def ingredients():
+    from custom_components.meal_manager.adapters import load_ingredients  # noqa: PLC0415
+
+    return load_ingredients()
+
+
+def test_model_must_use_known_ingredients_in_their_unit(ingredients) -> None:
+    data = {"title": "Gnocchi", "minutes": 25, "ingredients": "200 | g | gnocchi\n1 | pcs | yellow onion"}
+    recipe = check_recipe(data, REQUEST, ingredients)
+    assert [(i.name, i.unit) for i in recipe.ingredients] == [("potato gnocchi", "g"), ("onion", "pcs")]
+
+    data["ingredients"] = "200 | g | gnocchi\n100 | g | onion"
+    with pytest.raises(RecipeRejected, match="onion must be in pcs, not g"):
+        check_recipe(data, REQUEST, ingredients)
+    data["ingredients"] = "200 | g | dragon fruit"
+    with pytest.raises(RecipeRejected, match=r"unknown ingredients .*dragon fruit"):
+        check_recipe(data, REQUEST, ingredients)
+
+
+def test_prompt_lists_known_ingredients(ingredients) -> None:
+    text = build_instructions(REQUEST, "", ingredients)
+    assert "onion (pcs)" in text and "potatoes (g)" in text
+    assert "rejected: x" in retry_instructions(text, "x")

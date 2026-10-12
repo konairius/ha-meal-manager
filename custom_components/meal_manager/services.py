@@ -11,6 +11,7 @@ from homeassistant.util import dt as dt_util
 import voluptuous as vol
 
 from .const import CONF_PANTRY, CONF_SHOPPING_LANGUAGE, CONF_SHOPPING_LIST, DOMAIN
+from .core.ingredients import IngredientCatalog
 from .core.planner import MAX_DAYS, MealPlanner, PlannerError
 from .core.shopping import DEFAULT_PANTRY, build_shopping_list, parse_pantry
 
@@ -116,7 +117,7 @@ async def _shopping_list(hass: HomeAssistant, call: ServiceCall) -> ServiceRespo
     pantry = parse_pantry(data.general.get(CONF_PANTRY, "")) if data else frozenset(DEFAULT_PANTRY)
     shopping = build_shopping_list(
         planner.shopping_list(draft=call.data[ATTR_DRAFT]),
-        data.ingredients if data else {},
+        data.ingredients if data else IngredientCatalog({}),
         pantry,
         language,
     )

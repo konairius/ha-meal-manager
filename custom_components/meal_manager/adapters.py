@@ -15,9 +15,10 @@ import voluptuous as vol
 
 from .const import DOMAIN, EVENT_PREFIX, USER_RECIPES_FILE
 from .core.catalog import parse_recipes
-from .core.llm import build_instructions, parse_recipe
+from .core.ingredients import IngredientCatalog, IngredientInfo, Package
+from .core.llm import RecipeRejected, build_instructions, check_recipe, retry_instructions
 from .core.models import MealRequest, Recipe
-from .core.shopping import IngredientInfo, Package, ShoppingItem
+from .core.shopping import ShoppingItem
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -81,8 +82,8 @@ def load_recipes(config_dir: str) -> list[Recipe]:
     return recipes
 
 
-def load_ingredients() -> dict[str, IngredientInfo]:
-    """Translations and supermarket sections of known ingredients (blocking, run in executor)."""
+def load_ingredients() -> IngredientCatalog:
+    """Known ingredients with translations, sections and packages (blocking, run in executor)."""
     raw = json.loads(BUILTIN_INGREDIENTS.read_text(encoding="utf-8"))
 
     def package(data: dict[str, Any] | None) -> Package | None:
@@ -90,14 +91,18 @@ def load_ingredients() -> dict[str, IngredientInfo]:
             return None
         return Package(float(data["size"]), data["unit"], {"en": data["en"], "de": data["de"]})
 
-    return {
-        name: IngredientInfo(
-            category=data.get("category", "other"),
-            names={"en": name, "de": data.get("de", name)},
-            package=package(data.get("pack")),
-        )
-        for name, data in raw.items()
-    }
+    return IngredientCatalog(
+        {
+            name: IngredientInfo(
+                unit=data["unit"],
+                category=data.get("category", "other"),
+                names={"en": name, "de": data.get("de", name)},
+                package=package(data.get("pack")),
+                aliases=tuple(data.get("aliases", ())),
+            )
+            for name, data in raw.items()
+        }
+    )
 
 
 class HaTodoShoppingList:
@@ -162,13 +167,17 @@ async def generate_data(hass: HomeAssistant, **kwargs: Any) -> Any:
 class AiTaskRecipeSource:
     """Asks a local model through Home Assistant's AI Task integration."""
 
-    def __init__(self, hass: HomeAssistant, entity_id: str | None, preferences: str) -> None:
+    def __init__(
+        self, hass: HomeAssistant, entity_id: str | None, preferences: str, ingredients: IngredientCatalog
+    ) -> None:
         self._hass = hass
         self._entity_id = entity_id
         self._preferences = preferences
+        self._ingredients = ingredients
 
     async def suggest(self, request: MealRequest) -> Recipe | None:
-        instructions = build_instructions(request, self._preferences)
+        base = build_instructions(request, self._preferences, self._ingredients)
+        instructions = base
         for _ in range(AI_ATTEMPTS):
             try:
                 result = await generate_data(
@@ -181,7 +190,9 @@ class AiTaskRecipeSource:
             except (HomeAssistantError, KeyError) as err:
                 _LOGGER.warning("AI Task generation failed: %s", err)
                 return None
-            recipe = parse_recipe(result.data, request)
-            if recipe is not None:
-                return recipe
+            try:
+                return check_recipe(result.data, request, self._ingredients)
+            except RecipeRejected as err:
+                _LOGGER.info("Rejected model answer, asking again: %s", err)
+                instructions = retry_instructions(base, str(err))
         return None

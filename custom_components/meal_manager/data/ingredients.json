@@ -7,11 +7,16 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "apple": {
   "de": "Äpfel",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs",
+  "aliases": [
+   "apples"
+  ]
  },
  "apple sauce": {
   "de": "Apfelmus",
@@ -21,7 +26,8 @@
    "unit": "g",
    "de": "Glas 360 g",
    "en": "jar 360 g"
-  }
+  },
+  "unit": "g"
  },
  "arborio rice": {
   "de": "Risottoreis",
@@ -31,15 +37,41 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "asparagus": {
   "de": "Spargel",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g",
+  "aliases": [
+   "green asparagus",
+   "white asparagus"
+  ]
  },
  "avocado": {
   "de": "Avocados",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs"
+ },
+ "bacon cubes": {
+  "de": "Speckwürfel",
+  "category": "meat",
+  "unit": "g",
+  "pack": {
+   "size": 125,
+   "unit": "g",
+   "de": "Packung 125 g",
+   "en": "pack 125 g"
+  },
+  "aliases": [
+   "bacon lardons",
+   "diced bacon",
+   "diced pancetta",
+   "lardons",
+   "pancetta cubes",
+   "smoked bacon lardons"
+  ]
  },
  "bacon slice": {
   "de": "Bacon",
@@ -49,7 +81,8 @@
    "unit": "pcs",
    "de": "Packung (ca. 100 g)",
    "en": "pack (approx. 100 g)"
-  }
+  },
+  "unit": "pcs"
  },
  "baguette": {
   "de": "Baguette",
@@ -59,7 +92,8 @@
    "unit": "g",
    "de": "Stück (250 g)",
    "en": "loaf (250 g)"
-  }
+  },
+  "unit": "g"
  },
  "baked beans": {
   "de": "Baked Beans",
@@ -69,7 +103,8 @@
    "unit": "g",
    "de": "Dose 415 g",
    "en": "can 415 g"
-  }
+  },
+  "unit": "g"
  },
  "baking powder": {
   "de": "Backpulver",
@@ -79,7 +114,8 @@
    "unit": "g",
    "de": "Päckchen",
    "en": "sachet"
-  }
+  },
+  "unit": "g"
  },
  "balsamic vinegar": {
   "de": "Balsamico",
@@ -89,11 +125,13 @@
    "unit": "ml",
    "de": "Flasche 500 ml",
    "en": "bottle 500 ml"
-  }
+  },
+  "unit": "ml"
  },
  "banana": {
   "de": "Bananen",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs"
  },
  "basil": {
   "de": "Basilikum",
@@ -103,7 +141,12 @@
    "unit": "g",
    "de": "Topf",
    "en": "pot"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "basil leaves",
+   "fresh basil"
+  ]
  },
  "basil pesto": {
   "de": "Basilikum-Pesto",
@@ -113,7 +156,8 @@
    "unit": "g",
    "de": "Glas 190 g",
    "en": "jar 190 g"
-  }
+  },
+  "unit": "g"
  },
  "bbq sauce": {
   "de": "BBQ-Sauce",
@@ -123,7 +167,8 @@
    "unit": "ml",
    "de": "Flasche 500 ml",
    "en": "bottle 500 ml"
-  }
+  },
+  "unit": "ml"
  },
  "bean sprouts": {
   "de": "Sojasprossen",
@@ -133,7 +178,8 @@
    "unit": "g",
    "de": "Beutel 200 g",
    "en": "bag 200 g"
-  }
+  },
+  "unit": "g"
  },
  "beef broth": {
   "de": "Rinderbrühe",
@@ -143,23 +189,35 @@
    "unit": "ml",
    "de": "Glas Instant-Brühe (für 5 l)",
    "en": "jar of stock powder (makes 5 l)"
-  }
+  },
+  "unit": "ml",
+  "aliases": [
+   "beef stock"
+  ]
  },
  "beef topside": {
   "de": "Rinderoberschale",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g"
  },
  "beetroot": {
   "de": "Rote Bete",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g"
  },
  "bell pepper": {
   "de": "Paprika",
-  "category": "produce"
- },
- "black pepper": {
-  "de": "Schwarzer Pfeffer",
-  "category": "spices"
+  "category": "produce",
+  "unit": "pcs",
+  "aliases": [
+   "capsicum",
+   "green bell pepper",
+   "green pepper",
+   "red bell pepper",
+   "red pepper",
+   "yellow bell pepper",
+   "yellow pepper"
+  ]
  },
  "bok choy": {
   "de": "Pak Choi",
@@ -169,7 +227,8 @@
    "unit": "g",
    "de": "Stück",
    "en": "head"
-  }
+  },
+  "unit": "g"
  },
  "bratwurst": {
   "de": "Bratwurst",
@@ -179,15 +238,17 @@
    "unit": "pcs",
    "de": "Packung (4 Stück)",
    "en": "pack of 4"
-  }
- },
- "bread": {
-  "de": "Brot",
-  "category": "bakery"
+  },
+  "unit": "pcs",
+  "aliases": [
+   "bratwurst sausages",
+   "coarse bratwurst"
+  ]
  },
  "bread rolls": {
   "de": "Brötchen",
-  "category": "bakery"
+  "category": "bakery",
+  "unit": "pcs"
  },
  "breadcrumbs": {
   "de": "Paniermehl",
@@ -197,7 +258,8 @@
    "unit": "g",
    "de": "Packung 400 g",
    "en": "pack 400 g"
-  }
+  },
+  "unit": "g"
  },
  "broccoli": {
   "de": "Brokkoli",
@@ -207,7 +269,8 @@
    "unit": "g",
    "de": "Kopf (ca. 500 g)",
    "en": "head (approx. 500 g)"
-  }
+  },
+  "unit": "g"
  },
  "brown lentils": {
   "de": "Braune Linsen",
@@ -217,7 +280,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "brown sugar": {
   "de": "Brauner Zucker",
@@ -227,11 +291,13 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "brussels sprouts": {
   "de": "Rosenkohl",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g"
  },
  "burger bun": {
   "de": "Burgerbrötchen",
@@ -241,7 +307,8 @@
    "unit": "pcs",
    "de": "Packung (4 Stück)",
    "en": "pack of 4"
-  }
+  },
+  "unit": "pcs"
  },
  "butter": {
   "de": "Butter",
@@ -251,7 +318,12 @@
    "unit": "g",
    "de": "Packung 250 g",
    "en": "pack 250 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "salted butter",
+   "unsalted butter"
+  ]
  },
  "canned black beans": {
   "de": "Schwarze Bohnen",
@@ -261,7 +333,8 @@
    "unit": "g",
    "de": "Dose 400 g",
    "en": "can 400 g"
-  }
+  },
+  "unit": "g"
  },
  "canned chickpeas": {
   "de": "Kichererbsen",
@@ -271,7 +344,11 @@
    "unit": "g",
    "de": "Dose 400 g",
    "en": "can 400 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "chickpeas"
+  ]
  },
  "canned kidney beans": {
   "de": "Kidneybohnen",
@@ -281,7 +358,8 @@
    "unit": "g",
    "de": "Dose 400 g",
    "en": "can 400 g"
-  }
+  },
+  "unit": "g"
  },
  "canned tomatoes": {
   "de": "Gehackte Tomaten",
@@ -291,7 +369,13 @@
    "unit": "g",
    "de": "Dose 400 g",
    "en": "can 400 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "chopped tomatoes",
+   "diced tomatoes",
+   "tinned tomatoes"
+  ]
  },
  "canned tuna": {
   "de": "Thunfisch",
@@ -301,7 +385,8 @@
    "unit": "g",
    "de": "Dose 150 g",
    "en": "can 150 g"
-  }
+  },
+  "unit": "g"
  },
  "canned white beans": {
   "de": "Weiße Bohnen",
@@ -311,7 +396,8 @@
    "unit": "g",
    "de": "Dose 400 g",
    "en": "can 400 g"
-  }
+  },
+  "unit": "g"
  },
  "capers": {
   "de": "Kapern",
@@ -321,7 +407,8 @@
    "unit": "g",
    "de": "Glas 100 g",
    "en": "jar 100 g"
-  }
+  },
+  "unit": "g"
  },
  "caraway seeds": {
   "de": "Kümmel",
@@ -331,15 +418,21 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "carrot": {
   "de": "Karotten",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs",
+  "aliases": [
+   "carrots"
+  ]
  },
  "cauliflower": {
   "de": "Blumenkohl",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g"
  },
  "celeriac": {
   "de": "Knollensellerie",
@@ -349,7 +442,8 @@
    "unit": "g",
    "de": "Knolle (ca. 800 g)",
    "en": "bulb (approx. 800 g)"
-  }
+  },
+  "unit": "g"
  },
  "celery": {
   "de": "Staudensellerie",
@@ -359,7 +453,8 @@
    "unit": "g",
    "de": "Staude",
    "en": "bunch"
-  }
+  },
+  "unit": "g"
  },
  "cheddar": {
   "de": "Cheddar",
@@ -369,11 +464,11 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
- },
- "cheese": {
-  "de": "Käse",
-  "category": "dairy"
+  },
+  "unit": "g",
+  "aliases": [
+   "cheddar cheese"
+  ]
  },
  "cherry tomatoes": {
   "de": "Kirschtomaten",
@@ -383,7 +478,11 @@
    "unit": "g",
    "de": "Schale 250 g",
    "en": "punnet 250 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "grape tomatoes"
+  ]
  },
  "chia seeds": {
   "de": "Chiasamen",
@@ -393,15 +492,18 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
- },
- "chicken": {
-  "de": "Hähnchen",
-  "category": "meat"
+  },
+  "unit": "g"
  },
  "chicken breast": {
   "de": "Hähnchenbrust",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g",
+  "aliases": [
+   "chicken breast fillet",
+   "chicken breasts",
+   "chicken fillet"
+  ]
  },
  "chicken broth": {
   "de": "Hühnerbrühe",
@@ -411,7 +513,11 @@
    "unit": "ml",
    "de": "Glas Instant-Brühe (für 5 l)",
    "en": "jar of stock powder (makes 5 l)"
-  }
+  },
+  "unit": "ml",
+  "aliases": [
+   "chicken stock"
+  ]
  },
  "chicken drumsticks": {
   "de": "Hähnchenunterschenkel",
@@ -421,7 +527,8 @@
    "unit": "pcs",
    "de": "Packung (6 Stück)",
    "en": "pack of 6"
-  }
+  },
+  "unit": "pcs"
  },
  "chicken legs": {
   "de": "Hähnchenschenkel",
@@ -431,11 +538,13 @@
    "unit": "pcs",
    "de": "Packung (2 Stück)",
    "en": "pack of 2"
-  }
+  },
+  "unit": "pcs"
  },
  "chicken thighs": {
   "de": "Hähnchenoberschenkel",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g"
  },
  "chili flakes": {
   "de": "Chiliflocken",
@@ -445,7 +554,8 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "chili powder": {
   "de": "Chilipulver",
@@ -455,7 +565,8 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "chives": {
   "de": "Schnittlauch",
@@ -465,7 +576,11 @@
    "unit": "g",
    "de": "Bund",
    "en": "bunch"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "fresh chives"
+  ]
  },
  "chorizo": {
   "de": "Chorizo",
@@ -475,17 +590,8 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
- },
- "cilantro": {
-  "de": "Koriander",
-  "category": "herbs",
-  "pack": {
-   "size": 25,
-   "unit": "g",
-   "de": "Bund",
-   "en": "bunch"
-  }
+  },
+  "unit": "g"
  },
  "cinnamon": {
   "de": "Zimt",
@@ -495,7 +601,8 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "clarified butter": {
   "de": "Butterschmalz",
@@ -505,7 +612,8 @@
    "unit": "g",
    "de": "Becher 250 g",
    "en": "tub 250 g"
-  }
+  },
+  "unit": "g"
  },
  "cocoa powder": {
   "de": "Kakaopulver",
@@ -515,7 +623,8 @@
    "unit": "g",
    "de": "Packung 250 g",
    "en": "pack 250 g"
-  }
+  },
+  "unit": "g"
  },
  "coconut milk": {
   "de": "Kokosmilch",
@@ -525,11 +634,13 @@
    "unit": "ml",
    "de": "Dose 400 ml",
    "en": "can 400 ml"
-  }
+  },
+  "unit": "ml"
  },
  "cod fillet": {
   "de": "Kabeljaufilet",
-  "category": "fish"
+  "category": "fish",
+  "unit": "g"
  },
  "cooked beetroot": {
   "de": "Rote Bete (gekocht)",
@@ -539,7 +650,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "cooked ham slice": {
   "de": "Kochschinken",
@@ -549,7 +661,8 @@
    "unit": "pcs",
    "de": "Packung (ca. 150 g)",
    "en": "pack (approx. 150 g)"
-  }
+  },
+  "unit": "pcs"
  },
  "coriander": {
   "de": "Koriander",
@@ -559,7 +672,12 @@
    "unit": "g",
    "de": "Bund",
    "en": "bunch"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "cilantro",
+   "fresh coriander"
+  ]
  },
  "cottage cheese": {
   "de": "Hüttenkäse",
@@ -569,7 +687,8 @@
    "unit": "g",
    "de": "Becher 200 g",
    "en": "tub 200 g"
-  }
+  },
+  "unit": "g"
  },
  "couscous": {
   "de": "Couscous",
@@ -579,7 +698,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "cream": {
   "de": "Sahne",
@@ -589,7 +709,15 @@
    "unit": "ml",
    "de": "Becher 200 ml",
    "en": "carton 200 ml"
-  }
+  },
+  "unit": "ml",
+  "aliases": [
+   "cooking cream",
+   "double cream",
+   "heavy cream",
+   "single cream",
+   "whipping cream"
+  ]
  },
  "cream cheese": {
   "de": "Frischkäse",
@@ -599,7 +727,8 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "creme fraiche": {
   "de": "Crème fraîche",
@@ -609,7 +738,11 @@
    "unit": "g",
    "de": "Becher 150 g",
    "en": "tub 150 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "crème fraîche"
+  ]
  },
  "croissant": {
   "de": "Croissants",
@@ -619,7 +752,8 @@
    "unit": "pcs",
    "de": "Packung (4 Stück)",
    "en": "pack of 4"
-  }
+  },
+  "unit": "pcs"
  },
  "cucumber": {
   "de": "Gurke",
@@ -629,7 +763,8 @@
    "unit": "g",
    "de": "Stück",
    "en": "piece"
-  }
+  },
+  "unit": "g"
  },
  "cumin": {
   "de": "Kreuzkümmel",
@@ -639,7 +774,8 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "curry powder": {
   "de": "Currypulver",
@@ -649,7 +785,8 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "dark chocolate": {
   "de": "Zartbitterschokolade",
@@ -659,7 +796,8 @@
    "unit": "g",
    "de": "Tafel 100 g",
    "en": "bar 100 g"
-  }
+  },
+  "unit": "g"
  },
  "dates": {
   "de": "Datteln",
@@ -669,7 +807,8 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "dill": {
   "de": "Dill",
@@ -679,7 +818,11 @@
    "unit": "g",
    "de": "Bund",
    "en": "bunch"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "fresh dill"
+  ]
  },
  "dry yeast": {
   "de": "Trockenhefe",
@@ -689,7 +832,8 @@
    "unit": "g",
    "de": "Päckchen (3 Stück)",
    "en": "pack of 3 sachets"
-  }
+  },
+  "unit": "g"
  },
  "edamame": {
   "de": "Edamame",
@@ -699,7 +843,8 @@
    "unit": "g",
    "de": "Beutel 400 g",
    "en": "bag 400 g"
-  }
+  },
+  "unit": "g"
  },
  "egg noodles": {
   "de": "Eiernudeln",
@@ -709,7 +854,8 @@
    "unit": "g",
    "de": "Packung 250 g",
    "en": "pack 250 g"
-  }
+  },
+  "unit": "g"
  },
  "eggplant": {
   "de": "Aubergine",
@@ -719,7 +865,12 @@
    "unit": "g",
    "de": "Stück (ca. 300 g)",
    "en": "piece (approx. 300 g)"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "aubergine",
+   "aubergines"
+  ]
  },
  "eggs": {
   "de": "Eier",
@@ -729,7 +880,13 @@
    "unit": "pcs",
    "de": "10er-Packung",
    "en": "box of 10"
-  }
+  },
+  "unit": "pcs",
+  "aliases": [
+   "egg",
+   "large eggs",
+   "medium eggs"
+  ]
  },
  "emmental": {
   "de": "Emmentaler",
@@ -739,7 +896,12 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "emmental cheese",
+   "emmentaler"
+  ]
  },
  "english muffin": {
   "de": "English Muffins",
@@ -749,7 +911,8 @@
    "unit": "pcs",
    "de": "Packung (4 Stück)",
    "en": "pack of 4"
-  }
+  },
+  "unit": "pcs"
  },
  "feta": {
   "de": "Feta",
@@ -759,7 +922,11 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "feta cheese"
+  ]
  },
  "firm tofu": {
   "de": "Tofu",
@@ -769,7 +936,8 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "fish fingers": {
   "de": "Fischstäbchen",
@@ -779,7 +947,8 @@
    "unit": "g",
    "de": "Packung 450 g",
    "en": "pack 450 g"
-  }
+  },
+  "unit": "g"
  },
  "fish sauce": {
   "de": "Fischsauce",
@@ -789,7 +958,8 @@
    "unit": "ml",
    "de": "Flasche 200 ml",
    "en": "bottle 200 ml"
-  }
+  },
+  "unit": "ml"
  },
  "flaked almonds": {
   "de": "Mandelblättchen",
@@ -799,7 +969,8 @@
    "unit": "g",
    "de": "Packung 100 g",
    "en": "pack 100 g"
-  }
+  },
+  "unit": "g"
  },
  "flour": {
   "de": "Mehl",
@@ -809,7 +980,8 @@
    "unit": "g",
    "de": "Packung 1 kg",
    "en": "pack 1 kg"
-  }
+  },
+  "unit": "g"
  },
  "frankfurter": {
   "de": "Wiener Würstchen",
@@ -819,7 +991,8 @@
    "unit": "pcs",
    "de": "Glas (6 Stück)",
    "en": "jar of 6"
-  }
+  },
+  "unit": "pcs"
  },
  "frozen berries": {
   "de": "TK-Beeren",
@@ -829,11 +1002,8 @@
    "unit": "g",
    "de": "Beutel 500 g",
    "en": "bag 500 g"
-  }
- },
- "garlic": {
-  "de": "Knoblauch",
-  "category": "produce"
+  },
+  "unit": "g"
  },
  "garlic clove": {
   "de": "Knoblauch",
@@ -843,7 +1013,13 @@
    "unit": "pcs",
    "de": "Knolle",
    "en": "bulb"
-  }
+  },
+  "unit": "pcs",
+  "aliases": [
+   "clove garlic",
+   "garlic",
+   "garlic cloves"
+  ]
  },
  "gherkin": {
   "de": "Gewürzgurken",
@@ -853,7 +1029,8 @@
    "unit": "pcs",
    "de": "Glas",
    "en": "jar"
-  }
+  },
+  "unit": "pcs"
  },
  "ginger": {
   "de": "Ingwer",
@@ -863,7 +1040,12 @@
    "unit": "g",
    "de": "Stück (ca. 50 g)",
    "en": "piece (approx. 50 g)"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "fresh ginger",
+   "ginger root"
+  ]
  },
  "goat cheese": {
   "de": "Ziegenkäse",
@@ -873,7 +1055,8 @@
    "unit": "g",
    "de": "Packung 150 g",
    "en": "pack 150 g"
-  }
+  },
+  "unit": "g"
  },
  "gouda": {
   "de": "Gouda",
@@ -883,7 +1066,11 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "gouda cheese"
+  ]
  },
  "grapes": {
   "de": "Weintrauben",
@@ -893,7 +1080,8 @@
    "unit": "g",
    "de": "Schale 500 g",
    "en": "punnet 500 g"
-  }
+  },
+  "unit": "g"
  },
  "greek yogurt": {
   "de": "Griechischer Joghurt",
@@ -903,11 +1091,12 @@
    "unit": "g",
    "de": "Becher 500 g",
    "en": "tub 500 g"
-  }
- },
- "green asparagus": {
-  "de": "Grüner Spargel",
-  "category": "produce"
+  },
+  "unit": "g",
+  "aliases": [
+   "greek yoghurt",
+   "greek-style yogurt"
+  ]
  },
  "green beans": {
   "de": "Grüne Bohnen",
@@ -917,7 +1106,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "green curry paste": {
   "de": "Grüne Currypaste",
@@ -927,15 +1117,22 @@
    "unit": "g",
    "de": "Glas 110 g",
    "en": "jar 110 g"
-  }
+  },
+  "unit": "g"
  },
  "ground beef": {
   "de": "Rinderhack",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g",
+  "aliases": [
+   "beef mince",
+   "minced beef"
+  ]
  },
  "ground lamb": {
   "de": "Lammhack",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g"
  },
  "gruyere": {
   "de": "Gruyère",
@@ -945,7 +1142,8 @@
    "unit": "g",
    "de": "Packung 150 g",
    "en": "pack 150 g"
-  }
+  },
+  "unit": "g"
  },
  "hazelnuts": {
   "de": "Haselnüsse",
@@ -955,7 +1153,8 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "hokkaido pumpkin": {
   "de": "Hokkaido-Kürbis",
@@ -965,7 +1164,12 @@
    "unit": "g",
    "de": "Stück (ca. 1 kg)",
    "en": "piece (approx. 1 kg)"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "hokkaido squash",
+   "red kuri squash"
+  ]
  },
  "honey": {
   "de": "Honig",
@@ -975,7 +1179,8 @@
    "unit": "ml",
    "de": "Glas 500 g",
    "en": "jar 500 g"
-  }
+  },
+  "unit": "ml"
  },
  "hummus": {
   "de": "Hummus",
@@ -985,7 +1190,8 @@
    "unit": "g",
    "de": "Becher 200 g",
    "en": "tub 200 g"
-  }
+  },
+  "unit": "g"
  },
  "iceberg lettuce": {
   "de": "Eisbergsalat",
@@ -995,7 +1201,8 @@
    "unit": "g",
    "de": "Kopf",
    "en": "head"
-  }
+  },
+  "unit": "g"
  },
  "kalamata olives": {
   "de": "Kalamata-Oliven",
@@ -1005,11 +1212,13 @@
    "unit": "g",
    "de": "Glas 200 g",
    "en": "jar 200 g"
-  }
+  },
+  "unit": "g"
  },
  "kale": {
   "de": "Grünkohl",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g"
  },
  "ketchup": {
   "de": "Ketchup",
@@ -1019,7 +1228,8 @@
    "unit": "ml",
    "de": "Flasche 500 ml",
    "en": "bottle 500 ml"
-  }
+  },
+  "unit": "ml"
  },
  "lasagne sheets": {
   "de": "Lasagneplatten",
@@ -1029,7 +1239,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "leek": {
   "de": "Lauch",
@@ -1039,11 +1250,19 @@
    "unit": "g",
    "de": "Stange",
    "en": "stalk"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "leeks"
+  ]
  },
  "lemon": {
   "de": "Zitronen",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs",
+  "aliases": [
+   "lemons"
+  ]
  },
  "lemon juice": {
   "de": "Zitronensaft",
@@ -1053,15 +1272,16 @@
    "unit": "ml",
    "de": "Flasche 200 ml",
    "en": "bottle 200 ml"
-  }
- },
- "lemon zest": {
-  "de": "Zitronenschale",
-  "category": "produce"
+  },
+  "unit": "ml"
  },
  "lime": {
   "de": "Limetten",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs",
+  "aliases": [
+   "limes"
+  ]
  },
  "linseed": {
   "de": "Leinsamen",
@@ -1071,7 +1291,8 @@
    "unit": "g",
    "de": "Packung 250 g",
    "en": "pack 250 g"
-  }
+  },
+  "unit": "g"
  },
  "linseed oil": {
   "de": "Leinöl",
@@ -1081,7 +1302,8 @@
    "unit": "ml",
    "de": "Flasche 250 ml",
    "en": "bottle 250 ml"
-  }
+  },
+  "unit": "ml"
  },
  "low-fat quark": {
   "de": "Magerquark",
@@ -1091,7 +1313,8 @@
    "unit": "g",
    "de": "Becher 500 g",
    "en": "tub 500 g"
-  }
+  },
+  "unit": "g"
  },
  "mango": {
   "de": "Mango",
@@ -1101,7 +1324,8 @@
    "unit": "g",
    "de": "Stück",
    "en": "piece"
-  }
+  },
+  "unit": "g"
  },
  "maple syrup": {
   "de": "Ahornsirup",
@@ -1111,7 +1335,8 @@
    "unit": "ml",
    "de": "Flasche 250 ml",
    "en": "bottle 250 ml"
-  }
+  },
+  "unit": "ml"
  },
  "marjoram": {
   "de": "Majoran",
@@ -1121,7 +1346,8 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "matjes herring": {
   "de": "Matjes",
@@ -1131,7 +1357,8 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "mayonnaise": {
   "de": "Mayonnaise",
@@ -1141,7 +1368,8 @@
    "unit": "ml",
    "de": "Tube 250 ml",
    "en": "tube 250 ml"
-  }
+  },
+  "unit": "ml"
  },
  "milk": {
   "de": "Milch",
@@ -1151,7 +1379,12 @@
    "unit": "ml",
    "de": "Packung 1 l",
    "en": "carton 1 l"
-  }
+  },
+  "unit": "ml",
+  "aliases": [
+   "semi-skimmed milk",
+   "whole milk"
+  ]
  },
  "mint": {
   "de": "Minze",
@@ -1161,7 +1394,8 @@
    "unit": "g",
    "de": "Bund",
    "en": "bunch"
-  }
+  },
+  "unit": "g"
  },
  "mixed berries": {
   "de": "Beeren",
@@ -1171,11 +1405,17 @@
    "unit": "g",
    "de": "Schale 250 g",
    "en": "punnet 250 g"
-  }
+  },
+  "unit": "g"
  },
  "mixed ground meat": {
   "de": "Gemischtes Hack",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g",
+  "aliases": [
+   "minced meat",
+   "mixed mince"
+  ]
  },
  "mozzarella": {
   "de": "Mozzarella",
@@ -1185,7 +1425,12 @@
    "unit": "g",
    "de": "Kugel 125 g",
    "en": "ball 125 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "fresh mozzarella",
+   "mozzarella cheese"
+  ]
  },
  "mushrooms": {
   "de": "Champignons",
@@ -1195,7 +1440,16 @@
    "unit": "g",
    "de": "Schale 250 g",
    "en": "punnet 250 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "brown mushrooms",
+   "button mushrooms",
+   "champignons",
+   "chestnut mushrooms",
+   "cremini mushrooms",
+   "white mushrooms"
+  ]
  },
  "mussels": {
   "de": "Miesmuscheln",
@@ -1205,7 +1459,8 @@
    "unit": "g",
    "de": "Netz 1 kg",
    "en": "net 1 kg"
-  }
+  },
+  "unit": "g"
  },
  "mustard": {
   "de": "Senf",
@@ -1215,7 +1470,8 @@
    "unit": "g",
    "de": "Tube 200 g",
    "en": "tube 200 g"
-  }
+  },
+  "unit": "g"
  },
  "natural yogurt": {
   "de": "Naturjoghurt",
@@ -1225,7 +1481,14 @@
    "unit": "g",
    "de": "Becher 500 g",
    "en": "tub 500 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "natural yoghurt",
+   "plain yoghurt",
+   "plain yogurt",
+   "yogurt"
+  ]
  },
  "nutmeg": {
   "de": "Muskatnuss",
@@ -1235,7 +1498,8 @@
    "unit": "g",
    "de": "Ganze Muskatnuss",
    "en": "whole nutmeg"
-  }
+  },
+  "unit": "g"
  },
  "oat milk": {
   "de": "Haferdrink",
@@ -1245,7 +1509,8 @@
    "unit": "ml",
    "de": "Packung 1 l",
    "en": "carton 1 l"
-  }
+  },
+  "unit": "ml"
  },
  "olive oil": {
   "de": "Olivenöl",
@@ -1255,15 +1520,27 @@
    "unit": "ml",
    "de": "Flasche 500 ml",
    "en": "bottle 500 ml"
-  }
+  },
+  "unit": "ml",
+  "aliases": [
+   "extra virgin olive oil",
+   "extra-virgin olive oil"
+  ]
  },
  "onion": {
   "de": "Zwiebeln",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs",
+  "aliases": [
+   "brown onion",
+   "white onion",
+   "yellow onion"
+  ]
  },
  "orange": {
   "de": "Orangen",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs"
  },
  "oregano": {
   "de": "Oregano",
@@ -1273,7 +1550,8 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "paella rice": {
   "de": "Paellareis",
@@ -1283,7 +1561,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "paprika": {
   "de": "Paprikapulver",
@@ -1293,7 +1572,8 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "parmesan": {
   "de": "Parmesan",
@@ -1303,7 +1583,14 @@
    "unit": "g",
    "de": "Stück 100 g",
    "en": "piece 100 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "grated parmesan",
+   "parmesan cheese",
+   "parmigiano",
+   "parmigiano reggiano"
+  ]
  },
  "parsley": {
   "de": "Petersilie",
@@ -1313,11 +1600,13 @@
    "unit": "g",
    "de": "Bund",
    "en": "bunch"
-  }
- },
- "pasta": {
-  "de": "Nudeln",
-  "category": "dry"
+  },
+  "unit": "g",
+  "aliases": [
+   "curly parsley",
+   "flat-leaf parsley",
+   "italian parsley"
+  ]
  },
  "peanut butter": {
   "de": "Erdnussbutter",
@@ -1327,7 +1616,8 @@
    "unit": "g",
    "de": "Glas 350 g",
    "en": "jar 350 g"
-  }
+  },
+  "unit": "g"
  },
  "peanuts": {
   "de": "Erdnüsse",
@@ -1337,11 +1627,13 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "pear": {
   "de": "Birnen",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs"
  },
  "peas": {
   "de": "TK-Erbsen",
@@ -1351,7 +1643,8 @@
    "unit": "g",
    "de": "Beutel 450 g",
    "en": "bag 450 g"
-  }
+  },
+  "unit": "g"
  },
  "penne": {
   "de": "Penne",
@@ -1361,11 +1654,21 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "penne pasta"
+  ]
  },
  "pepper": {
   "de": "Pfeffer",
-  "category": "spices"
+  "category": "spices",
+  "unit": "g",
+  "aliases": [
+   "black pepper",
+   "ground black pepper",
+   "white pepper"
+  ]
  },
  "popcorn kernels": {
   "de": "Popcornmais",
@@ -1375,11 +1678,13 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "pork chop": {
   "de": "Schweinekoteletts",
-  "category": "meat"
+  "category": "meat",
+  "unit": "pcs"
  },
  "pork sausages": {
   "de": "Schweinswürstchen",
@@ -1389,19 +1694,49 @@
    "unit": "pcs",
    "de": "Packung (6 Stück)",
    "en": "pack of 6"
-  }
+  },
+  "unit": "pcs",
+  "aliases": [
+   "pork sausage",
+   "sausages"
+  ]
  },
  "pork shoulder": {
   "de": "Schweineschulter",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g"
  },
  "pork tenderloin": {
   "de": "Schweinefilet",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g"
+ },
+ "potato gnocchi": {
+  "de": "Gnocchi",
+  "category": "dairy",
+  "unit": "g",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  },
+  "aliases": [
+   "gnocchi"
+  ]
  },
  "potatoes": {
   "de": "Kartoffeln",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g",
+  "aliases": [
+   "baby potatoes",
+   "floury potatoes",
+   "new potatoes",
+   "potato",
+   "starchy potatoes",
+   "waxy potatoes"
+  ]
  },
  "powdered sugar": {
   "de": "Puderzucker",
@@ -1411,15 +1746,22 @@
    "unit": "g",
    "de": "Packung 250 g",
    "en": "pack 250 g"
-  }
+  },
+  "unit": "g"
  },
  "pretzel": {
   "de": "Brezeln",
-  "category": "bakery"
+  "category": "bakery",
+  "unit": "pcs"
  },
  "pumpkin": {
   "de": "Kürbis",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g",
+  "aliases": [
+   "butternut squash",
+   "squash"
+  ]
  },
  "pumpkin seeds": {
   "de": "Kürbiskerne",
@@ -1429,7 +1771,8 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "quinoa": {
   "de": "Quinoa",
@@ -1439,7 +1782,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "raisins": {
   "de": "Rosinen",
@@ -1449,15 +1793,23 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "rapeseed oil": {
   "de": "Rapsöl",
-  "category": "dry"
+  "category": "dry",
+  "unit": "ml"
  },
  "red cabbage": {
   "de": "Rotkohl",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g"
+ },
+ "red chili": {
+  "de": "Rote Chilischoten",
+  "category": "produce",
+  "unit": "pcs"
  },
  "red lentils": {
   "de": "Rote Linsen",
@@ -1467,11 +1819,16 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "red onion": {
   "de": "Rote Zwiebeln",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs",
+  "aliases": [
+   "purple onion"
+  ]
  },
  "red wine": {
   "de": "Rotwein",
@@ -1481,7 +1838,8 @@
    "unit": "ml",
    "de": "Flasche 750 ml",
    "en": "bottle 750 ml"
-  }
+  },
+  "unit": "ml"
  },
  "rice": {
   "de": "Reis",
@@ -1491,7 +1849,13 @@
    "unit": "g",
    "de": "Packung 1 kg",
    "en": "pack 1 kg"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "basmati rice",
+   "jasmine rice",
+   "long grain rice"
+  ]
  },
  "rice cakes": {
   "de": "Reiswaffeln",
@@ -1501,7 +1865,8 @@
    "unit": "pcs",
    "de": "Packung",
    "en": "pack"
-  }
+  },
+  "unit": "pcs"
  },
  "rice noodles": {
   "de": "Reisnudeln",
@@ -1511,7 +1876,8 @@
    "unit": "g",
    "de": "Packung 250 g",
    "en": "pack 250 g"
-  }
+  },
+  "unit": "g"
  },
  "ricotta": {
   "de": "Ricotta",
@@ -1521,7 +1887,8 @@
    "unit": "g",
    "de": "Becher 250 g",
    "en": "tub 250 g"
-  }
+  },
+  "unit": "g"
  },
  "rocket": {
   "de": "Rucola",
@@ -1531,7 +1898,11 @@
    "unit": "g",
    "de": "Schale 125 g",
    "en": "punnet 125 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "arugula"
+  ]
  },
  "rolled oats": {
   "de": "Haferflocken",
@@ -1541,7 +1912,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "romaine lettuce": {
   "de": "Römersalat",
@@ -1551,7 +1923,8 @@
    "unit": "g",
    "de": "Kopf",
    "en": "head"
-  }
+  },
+  "unit": "g"
  },
  "rosemary": {
   "de": "Rosmarin",
@@ -1561,7 +1934,11 @@
    "unit": "g",
    "de": "Bund",
    "en": "bunch"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "fresh rosemary"
+  ]
  },
  "rye bread slice": {
   "de": "Roggenbrot",
@@ -1571,7 +1948,8 @@
    "unit": "pcs",
    "de": "Packung (500 g)",
    "en": "pack (500 g)"
-  }
+  },
+  "unit": "pcs"
  },
  "saffron": {
   "de": "Safran",
@@ -1581,19 +1959,26 @@
    "unit": "g",
    "de": "Döschen",
    "en": "small tin"
-  }
- },
- "salmon": {
-  "de": "Lachs",
-  "category": "fish"
+  },
+  "unit": "g"
  },
  "salmon fillet": {
   "de": "Lachsfilet",
-  "category": "fish"
+  "category": "fish",
+  "unit": "g",
+  "aliases": [
+   "salmon",
+   "salmon fillets"
+  ]
  },
  "salt": {
   "de": "Salz",
-  "category": "spices"
+  "category": "spices",
+  "unit": "g",
+  "aliases": [
+   "sea salt",
+   "table salt"
+  ]
  },
  "sauerkraut": {
   "de": "Sauerkraut",
@@ -1603,11 +1988,13 @@
    "unit": "g",
    "de": "Dose 520 g",
    "en": "can 520 g"
-  }
+  },
+  "unit": "g"
  },
  "savoy cabbage": {
   "de": "Wirsing",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g"
  },
  "sesame oil": {
   "de": "Sesamöl",
@@ -1617,7 +2004,8 @@
    "unit": "ml",
    "de": "Flasche 250 ml",
    "en": "bottle 250 ml"
-  }
+  },
+  "unit": "ml"
  },
  "sesame seeds": {
   "de": "Sesam",
@@ -1627,7 +2015,16 @@
    "unit": "g",
    "de": "Packung 100 g",
    "en": "pack 100 g"
-  }
+  },
+  "unit": "g"
+ },
+ "shallot": {
+  "de": "Schalotten",
+  "category": "produce",
+  "unit": "pcs",
+  "aliases": [
+   "shallots"
+  ]
  },
  "shrimp": {
   "de": "Garnelen",
@@ -1637,7 +2034,8 @@
    "unit": "g",
    "de": "Packung 250 g",
    "en": "pack 250 g"
-  }
+  },
+  "unit": "g"
  },
  "small pasta": {
   "de": "Suppennudeln (Sternchen)",
@@ -1647,7 +2045,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "smoked salmon": {
   "de": "Räucherlachs",
@@ -1657,7 +2056,8 @@
    "unit": "g",
    "de": "Packung 100 g",
    "en": "pack 100 g"
-  }
+  },
+  "unit": "g"
  },
  "soup noodles": {
   "de": "Suppennudeln",
@@ -1667,7 +2067,8 @@
    "unit": "g",
    "de": "Packung 250 g",
    "en": "pack 250 g"
-  }
+  },
+  "unit": "g"
  },
  "sour cream": {
   "de": "Schmand",
@@ -1677,7 +2078,11 @@
    "unit": "g",
    "de": "Becher 200 g",
    "en": "tub 200 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "soured cream"
+  ]
  },
  "soy sauce": {
   "de": "Sojasauce",
@@ -1687,7 +2092,8 @@
    "unit": "ml",
    "de": "Flasche 250 ml",
    "en": "bottle 250 ml"
-  }
+  },
+  "unit": "ml"
  },
  "spaghetti": {
   "de": "Spaghetti",
@@ -1697,7 +2103,11 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "spaghetti pasta"
+  ]
  },
  "spinach": {
   "de": "Spinat",
@@ -1707,7 +2117,8 @@
    "unit": "g",
    "de": "Beutel 250 g",
    "en": "bag 250 g"
-  }
+  },
+  "unit": "g"
  },
  "spring onion": {
   "de": "Frühlingszwiebeln",
@@ -1717,11 +2128,19 @@
    "unit": "pcs",
    "de": "Bund",
    "en": "bunch"
-  }
+  },
+  "unit": "pcs",
+  "aliases": [
+   "green onion",
+   "green onions",
+   "scallion",
+   "scallions"
+  ]
  },
  "stewing beef": {
   "de": "Rindergulasch",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g"
  },
  "strawberry jam": {
   "de": "Erdbeermarmelade",
@@ -1731,7 +2150,8 @@
    "unit": "g",
    "de": "Glas 450 g",
    "en": "jar 450 g"
-  }
+  },
+  "unit": "g"
  },
  "sugar": {
   "de": "Zucker",
@@ -1741,7 +2161,8 @@
    "unit": "g",
    "de": "Packung 1 kg",
    "en": "pack 1 kg"
-  }
+  },
+  "unit": "g"
  },
  "sunflower oil": {
   "de": "Sonnenblumenöl",
@@ -1751,11 +2172,19 @@
    "unit": "ml",
    "de": "Flasche 1 l",
    "en": "bottle 1 l"
-  }
+  },
+  "unit": "ml",
+  "aliases": [
+   "neutral oil"
+  ]
  },
  "sweet potato": {
   "de": "Süßkartoffeln",
-  "category": "produce"
+  "category": "produce",
+  "unit": "g",
+  "aliases": [
+   "sweet potatoes"
+  ]
  },
  "sweetcorn": {
   "de": "Mais",
@@ -1765,7 +2194,8 @@
    "unit": "g",
    "de": "Dose 285 g",
    "en": "can 285 g"
-  }
+  },
+  "unit": "g"
  },
  "tagliatelle": {
   "de": "Tagliatelle",
@@ -1775,7 +2205,8 @@
    "unit": "g",
    "de": "Packung 500 g",
    "en": "pack 500 g"
-  }
+  },
+  "unit": "g"
  },
  "tahini": {
   "de": "Tahini",
@@ -1785,7 +2216,8 @@
    "unit": "g",
    "de": "Glas 250 g",
    "en": "jar 250 g"
-  }
+  },
+  "unit": "g"
  },
  "tamarind paste": {
   "de": "Tamarindenpaste",
@@ -1795,7 +2227,8 @@
    "unit": "g",
    "de": "Glas 200 g",
    "en": "jar 200 g"
-  }
+  },
+  "unit": "g"
  },
  "thyme": {
   "de": "Thymian",
@@ -1805,7 +2238,11 @@
    "unit": "g",
    "de": "Bund",
    "en": "bunch"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "fresh thyme"
+  ]
  },
  "toast bread slice": {
   "de": "Toastbrot",
@@ -1815,11 +2252,18 @@
    "unit": "pcs",
    "de": "Packung (500 g)",
    "en": "loaf (500 g)"
-  }
+  },
+  "unit": "pcs"
  },
  "tomato": {
   "de": "Tomaten",
-  "category": "produce"
+  "category": "produce",
+  "unit": "pcs",
+  "aliases": [
+   "plum tomatoes",
+   "tomatoes",
+   "vine tomatoes"
+  ]
  },
  "tomato passata": {
   "de": "Passierte Tomaten",
@@ -1829,7 +2273,8 @@
    "unit": "ml",
    "de": "Packung 500 ml",
    "en": "carton 500 ml"
-  }
+  },
+  "unit": "ml"
  },
  "tomato paste": {
   "de": "Tomatenmark",
@@ -1839,7 +2284,8 @@
    "unit": "g",
    "de": "Tube 200 g",
    "en": "tube 200 g"
-  }
+  },
+  "unit": "g"
  },
  "tortellini": {
   "de": "Tortellini",
@@ -1849,7 +2295,8 @@
    "unit": "g",
    "de": "Packung 250 g",
    "en": "pack 250 g"
-  }
+  },
+  "unit": "g"
  },
  "tortilla": {
   "de": "Tortillas",
@@ -1859,7 +2306,8 @@
    "unit": "pcs",
    "de": "Packung (8 Stück)",
    "en": "pack of 8"
-  }
+  },
+  "unit": "pcs"
  },
  "tortilla chips": {
   "de": "Tortilla-Chips",
@@ -1869,15 +2317,18 @@
    "unit": "g",
    "de": "Tüte 200 g",
    "en": "bag 200 g"
-  }
+  },
+  "unit": "g"
  },
  "trout fillet": {
   "de": "Forellenfilet",
-  "category": "fish"
+  "category": "fish",
+  "unit": "g"
  },
  "turkey breast": {
   "de": "Putenbrust",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g"
  },
  "turmeric": {
   "de": "Kurkuma",
@@ -1887,11 +2338,13 @@
    "unit": "g",
    "de": "Dose 50 g",
    "en": "tin 50 g"
-  }
+  },
+  "unit": "g"
  },
  "veal cutlet": {
   "de": "Kalbsschnitzel",
-  "category": "meat"
+  "category": "meat",
+  "unit": "g"
  },
  "vegetable broth": {
   "de": "Gemüsebrühe",
@@ -1901,15 +2354,21 @@
    "unit": "ml",
    "de": "Glas Instant-Brühe (für 5 l)",
    "en": "jar of stock powder (makes 5 l)"
-  }
+  },
+  "unit": "ml",
+  "aliases": [
+   "vegetable stock"
+  ]
  },
  "vegetable oil": {
   "de": "Pflanzenöl",
-  "category": "dry"
+  "category": "dry",
+  "unit": "ml"
  },
  "vinegar": {
   "de": "Essig",
-  "category": "dry"
+  "category": "dry",
+  "unit": "ml"
  },
  "walnuts": {
   "de": "Walnüsse",
@@ -1919,11 +2378,18 @@
    "unit": "g",
    "de": "Packung 200 g",
    "en": "pack 200 g"
-  }
+  },
+  "unit": "g"
  },
  "water": {
   "de": "Wasser",
-  "category": "dry"
+  "category": "dry",
+  "unit": "ml",
+  "aliases": [
+   "cold water",
+   "hot water",
+   "warm water"
+  ]
  },
  "white bread slice": {
   "de": "Weißbrot",
@@ -1933,7 +2399,8 @@
    "unit": "pcs",
    "de": "Packung (500 g)",
    "en": "loaf (500 g)"
-  }
+  },
+  "unit": "pcs"
  },
  "white cabbage": {
   "de": "Weißkohl",
@@ -1943,11 +2410,16 @@
    "unit": "g",
    "de": "Kopf (ca. 1 kg)",
    "en": "head (approx. 1 kg)"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "cabbage"
+  ]
  },
  "white fish fillet": {
   "de": "Weißfischfilet",
-  "category": "fish"
+  "category": "fish",
+  "unit": "g"
  },
  "white wine": {
   "de": "Weißwein",
@@ -1957,7 +2429,8 @@
    "unit": "ml",
    "de": "Flasche 750 ml",
    "en": "bottle 750 ml"
-  }
+  },
+  "unit": "ml"
  },
  "white wine vinegar": {
   "de": "Weißweinessig",
@@ -1967,7 +2440,8 @@
    "unit": "ml",
    "de": "Flasche 500 ml",
    "en": "bottle 500 ml"
-  }
+  },
+  "unit": "ml"
  },
  "whole grain bread slice": {
   "de": "Vollkornbrot",
@@ -1977,7 +2451,8 @@
    "unit": "pcs",
    "de": "Packung (500 g)",
    "en": "pack (500 g)"
-  }
+  },
+  "unit": "pcs"
  },
  "worcestershire sauce": {
   "de": "Worcestershiresauce",
@@ -1987,11 +2462,8 @@
    "unit": "ml",
    "de": "Flasche 150 ml",
    "en": "bottle 150 ml"
-  }
- },
- "yogurt": {
-  "de": "Joghurt",
-  "category": "dairy"
+  },
+  "unit": "ml"
  },
  "zucchini": {
   "de": "Zucchini",
@@ -2001,6 +2473,11 @@
    "unit": "g",
    "de": "Stück (ca. 250 g)",
    "en": "piece (approx. 250 g)"
-  }
+  },
+  "unit": "g",
+  "aliases": [
+   "courgette",
+   "courgettes"
+  ]
  }
 }
