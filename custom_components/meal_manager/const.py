@@ -4,8 +4,10 @@ from __future__ import annotations
 
 from typing import Final
 
+from .core.shopping import DEFAULT_PANTRY
+
 DOMAIN: Final = "meal_manager"
-VERSION: Final = "0.1.2"
+VERSION: Final = "0.1.3"
 
 URL_BASE: Final = "/meal_manager_static"
 CARD_FILE: Final = "meal-manager-card.js"
@@ -27,6 +29,9 @@ CONF_AUTO_NEW_PLAN: Final = "auto_new_plan"
 CONF_DEFAULT_DAYS: Final = "default_days"
 CONF_AVOID_RECENT: Final = "avoid_recent"
 CONF_SEASON: Final = "season"
+CONF_PANTRY: Final = "pantry"
+CONF_SHOPPING_LANGUAGE: Final = "shopping_language"
+SHOPPING_LANGUAGES: Final = ("auto", "de", "en")
 SEASON_MODES: Final = ("strict", "prefer", "off")
 
 DEFAULT_GENERAL: Final = {
@@ -38,6 +43,8 @@ DEFAULT_GENERAL: Final = {
     CONF_DEFAULT_DAYS: 7,
     CONF_AVOID_RECENT: 10,
     CONF_SEASON: "strict",
+    CONF_PANTRY: ", ".join(DEFAULT_PANTRY),
+    CONF_SHOPPING_LANGUAGE: "auto",
 }
 
 EVENT_PREFIX: Final = f"{DOMAIN}_"

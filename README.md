@@ -15,7 +15,8 @@ integration (e.g. Ollama). Nothing talks to the internet or a cloud service.
   `meal_manager_draft_ready` event fires.
 - **Decline** a meal ("something else") or **ban** it ("never again"); bans can be lifted.
 - **Calories** are split across the day's meals and portion sizes are scaled (0.75×–1.5×) to match.
-- **Shopping list**: ingredients of all uncooked meals, aggregated, pushed to any to-do list.
+- **Shopping list**: products to buy for all uncooked meals ("Kokosmilch: 2 × Dose 400 ml", "Petersilie: 1 × Bund"),
+  in German or English, sorted by supermarket section, without pantry staples, pushed to any to-do list.
 - **Entities**: calendar, plan status, next meal, today's meal per meal slot.
 - **UI**: mobile-first dashboard card and a *Meal plan* sidebar panel, English and German.
 
@@ -35,7 +36,7 @@ Everything is edited under *Settings → Devices & services → Meal Manager →
 
 | Menu | Contents |
 | --- | --- |
-| General | Optional AI Task entity and household preferences, shopping list, days per plan, how many recently cooked dishes to avoid, seasonal produce, automatic new plan, sidebar panel |
+| General | Optional AI Task entity and household preferences, shopping list (to-do entity, language, what is always in stock), days per plan, how many recently cooked dishes to avoid, seasonal produce, automatic new plan, sidebar panel |
 | Default settings | Value and/or entity (+ attribute) for portions, effort, health and calories |
 | Meals of the day | Meals per day, and per meal (breakfast, lunch, dinner, snack): whether it is planned at all, time, share of the daily calories and priority |
 | Add / remove override | A value and/or entity for one setting on a weekday, a meal, or both |
@@ -99,6 +100,22 @@ Model answers are checked strictly: every ingredient must be `quantity | unit | 
 6 garlic cloves). Anything else, such as `5 | unit | lemon` or `2 | tbsp | oil`, is rejected and the
 dish is asked for again. Recipes in `meal_manager_recipes.json` are checked against the same limits;
 their spoons, cups, pinches, cloves and slices are converted to g, ml and pieces.
+
+### Shopping list
+
+*Add to shopping list* (or `meal_manager.add_to_shopping_list`) writes what to buy for all uncooked
+meals to the chosen to-do list:
+
+- Amounts of all meals are merged and turned into products as they are sold: packages, cans,
+  bunches and jars (`Eier: 2 × 10er-Packung`, `Kokosmilch: 2 × Dose 400 ml`), loose produce in whole
+  pieces or rounded weights (`Paprika: 3 Stück`, `Kartoffeln: 2,5 kg`).
+- Items are named in German or English (*General → Language of the shopping list*) and ordered by
+  supermarket section: produce, herbs, bakery, meat, fish, dairy, frozen, dry goods.
+- Pantry staples are left out (*General → Always in stock*; by default water, salt, pepper, oils,
+  vinegar, flour, sugar, spices and a few others). Entries match an ingredient in English or German,
+  or a whole section such as `spices`.
+- Running it again replaces the open items it added before, so nothing is duplicated; items you
+  added yourself or already ticked off stay.
 
 ### Seasons
 
@@ -188,13 +205,14 @@ custom_components/meal_manager/
     llm.py          prompt and strict parsing for the optional local model
     quantities.py   units (metric only) and plausibility per portion
     season.py       Central European seasonal calendar
+    shopping.py     shopping list: packages, pantry, translation, sections
     ports.py        interfaces the core depends on
   adapters.py       Home Assistant implementations of the ports (Store, bus, states, AI Task)
   __init__.py       composition root, card and panel registration
   config_flow.py    settings UI
   services.py, websocket_api.py, sensor.py, calendar.py
   frontend/         card and panel (plain web components, no build step)
-  data/recipes.json bundled recipes
+  data/            bundled recipes, ingredient names (de/en), sections and package sizes
 ```
 
 State is stored in `.storage/meal_manager`.

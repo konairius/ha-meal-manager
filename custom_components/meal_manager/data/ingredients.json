@@ -1,0 +1,2006 @@
+{
+ "almonds": {
+  "de": "Mandeln",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "apple": {
+  "de": "Äpfel",
+  "category": "produce"
+ },
+ "apple sauce": {
+  "de": "Apfelmus",
+  "category": "dry",
+  "pack": {
+   "size": 360,
+   "unit": "g",
+   "de": "Glas 360 g",
+   "en": "jar 360 g"
+  }
+ },
+ "arborio rice": {
+  "de": "Risottoreis",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "asparagus": {
+  "de": "Spargel",
+  "category": "produce"
+ },
+ "avocado": {
+  "de": "Avocados",
+  "category": "produce"
+ },
+ "bacon slice": {
+  "de": "Bacon",
+  "category": "meat",
+  "pack": {
+   "size": 8,
+   "unit": "pcs",
+   "de": "Packung (ca. 100 g)",
+   "en": "pack (approx. 100 g)"
+  }
+ },
+ "baguette": {
+  "de": "Baguette",
+  "category": "bakery",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Stück (250 g)",
+   "en": "loaf (250 g)"
+  }
+ },
+ "baked beans": {
+  "de": "Baked Beans",
+  "category": "dry",
+  "pack": {
+   "size": 415,
+   "unit": "g",
+   "de": "Dose 415 g",
+   "en": "can 415 g"
+  }
+ },
+ "baking powder": {
+  "de": "Backpulver",
+  "category": "dry",
+  "pack": {
+   "size": 15,
+   "unit": "g",
+   "de": "Päckchen",
+   "en": "sachet"
+  }
+ },
+ "balsamic vinegar": {
+  "de": "Balsamico",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "ml",
+   "de": "Flasche 500 ml",
+   "en": "bottle 500 ml"
+  }
+ },
+ "banana": {
+  "de": "Bananen",
+  "category": "produce"
+ },
+ "basil": {
+  "de": "Basilikum",
+  "category": "herbs",
+  "pack": {
+   "size": 20,
+   "unit": "g",
+   "de": "Topf",
+   "en": "pot"
+  }
+ },
+ "basil pesto": {
+  "de": "Basilikum-Pesto",
+  "category": "dry",
+  "pack": {
+   "size": 190,
+   "unit": "g",
+   "de": "Glas 190 g",
+   "en": "jar 190 g"
+  }
+ },
+ "bbq sauce": {
+  "de": "BBQ-Sauce",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "ml",
+   "de": "Flasche 500 ml",
+   "en": "bottle 500 ml"
+  }
+ },
+ "bean sprouts": {
+  "de": "Sojasprossen",
+  "category": "produce",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Beutel 200 g",
+   "en": "bag 200 g"
+  }
+ },
+ "beef broth": {
+  "de": "Rinderbrühe",
+  "category": "dry",
+  "pack": {
+   "size": 5000,
+   "unit": "ml",
+   "de": "Glas Instant-Brühe (für 5 l)",
+   "en": "jar of stock powder (makes 5 l)"
+  }
+ },
+ "beef topside": {
+  "de": "Rinderoberschale",
+  "category": "meat"
+ },
+ "beetroot": {
+  "de": "Rote Bete",
+  "category": "produce"
+ },
+ "bell pepper": {
+  "de": "Paprika",
+  "category": "produce"
+ },
+ "black pepper": {
+  "de": "Schwarzer Pfeffer",
+  "category": "spices"
+ },
+ "bok choy": {
+  "de": "Pak Choi",
+  "category": "produce",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Stück",
+   "en": "head"
+  }
+ },
+ "bratwurst": {
+  "de": "Bratwurst",
+  "category": "meat",
+  "pack": {
+   "size": 4,
+   "unit": "pcs",
+   "de": "Packung (4 Stück)",
+   "en": "pack of 4"
+  }
+ },
+ "bread": {
+  "de": "Brot",
+  "category": "bakery"
+ },
+ "bread rolls": {
+  "de": "Brötchen",
+  "category": "bakery"
+ },
+ "breadcrumbs": {
+  "de": "Paniermehl",
+  "category": "dry",
+  "pack": {
+   "size": 400,
+   "unit": "g",
+   "de": "Packung 400 g",
+   "en": "pack 400 g"
+  }
+ },
+ "broccoli": {
+  "de": "Brokkoli",
+  "category": "produce",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Kopf (ca. 500 g)",
+   "en": "head (approx. 500 g)"
+  }
+ },
+ "brown lentils": {
+  "de": "Braune Linsen",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "brown sugar": {
+  "de": "Brauner Zucker",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "brussels sprouts": {
+  "de": "Rosenkohl",
+  "category": "produce"
+ },
+ "burger bun": {
+  "de": "Burgerbrötchen",
+  "category": "bakery",
+  "pack": {
+   "size": 4,
+   "unit": "pcs",
+   "de": "Packung (4 Stück)",
+   "en": "pack of 4"
+  }
+ },
+ "butter": {
+  "de": "Butter",
+  "category": "dairy",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Packung 250 g",
+   "en": "pack 250 g"
+  }
+ },
+ "canned black beans": {
+  "de": "Schwarze Bohnen",
+  "category": "dry",
+  "pack": {
+   "size": 400,
+   "unit": "g",
+   "de": "Dose 400 g",
+   "en": "can 400 g"
+  }
+ },
+ "canned chickpeas": {
+  "de": "Kichererbsen",
+  "category": "dry",
+  "pack": {
+   "size": 400,
+   "unit": "g",
+   "de": "Dose 400 g",
+   "en": "can 400 g"
+  }
+ },
+ "canned kidney beans": {
+  "de": "Kidneybohnen",
+  "category": "dry",
+  "pack": {
+   "size": 400,
+   "unit": "g",
+   "de": "Dose 400 g",
+   "en": "can 400 g"
+  }
+ },
+ "canned tomatoes": {
+  "de": "Gehackte Tomaten",
+  "category": "dry",
+  "pack": {
+   "size": 400,
+   "unit": "g",
+   "de": "Dose 400 g",
+   "en": "can 400 g"
+  }
+ },
+ "canned tuna": {
+  "de": "Thunfisch",
+  "category": "dry",
+  "pack": {
+   "size": 150,
+   "unit": "g",
+   "de": "Dose 150 g",
+   "en": "can 150 g"
+  }
+ },
+ "canned white beans": {
+  "de": "Weiße Bohnen",
+  "category": "dry",
+  "pack": {
+   "size": 400,
+   "unit": "g",
+   "de": "Dose 400 g",
+   "en": "can 400 g"
+  }
+ },
+ "capers": {
+  "de": "Kapern",
+  "category": "dry",
+  "pack": {
+   "size": 100,
+   "unit": "g",
+   "de": "Glas 100 g",
+   "en": "jar 100 g"
+  }
+ },
+ "caraway seeds": {
+  "de": "Kümmel",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "carrot": {
+  "de": "Karotten",
+  "category": "produce"
+ },
+ "cauliflower": {
+  "de": "Blumenkohl",
+  "category": "produce"
+ },
+ "celeriac": {
+  "de": "Knollensellerie",
+  "category": "produce",
+  "pack": {
+   "size": 800,
+   "unit": "g",
+   "de": "Knolle (ca. 800 g)",
+   "en": "bulb (approx. 800 g)"
+  }
+ },
+ "celery": {
+  "de": "Staudensellerie",
+  "category": "produce",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Staude",
+   "en": "bunch"
+  }
+ },
+ "cheddar": {
+  "de": "Cheddar",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "cheese": {
+  "de": "Käse",
+  "category": "dairy"
+ },
+ "cherry tomatoes": {
+  "de": "Kirschtomaten",
+  "category": "produce",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Schale 250 g",
+   "en": "punnet 250 g"
+  }
+ },
+ "chia seeds": {
+  "de": "Chiasamen",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "chicken": {
+  "de": "Hähnchen",
+  "category": "meat"
+ },
+ "chicken breast": {
+  "de": "Hähnchenbrust",
+  "category": "meat"
+ },
+ "chicken broth": {
+  "de": "Hühnerbrühe",
+  "category": "dry",
+  "pack": {
+   "size": 5000,
+   "unit": "ml",
+   "de": "Glas Instant-Brühe (für 5 l)",
+   "en": "jar of stock powder (makes 5 l)"
+  }
+ },
+ "chicken drumsticks": {
+  "de": "Hähnchenunterschenkel",
+  "category": "meat",
+  "pack": {
+   "size": 6,
+   "unit": "pcs",
+   "de": "Packung (6 Stück)",
+   "en": "pack of 6"
+  }
+ },
+ "chicken legs": {
+  "de": "Hähnchenschenkel",
+  "category": "meat",
+  "pack": {
+   "size": 2,
+   "unit": "pcs",
+   "de": "Packung (2 Stück)",
+   "en": "pack of 2"
+  }
+ },
+ "chicken thighs": {
+  "de": "Hähnchenoberschenkel",
+  "category": "meat"
+ },
+ "chili flakes": {
+  "de": "Chiliflocken",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "chili powder": {
+  "de": "Chilipulver",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "chives": {
+  "de": "Schnittlauch",
+  "category": "herbs",
+  "pack": {
+   "size": 25,
+   "unit": "g",
+   "de": "Bund",
+   "en": "bunch"
+  }
+ },
+ "chorizo": {
+  "de": "Chorizo",
+  "category": "meat",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "cilantro": {
+  "de": "Koriander",
+  "category": "herbs",
+  "pack": {
+   "size": 25,
+   "unit": "g",
+   "de": "Bund",
+   "en": "bunch"
+  }
+ },
+ "cinnamon": {
+  "de": "Zimt",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "clarified butter": {
+  "de": "Butterschmalz",
+  "category": "dairy",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Becher 250 g",
+   "en": "tub 250 g"
+  }
+ },
+ "cocoa powder": {
+  "de": "Kakaopulver",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Packung 250 g",
+   "en": "pack 250 g"
+  }
+ },
+ "coconut milk": {
+  "de": "Kokosmilch",
+  "category": "dry",
+  "pack": {
+   "size": 400,
+   "unit": "ml",
+   "de": "Dose 400 ml",
+   "en": "can 400 ml"
+  }
+ },
+ "cod fillet": {
+  "de": "Kabeljaufilet",
+  "category": "fish"
+ },
+ "cooked beetroot": {
+  "de": "Rote Bete (gekocht)",
+  "category": "produce",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "cooked ham slice": {
+  "de": "Kochschinken",
+  "category": "meat",
+  "pack": {
+   "size": 8,
+   "unit": "pcs",
+   "de": "Packung (ca. 150 g)",
+   "en": "pack (approx. 150 g)"
+  }
+ },
+ "coriander": {
+  "de": "Koriander",
+  "category": "herbs",
+  "pack": {
+   "size": 25,
+   "unit": "g",
+   "de": "Bund",
+   "en": "bunch"
+  }
+ },
+ "cottage cheese": {
+  "de": "Hüttenkäse",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Becher 200 g",
+   "en": "tub 200 g"
+  }
+ },
+ "couscous": {
+  "de": "Couscous",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "cream": {
+  "de": "Sahne",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "ml",
+   "de": "Becher 200 ml",
+   "en": "carton 200 ml"
+  }
+ },
+ "cream cheese": {
+  "de": "Frischkäse",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "creme fraiche": {
+  "de": "Crème fraîche",
+  "category": "dairy",
+  "pack": {
+   "size": 150,
+   "unit": "g",
+   "de": "Becher 150 g",
+   "en": "tub 150 g"
+  }
+ },
+ "croissant": {
+  "de": "Croissants",
+  "category": "bakery",
+  "pack": {
+   "size": 4,
+   "unit": "pcs",
+   "de": "Packung (4 Stück)",
+   "en": "pack of 4"
+  }
+ },
+ "cucumber": {
+  "de": "Gurke",
+  "category": "produce",
+  "pack": {
+   "size": 400,
+   "unit": "g",
+   "de": "Stück",
+   "en": "piece"
+  }
+ },
+ "cumin": {
+  "de": "Kreuzkümmel",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "curry powder": {
+  "de": "Currypulver",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "dark chocolate": {
+  "de": "Zartbitterschokolade",
+  "category": "dry",
+  "pack": {
+   "size": 100,
+   "unit": "g",
+   "de": "Tafel 100 g",
+   "en": "bar 100 g"
+  }
+ },
+ "dates": {
+  "de": "Datteln",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "dill": {
+  "de": "Dill",
+  "category": "herbs",
+  "pack": {
+   "size": 25,
+   "unit": "g",
+   "de": "Bund",
+   "en": "bunch"
+  }
+ },
+ "dry yeast": {
+  "de": "Trockenhefe",
+  "category": "dry",
+  "pack": {
+   "size": 21,
+   "unit": "g",
+   "de": "Päckchen (3 Stück)",
+   "en": "pack of 3 sachets"
+  }
+ },
+ "edamame": {
+  "de": "Edamame",
+  "category": "frozen",
+  "pack": {
+   "size": 400,
+   "unit": "g",
+   "de": "Beutel 400 g",
+   "en": "bag 400 g"
+  }
+ },
+ "egg noodles": {
+  "de": "Eiernudeln",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Packung 250 g",
+   "en": "pack 250 g"
+  }
+ },
+ "eggplant": {
+  "de": "Aubergine",
+  "category": "produce",
+  "pack": {
+   "size": 300,
+   "unit": "g",
+   "de": "Stück (ca. 300 g)",
+   "en": "piece (approx. 300 g)"
+  }
+ },
+ "eggs": {
+  "de": "Eier",
+  "category": "dairy",
+  "pack": {
+   "size": 10,
+   "unit": "pcs",
+   "de": "10er-Packung",
+   "en": "box of 10"
+  }
+ },
+ "emmental": {
+  "de": "Emmentaler",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "english muffin": {
+  "de": "English Muffins",
+  "category": "bakery",
+  "pack": {
+   "size": 4,
+   "unit": "pcs",
+   "de": "Packung (4 Stück)",
+   "en": "pack of 4"
+  }
+ },
+ "feta": {
+  "de": "Feta",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "firm tofu": {
+  "de": "Tofu",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "fish fingers": {
+  "de": "Fischstäbchen",
+  "category": "frozen",
+  "pack": {
+   "size": 450,
+   "unit": "g",
+   "de": "Packung 450 g",
+   "en": "pack 450 g"
+  }
+ },
+ "fish sauce": {
+  "de": "Fischsauce",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "ml",
+   "de": "Flasche 200 ml",
+   "en": "bottle 200 ml"
+  }
+ },
+ "flaked almonds": {
+  "de": "Mandelblättchen",
+  "category": "dry",
+  "pack": {
+   "size": 100,
+   "unit": "g",
+   "de": "Packung 100 g",
+   "en": "pack 100 g"
+  }
+ },
+ "flour": {
+  "de": "Mehl",
+  "category": "dry",
+  "pack": {
+   "size": 1000,
+   "unit": "g",
+   "de": "Packung 1 kg",
+   "en": "pack 1 kg"
+  }
+ },
+ "frankfurter": {
+  "de": "Wiener Würstchen",
+  "category": "meat",
+  "pack": {
+   "size": 6,
+   "unit": "pcs",
+   "de": "Glas (6 Stück)",
+   "en": "jar of 6"
+  }
+ },
+ "frozen berries": {
+  "de": "TK-Beeren",
+  "category": "frozen",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Beutel 500 g",
+   "en": "bag 500 g"
+  }
+ },
+ "garlic": {
+  "de": "Knoblauch",
+  "category": "produce"
+ },
+ "garlic clove": {
+  "de": "Knoblauch",
+  "category": "produce",
+  "pack": {
+   "size": 10,
+   "unit": "pcs",
+   "de": "Knolle",
+   "en": "bulb"
+  }
+ },
+ "gherkin": {
+  "de": "Gewürzgurken",
+  "category": "dry",
+  "pack": {
+   "size": 10,
+   "unit": "pcs",
+   "de": "Glas",
+   "en": "jar"
+  }
+ },
+ "ginger": {
+  "de": "Ingwer",
+  "category": "produce",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Stück (ca. 50 g)",
+   "en": "piece (approx. 50 g)"
+  }
+ },
+ "goat cheese": {
+  "de": "Ziegenkäse",
+  "category": "dairy",
+  "pack": {
+   "size": 150,
+   "unit": "g",
+   "de": "Packung 150 g",
+   "en": "pack 150 g"
+  }
+ },
+ "gouda": {
+  "de": "Gouda",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "grapes": {
+  "de": "Weintrauben",
+  "category": "produce",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Schale 500 g",
+   "en": "punnet 500 g"
+  }
+ },
+ "greek yogurt": {
+  "de": "Griechischer Joghurt",
+  "category": "dairy",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Becher 500 g",
+   "en": "tub 500 g"
+  }
+ },
+ "green asparagus": {
+  "de": "Grüner Spargel",
+  "category": "produce"
+ },
+ "green beans": {
+  "de": "Grüne Bohnen",
+  "category": "produce",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "green curry paste": {
+  "de": "Grüne Currypaste",
+  "category": "dry",
+  "pack": {
+   "size": 110,
+   "unit": "g",
+   "de": "Glas 110 g",
+   "en": "jar 110 g"
+  }
+ },
+ "ground beef": {
+  "de": "Rinderhack",
+  "category": "meat"
+ },
+ "ground lamb": {
+  "de": "Lammhack",
+  "category": "meat"
+ },
+ "gruyere": {
+  "de": "Gruyère",
+  "category": "dairy",
+  "pack": {
+   "size": 150,
+   "unit": "g",
+   "de": "Packung 150 g",
+   "en": "pack 150 g"
+  }
+ },
+ "hazelnuts": {
+  "de": "Haselnüsse",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "hokkaido pumpkin": {
+  "de": "Hokkaido-Kürbis",
+  "category": "produce",
+  "pack": {
+   "size": 1000,
+   "unit": "g",
+   "de": "Stück (ca. 1 kg)",
+   "en": "piece (approx. 1 kg)"
+  }
+ },
+ "honey": {
+  "de": "Honig",
+  "category": "dry",
+  "pack": {
+   "size": 350,
+   "unit": "ml",
+   "de": "Glas 500 g",
+   "en": "jar 500 g"
+  }
+ },
+ "hummus": {
+  "de": "Hummus",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Becher 200 g",
+   "en": "tub 200 g"
+  }
+ },
+ "iceberg lettuce": {
+  "de": "Eisbergsalat",
+  "category": "produce",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Kopf",
+   "en": "head"
+  }
+ },
+ "kalamata olives": {
+  "de": "Kalamata-Oliven",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Glas 200 g",
+   "en": "jar 200 g"
+  }
+ },
+ "kale": {
+  "de": "Grünkohl",
+  "category": "produce"
+ },
+ "ketchup": {
+  "de": "Ketchup",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "ml",
+   "de": "Flasche 500 ml",
+   "en": "bottle 500 ml"
+  }
+ },
+ "lasagne sheets": {
+  "de": "Lasagneplatten",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "leek": {
+  "de": "Lauch",
+  "category": "produce",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Stange",
+   "en": "stalk"
+  }
+ },
+ "lemon": {
+  "de": "Zitronen",
+  "category": "produce"
+ },
+ "lemon juice": {
+  "de": "Zitronensaft",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "ml",
+   "de": "Flasche 200 ml",
+   "en": "bottle 200 ml"
+  }
+ },
+ "lemon zest": {
+  "de": "Zitronenschale",
+  "category": "produce"
+ },
+ "lime": {
+  "de": "Limetten",
+  "category": "produce"
+ },
+ "linseed": {
+  "de": "Leinsamen",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Packung 250 g",
+   "en": "pack 250 g"
+  }
+ },
+ "linseed oil": {
+  "de": "Leinöl",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "ml",
+   "de": "Flasche 250 ml",
+   "en": "bottle 250 ml"
+  }
+ },
+ "low-fat quark": {
+  "de": "Magerquark",
+  "category": "dairy",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Becher 500 g",
+   "en": "tub 500 g"
+  }
+ },
+ "mango": {
+  "de": "Mango",
+  "category": "produce",
+  "pack": {
+   "size": 400,
+   "unit": "g",
+   "de": "Stück",
+   "en": "piece"
+  }
+ },
+ "maple syrup": {
+  "de": "Ahornsirup",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "ml",
+   "de": "Flasche 250 ml",
+   "en": "bottle 250 ml"
+  }
+ },
+ "marjoram": {
+  "de": "Majoran",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "matjes herring": {
+  "de": "Matjes",
+  "category": "fish",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "mayonnaise": {
+  "de": "Mayonnaise",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "ml",
+   "de": "Tube 250 ml",
+   "en": "tube 250 ml"
+  }
+ },
+ "milk": {
+  "de": "Milch",
+  "category": "dairy",
+  "pack": {
+   "size": 1000,
+   "unit": "ml",
+   "de": "Packung 1 l",
+   "en": "carton 1 l"
+  }
+ },
+ "mint": {
+  "de": "Minze",
+  "category": "herbs",
+  "pack": {
+   "size": 25,
+   "unit": "g",
+   "de": "Bund",
+   "en": "bunch"
+  }
+ },
+ "mixed berries": {
+  "de": "Beeren",
+  "category": "produce",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Schale 250 g",
+   "en": "punnet 250 g"
+  }
+ },
+ "mixed ground meat": {
+  "de": "Gemischtes Hack",
+  "category": "meat"
+ },
+ "mozzarella": {
+  "de": "Mozzarella",
+  "category": "dairy",
+  "pack": {
+   "size": 125,
+   "unit": "g",
+   "de": "Kugel 125 g",
+   "en": "ball 125 g"
+  }
+ },
+ "mushrooms": {
+  "de": "Champignons",
+  "category": "produce",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Schale 250 g",
+   "en": "punnet 250 g"
+  }
+ },
+ "mussels": {
+  "de": "Miesmuscheln",
+  "category": "fish",
+  "pack": {
+   "size": 1000,
+   "unit": "g",
+   "de": "Netz 1 kg",
+   "en": "net 1 kg"
+  }
+ },
+ "mustard": {
+  "de": "Senf",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Tube 200 g",
+   "en": "tube 200 g"
+  }
+ },
+ "natural yogurt": {
+  "de": "Naturjoghurt",
+  "category": "dairy",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Becher 500 g",
+   "en": "tub 500 g"
+  }
+ },
+ "nutmeg": {
+  "de": "Muskatnuss",
+  "category": "spices",
+  "pack": {
+   "size": 10,
+   "unit": "g",
+   "de": "Ganze Muskatnuss",
+   "en": "whole nutmeg"
+  }
+ },
+ "oat milk": {
+  "de": "Haferdrink",
+  "category": "dry",
+  "pack": {
+   "size": 1000,
+   "unit": "ml",
+   "de": "Packung 1 l",
+   "en": "carton 1 l"
+  }
+ },
+ "olive oil": {
+  "de": "Olivenöl",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "ml",
+   "de": "Flasche 500 ml",
+   "en": "bottle 500 ml"
+  }
+ },
+ "onion": {
+  "de": "Zwiebeln",
+  "category": "produce"
+ },
+ "orange": {
+  "de": "Orangen",
+  "category": "produce"
+ },
+ "oregano": {
+  "de": "Oregano",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "paella rice": {
+  "de": "Paellareis",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "paprika": {
+  "de": "Paprikapulver",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "parmesan": {
+  "de": "Parmesan",
+  "category": "dairy",
+  "pack": {
+   "size": 100,
+   "unit": "g",
+   "de": "Stück 100 g",
+   "en": "piece 100 g"
+  }
+ },
+ "parsley": {
+  "de": "Petersilie",
+  "category": "herbs",
+  "pack": {
+   "size": 25,
+   "unit": "g",
+   "de": "Bund",
+   "en": "bunch"
+  }
+ },
+ "pasta": {
+  "de": "Nudeln",
+  "category": "dry"
+ },
+ "peanut butter": {
+  "de": "Erdnussbutter",
+  "category": "dry",
+  "pack": {
+   "size": 350,
+   "unit": "g",
+   "de": "Glas 350 g",
+   "en": "jar 350 g"
+  }
+ },
+ "peanuts": {
+  "de": "Erdnüsse",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "pear": {
+  "de": "Birnen",
+  "category": "produce"
+ },
+ "peas": {
+  "de": "TK-Erbsen",
+  "category": "frozen",
+  "pack": {
+   "size": 450,
+   "unit": "g",
+   "de": "Beutel 450 g",
+   "en": "bag 450 g"
+  }
+ },
+ "penne": {
+  "de": "Penne",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "pepper": {
+  "de": "Pfeffer",
+  "category": "spices"
+ },
+ "popcorn kernels": {
+  "de": "Popcornmais",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "pork chop": {
+  "de": "Schweinekoteletts",
+  "category": "meat"
+ },
+ "pork sausages": {
+  "de": "Schweinswürstchen",
+  "category": "meat",
+  "pack": {
+   "size": 6,
+   "unit": "pcs",
+   "de": "Packung (6 Stück)",
+   "en": "pack of 6"
+  }
+ },
+ "pork shoulder": {
+  "de": "Schweineschulter",
+  "category": "meat"
+ },
+ "pork tenderloin": {
+  "de": "Schweinefilet",
+  "category": "meat"
+ },
+ "potatoes": {
+  "de": "Kartoffeln",
+  "category": "produce"
+ },
+ "powdered sugar": {
+  "de": "Puderzucker",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Packung 250 g",
+   "en": "pack 250 g"
+  }
+ },
+ "pretzel": {
+  "de": "Brezeln",
+  "category": "bakery"
+ },
+ "pumpkin": {
+  "de": "Kürbis",
+  "category": "produce"
+ },
+ "pumpkin seeds": {
+  "de": "Kürbiskerne",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "quinoa": {
+  "de": "Quinoa",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "raisins": {
+  "de": "Rosinen",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "rapeseed oil": {
+  "de": "Rapsöl",
+  "category": "dry"
+ },
+ "red cabbage": {
+  "de": "Rotkohl",
+  "category": "produce"
+ },
+ "red lentils": {
+  "de": "Rote Linsen",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "red onion": {
+  "de": "Rote Zwiebeln",
+  "category": "produce"
+ },
+ "red wine": {
+  "de": "Rotwein",
+  "category": "drinks",
+  "pack": {
+   "size": 750,
+   "unit": "ml",
+   "de": "Flasche 750 ml",
+   "en": "bottle 750 ml"
+  }
+ },
+ "rice": {
+  "de": "Reis",
+  "category": "dry",
+  "pack": {
+   "size": 1000,
+   "unit": "g",
+   "de": "Packung 1 kg",
+   "en": "pack 1 kg"
+  }
+ },
+ "rice cakes": {
+  "de": "Reiswaffeln",
+  "category": "dry",
+  "pack": {
+   "size": 12,
+   "unit": "pcs",
+   "de": "Packung",
+   "en": "pack"
+  }
+ },
+ "rice noodles": {
+  "de": "Reisnudeln",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Packung 250 g",
+   "en": "pack 250 g"
+  }
+ },
+ "ricotta": {
+  "de": "Ricotta",
+  "category": "dairy",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Becher 250 g",
+   "en": "tub 250 g"
+  }
+ },
+ "rocket": {
+  "de": "Rucola",
+  "category": "produce",
+  "pack": {
+   "size": 125,
+   "unit": "g",
+   "de": "Schale 125 g",
+   "en": "punnet 125 g"
+  }
+ },
+ "rolled oats": {
+  "de": "Haferflocken",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "romaine lettuce": {
+  "de": "Römersalat",
+  "category": "produce",
+  "pack": {
+   "size": 300,
+   "unit": "g",
+   "de": "Kopf",
+   "en": "head"
+  }
+ },
+ "rosemary": {
+  "de": "Rosmarin",
+  "category": "herbs",
+  "pack": {
+   "size": 25,
+   "unit": "g",
+   "de": "Bund",
+   "en": "bunch"
+  }
+ },
+ "rye bread slice": {
+  "de": "Roggenbrot",
+  "category": "bakery",
+  "pack": {
+   "size": 10,
+   "unit": "pcs",
+   "de": "Packung (500 g)",
+   "en": "pack (500 g)"
+  }
+ },
+ "saffron": {
+  "de": "Safran",
+  "category": "spices",
+  "pack": {
+   "size": 0.1,
+   "unit": "g",
+   "de": "Döschen",
+   "en": "small tin"
+  }
+ },
+ "salmon": {
+  "de": "Lachs",
+  "category": "fish"
+ },
+ "salmon fillet": {
+  "de": "Lachsfilet",
+  "category": "fish"
+ },
+ "salt": {
+  "de": "Salz",
+  "category": "spices"
+ },
+ "sauerkraut": {
+  "de": "Sauerkraut",
+  "category": "dry",
+  "pack": {
+   "size": 520,
+   "unit": "g",
+   "de": "Dose 520 g",
+   "en": "can 520 g"
+  }
+ },
+ "savoy cabbage": {
+  "de": "Wirsing",
+  "category": "produce"
+ },
+ "sesame oil": {
+  "de": "Sesamöl",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "ml",
+   "de": "Flasche 250 ml",
+   "en": "bottle 250 ml"
+  }
+ },
+ "sesame seeds": {
+  "de": "Sesam",
+  "category": "dry",
+  "pack": {
+   "size": 100,
+   "unit": "g",
+   "de": "Packung 100 g",
+   "en": "pack 100 g"
+  }
+ },
+ "shrimp": {
+  "de": "Garnelen",
+  "category": "fish",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Packung 250 g",
+   "en": "pack 250 g"
+  }
+ },
+ "small pasta": {
+  "de": "Suppennudeln (Sternchen)",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "smoked salmon": {
+  "de": "Räucherlachs",
+  "category": "fish",
+  "pack": {
+   "size": 100,
+   "unit": "g",
+   "de": "Packung 100 g",
+   "en": "pack 100 g"
+  }
+ },
+ "soup noodles": {
+  "de": "Suppennudeln",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Packung 250 g",
+   "en": "pack 250 g"
+  }
+ },
+ "sour cream": {
+  "de": "Schmand",
+  "category": "dairy",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Becher 200 g",
+   "en": "tub 200 g"
+  }
+ },
+ "soy sauce": {
+  "de": "Sojasauce",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "ml",
+   "de": "Flasche 250 ml",
+   "en": "bottle 250 ml"
+  }
+ },
+ "spaghetti": {
+  "de": "Spaghetti",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "spinach": {
+  "de": "Spinat",
+  "category": "produce",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Beutel 250 g",
+   "en": "bag 250 g"
+  }
+ },
+ "spring onion": {
+  "de": "Frühlingszwiebeln",
+  "category": "produce",
+  "pack": {
+   "size": 6,
+   "unit": "pcs",
+   "de": "Bund",
+   "en": "bunch"
+  }
+ },
+ "stewing beef": {
+  "de": "Rindergulasch",
+  "category": "meat"
+ },
+ "strawberry jam": {
+  "de": "Erdbeermarmelade",
+  "category": "dry",
+  "pack": {
+   "size": 450,
+   "unit": "g",
+   "de": "Glas 450 g",
+   "en": "jar 450 g"
+  }
+ },
+ "sugar": {
+  "de": "Zucker",
+  "category": "dry",
+  "pack": {
+   "size": 1000,
+   "unit": "g",
+   "de": "Packung 1 kg",
+   "en": "pack 1 kg"
+  }
+ },
+ "sunflower oil": {
+  "de": "Sonnenblumenöl",
+  "category": "dry",
+  "pack": {
+   "size": 1000,
+   "unit": "ml",
+   "de": "Flasche 1 l",
+   "en": "bottle 1 l"
+  }
+ },
+ "sweet potato": {
+  "de": "Süßkartoffeln",
+  "category": "produce"
+ },
+ "sweetcorn": {
+  "de": "Mais",
+  "category": "dry",
+  "pack": {
+   "size": 285,
+   "unit": "g",
+   "de": "Dose 285 g",
+   "en": "can 285 g"
+  }
+ },
+ "tagliatelle": {
+  "de": "Tagliatelle",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "g",
+   "de": "Packung 500 g",
+   "en": "pack 500 g"
+  }
+ },
+ "tahini": {
+  "de": "Tahini",
+  "category": "dry",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Glas 250 g",
+   "en": "jar 250 g"
+  }
+ },
+ "tamarind paste": {
+  "de": "Tamarindenpaste",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Glas 200 g",
+   "en": "jar 200 g"
+  }
+ },
+ "thyme": {
+  "de": "Thymian",
+  "category": "herbs",
+  "pack": {
+   "size": 25,
+   "unit": "g",
+   "de": "Bund",
+   "en": "bunch"
+  }
+ },
+ "toast bread slice": {
+  "de": "Toastbrot",
+  "category": "bakery",
+  "pack": {
+   "size": 20,
+   "unit": "pcs",
+   "de": "Packung (500 g)",
+   "en": "loaf (500 g)"
+  }
+ },
+ "tomato": {
+  "de": "Tomaten",
+  "category": "produce"
+ },
+ "tomato passata": {
+  "de": "Passierte Tomaten",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "ml",
+   "de": "Packung 500 ml",
+   "en": "carton 500 ml"
+  }
+ },
+ "tomato paste": {
+  "de": "Tomatenmark",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Tube 200 g",
+   "en": "tube 200 g"
+  }
+ },
+ "tortellini": {
+  "de": "Tortellini",
+  "category": "dairy",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Packung 250 g",
+   "en": "pack 250 g"
+  }
+ },
+ "tortilla": {
+  "de": "Tortillas",
+  "category": "bakery",
+  "pack": {
+   "size": 8,
+   "unit": "pcs",
+   "de": "Packung (8 Stück)",
+   "en": "pack of 8"
+  }
+ },
+ "tortilla chips": {
+  "de": "Tortilla-Chips",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Tüte 200 g",
+   "en": "bag 200 g"
+  }
+ },
+ "trout fillet": {
+  "de": "Forellenfilet",
+  "category": "fish"
+ },
+ "turkey breast": {
+  "de": "Putenbrust",
+  "category": "meat"
+ },
+ "turmeric": {
+  "de": "Kurkuma",
+  "category": "spices",
+  "pack": {
+   "size": 50,
+   "unit": "g",
+   "de": "Dose 50 g",
+   "en": "tin 50 g"
+  }
+ },
+ "veal cutlet": {
+  "de": "Kalbsschnitzel",
+  "category": "meat"
+ },
+ "vegetable broth": {
+  "de": "Gemüsebrühe",
+  "category": "dry",
+  "pack": {
+   "size": 5000,
+   "unit": "ml",
+   "de": "Glas Instant-Brühe (für 5 l)",
+   "en": "jar of stock powder (makes 5 l)"
+  }
+ },
+ "vegetable oil": {
+  "de": "Pflanzenöl",
+  "category": "dry"
+ },
+ "vinegar": {
+  "de": "Essig",
+  "category": "dry"
+ },
+ "walnuts": {
+  "de": "Walnüsse",
+  "category": "dry",
+  "pack": {
+   "size": 200,
+   "unit": "g",
+   "de": "Packung 200 g",
+   "en": "pack 200 g"
+  }
+ },
+ "water": {
+  "de": "Wasser",
+  "category": "dry"
+ },
+ "white bread slice": {
+  "de": "Weißbrot",
+  "category": "bakery",
+  "pack": {
+   "size": 20,
+   "unit": "pcs",
+   "de": "Packung (500 g)",
+   "en": "loaf (500 g)"
+  }
+ },
+ "white cabbage": {
+  "de": "Weißkohl",
+  "category": "produce",
+  "pack": {
+   "size": 1000,
+   "unit": "g",
+   "de": "Kopf (ca. 1 kg)",
+   "en": "head (approx. 1 kg)"
+  }
+ },
+ "white fish fillet": {
+  "de": "Weißfischfilet",
+  "category": "fish"
+ },
+ "white wine": {
+  "de": "Weißwein",
+  "category": "drinks",
+  "pack": {
+   "size": 750,
+   "unit": "ml",
+   "de": "Flasche 750 ml",
+   "en": "bottle 750 ml"
+  }
+ },
+ "white wine vinegar": {
+  "de": "Weißweinessig",
+  "category": "dry",
+  "pack": {
+   "size": 500,
+   "unit": "ml",
+   "de": "Flasche 500 ml",
+   "en": "bottle 500 ml"
+  }
+ },
+ "whole grain bread slice": {
+  "de": "Vollkornbrot",
+  "category": "bakery",
+  "pack": {
+   "size": 10,
+   "unit": "pcs",
+   "de": "Packung (500 g)",
+   "en": "pack (500 g)"
+  }
+ },
+ "worcestershire sauce": {
+  "de": "Worcestershiresauce",
+  "category": "dry",
+  "pack": {
+   "size": 150,
+   "unit": "ml",
+   "de": "Flasche 150 ml",
+   "en": "bottle 150 ml"
+  }
+ },
+ "yogurt": {
+  "de": "Joghurt",
+  "category": "dairy"
+ },
+ "zucchini": {
+  "de": "Zucchini",
+  "category": "produce",
+  "pack": {
+   "size": 250,
+   "unit": "g",
+   "de": "Stück (ca. 250 g)",
+   "en": "piece (approx. 250 g)"
+  }
+ }
+}

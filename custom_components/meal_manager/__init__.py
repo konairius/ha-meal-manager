@@ -17,7 +17,15 @@ from homeassistant.helpers.typing import ConfigType
 from homeassistant.util import dt as dt_util
 
 from . import services, websocket_api
-from .adapters import AiTaskRecipeSource, HaEventSink, HaStateStore, load_recipes, state_reader
+from .adapters import (
+    AiTaskRecipeSource,
+    HaEventSink,
+    HaStateStore,
+    HaTodoShoppingList,
+    load_ingredients,
+    load_recipes,
+    state_reader,
+)
 from .const import (
     CARD_FILE,
     CONF_AI_TASK_ENTITY,
@@ -40,6 +48,7 @@ from .core.models import SeasonMode
 from .core.planner import MealPlanner, PlannerOptions
 from .core.ports import RecipeSource
 from .core.settings import PlannerSettings, SettingsResolver
+from .core.shopping import IngredientInfo
 from .core.sources import FallbackSource
 
 PLATFORMS = [Platform.CALENDAR, Platform.SENSOR]
@@ -54,6 +63,8 @@ class MealManagerData:
     catalog: RecipeCatalog
     general: dict
     resolver: Callable[[], SettingsResolver]
+    ingredients: dict[str, IngredientInfo]
+    todo: HaTodoShoppingList
 
 
 type MealManagerConfigEntry = ConfigEntry[MealManagerData]
@@ -104,7 +115,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: MealManagerConfigEntry) 
         ),
     )
     await planner.async_load()
-    entry.runtime_data = MealManagerData(planner=planner, catalog=catalog, general=general, resolver=resolver)
+    ingredients = await hass.async_add_executor_job(load_ingredients)
+    entry.runtime_data = MealManagerData(
+        planner=planner,
+        catalog=catalog,
+        general=general,
+        resolver=resolver,
+        ingredients=ingredients,
+        todo=HaTodoShoppingList(hass),
+    )
 
     @callback
     def _changed() -> None:

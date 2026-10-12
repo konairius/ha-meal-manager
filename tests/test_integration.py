@@ -6,7 +6,7 @@ from types import SimpleNamespace
 from unittest.mock import patch
 
 from homeassistant import config_entries
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, SupportsResponse
 from homeassistant.data_entry_flow import FlowResultType
 from homeassistant.exceptions import ServiceValidationError
 import pytest
@@ -98,20 +98,44 @@ async def test_mark_cooked_by_slot_and_errors(hass: HomeAssistant) -> None:
 
 
 async def test_shopping_list_to_todo(hass: HomeAssistant) -> None:
-    calls = []
+    """The list is German, buyable, and replaces what was added before instead of duplicating it."""
+    hass.config.language = "de"
+    todo: dict[str, dict] = {
+        "Klopapier": {"summary": "Klopapier", "uid": "Klopapier", "status": "needs_action"}
+    }
 
     async def add_item(call):
-        calls.append(call.data["item"])
+        todo[call.data["item"]] = {
+            "summary": call.data["item"],
+            "uid": call.data["item"],
+            "status": "needs_action",
+        }
+
+    async def remove_item(call):
+        for uid in call.data["item"]:
+            todo.pop(uid)
+
+    async def get_items(call):
+        return {"todo.shopping": {"items": [i for i in todo.values() if i["status"] in call.data["status"]]}}
 
     hass.services.async_register("todo", "add_item", add_item)
+    hass.services.async_register("todo", "remove_item", remove_item)
+    hass.services.async_register("todo", "get_items", get_items, supports_response=SupportsResponse.ONLY)
     await setup(hass, **{OPT_GENERAL: {**default_options()[OPT_GENERAL], "shopping_list": "todo.shopping"}})
-    await hass.services.async_call(DOMAIN, "generate_plan", {"days": 1}, blocking=True)
+    await hass.services.async_call(DOMAIN, "generate_plan", {"days": 3}, blocking=True)
     await hass.services.async_call(DOMAIN, "accept_plan", {}, blocking=True)
     response = await hass.services.async_call(
         DOMAIN, "add_to_shopping_list", {}, blocking=True, return_response=True
     )
     assert response["entity_id"] == "todo.shopping"
-    assert calls == response["items"] and calls
+    assert response["items"] and set(response["items"]) | {"Klopapier"} == set(todo)
+    assert not any(i.startswith(("Salz", "Wasser", "water", "salt")) for i in response["items"])
+
+    again = await hass.services.async_call(
+        DOMAIN, "add_to_shopping_list", {}, blocking=True, return_response=True
+    )
+    assert again["items"] == response["items"]
+    assert len(todo) == len(response["items"]) + 1  # nothing duplicated, own item kept
 
 
 async def test_calendar_events(hass: HomeAssistant) -> None:
