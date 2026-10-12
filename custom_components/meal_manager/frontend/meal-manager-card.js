@@ -65,7 +65,6 @@ const STRINGS = {
     slot_dinner: "Dinner",
     slot_snack: "Snack",
     not_loaded: "Meal Manager is not set up.",
-    recipes: "{n} recipes available",
   },
   de: {
     title: "Essensplan",
@@ -128,7 +127,6 @@ const STRINGS = {
     slot_dinner: "Abendessen",
     slot_snack: "Snack",
     not_loaded: "Meal Manager ist nicht eingerichtet.",
-    recipes: "{n} Rezepte verfügbar",
   },
 };
 
@@ -462,7 +460,7 @@ class MealManagerView extends HTMLElement {
 
   _renderCreate() {
     const v = this._view;
-    return `<div class="info">${this._t("no_plan")} ${esc(this._t("recipes", { n: v.recipes }))}</div>
+    return `<div class="info">${this._t("no_plan")}</div>
       <div class="form">
         <label>${this._t("start")}<input id="start" type="date" value="${esc(v.today)}"></label>
         <label>${this._t("days")}<input id="days" type="number" min="1" max="31" inputmode="numeric" value="${esc(v.default_days)}"></label>

@@ -117,7 +117,6 @@ def build_view(hass: HomeAssistant) -> dict[str, Any]:
         "bans": [b.to_dict() for b in sorted(state.bans, key=lambda b: b.key)],
         "slots": [s.to_dict() for s in resolver.settings.slots],
         "preview": settings_preview(resolver),
-        "recipes": data.catalog.count(),
     }
 
 

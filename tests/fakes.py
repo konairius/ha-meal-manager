@@ -1,47 +1,52 @@
-"""In-memory fakes of the core ports and a small recipe set."""
+"""In-memory fakes of the core ports, including a stand-in for the local model."""
 
 from __future__ import annotations
 
 from datetime import datetime
-import random
 from typing import Any
 
-from custom_components.meal_manager.core.catalog import RecipeCatalog, parse_recipes
+from custom_components.meal_manager.core.models import (
+    Ingredient,
+    MealRequest,
+    MealType,
+    Recipe,
+    normalize_title,
+)
+
+# Dishes the fake model knows per meal type; it runs out after these.
+POOLS = {
+    MealType.BREAKFAST: [f"Breakfast {i}" for i in range(8)],
+    MealType.LUNCH: [f"Main {i}" for i in range(20)],
+    MealType.DINNER: [f"Main {i}" for i in range(20)],
+    MealType.SNACK: [f"Snack {i}" for i in range(5)],
+}
 
 
-def recipe(title: str, types: list[str], effort: int = 1, health: int = 3, kcal: int = 500) -> dict:
-    return {
-        "title": title,
-        "meal_types": types,
-        "effort": effort,
-        "minutes": {1: 15, 2: 35, 3: 70}[effort],
-        "health": health,
-        "kcal": kcal,
-        "ingredients": [
-            {"name": "onion", "quantity": 0.5, "unit": "pcs"},
-            {"name": f"{title.lower()} base", "quantity": 100, "unit": "g"},
-        ],
-        "steps": ["Cook it."],
-    }
+class FakeModel:
+    """A RecipeSource standing in for the local model: follows the request like a good model."""
 
+    def __init__(self) -> None:
+        self.requests: list[MealRequest] = []
 
-RAW = [
-    *(
-        recipe(f"Breakfast {i}", ["breakfast"], effort=1 + i % 3, health=1 + i % 5, kcal=300 + 20 * i)
-        for i in range(8)
-    ),
-    *(
-        recipe(f"Main {i}", ["lunch", "dinner"], effort=1 + i % 3, health=1 + i % 5, kcal=450 + 30 * i)
-        for i in range(20)
-    ),
-    *(recipe(f"Snack {i}", ["snack"], effort=1, health=2 + i % 3, kcal=150 + 20 * i) for i in range(5)),
-]
-
-
-def catalog(seed: int = 1) -> RecipeCatalog:
-    recipes, errors = parse_recipes(RAW, "test")
-    assert not errors
-    return RecipeCatalog(recipes, random.Random(seed))
+    async def suggest(self, request: MealRequest) -> Recipe | None:
+        self.requests.append(request)
+        allowed = [t for t in POOLS[request.meal_type] if normalize_title(t) not in request.exclude]
+        fresh = [t for t in allowed if normalize_title(t) not in request.avoid]
+        title = next(iter(fresh or allowed), None)
+        if title is None:
+            return None
+        return Recipe(
+            id=f"ai:{normalize_title(title)}",
+            title=title,
+            meal_types=(request.meal_type,),
+            effort=request.effort,
+            minutes={1: 15, 2: 35, 3: 70}[request.effort],
+            health=request.health,
+            kcal=request.kcal_target or 500,
+            ingredients=(Ingredient("onion", 0.5, "pcs"), Ingredient(f"{title.lower()} base", 100, "g")),
+            steps=("Cook it.",),
+            source="ai",
+        )
 
 
 class MemoryStore:

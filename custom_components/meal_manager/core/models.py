@@ -31,7 +31,7 @@ class PlanStatus(StrEnum):
 class SeasonMode(StrEnum):
     """How strictly seasonal produce is respected."""
 
-    STRICT = "strict"  # never plan out-of-season produce, unless nothing else fits
+    STRICT = "strict"  # only produce that is in season now
     PREFER = "prefer"  # rather plan seasonal dishes
     OFF = "off"
 
@@ -325,3 +325,15 @@ class PlannerState:
             bans=[Ban.from_dict(b) for b in data.get("bans", ())],
             history=[CookedEntry.from_dict(h) for h in data.get("history", ())],
         )
+
+
+MIN_SCALE = 0.75
+MAX_SCALE = 1.5
+
+
+def portion_scale(recipe: Recipe, kcal_target: int | None) -> float:
+    """Portion size factor (in quarter steps) that brings a dish close to the calorie target."""
+    if not kcal_target:
+        return 1.0
+    factor = min(MAX_SCALE, max(MIN_SCALE, kcal_target / recipe.kcal))
+    return round(factor * 4) / 4
