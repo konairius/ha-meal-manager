@@ -20,20 +20,20 @@ from .const import (
     CONF_AUTO_NEW_PLAN,
     CONF_AVOID_RECENT,
     CONF_DEFAULT_DAYS,
+    CONF_LANGUAGE,
     CONF_PANTRY,
     CONF_PREFERENCES,
     CONF_SEASON,
-    CONF_SHOPPING_LANGUAGE,
     CONF_SHOPPING_LIST,
     CONF_SHOW_PANEL,
     DEFAULT_GENERAL,
     DOMAIN,
+    LANGUAGES,
     OPT_DEFAULTS,
     OPT_GENERAL,
     OPT_OVERRIDES,
     OPT_SLOTS,
     SEASON_MODES,
-    SHOPPING_LANGUAGES,
 )
 from .core.settings import (
     DAY_SCOPED,
@@ -194,13 +194,11 @@ class MealManagerOptionsFlow(OptionsFlow):
                 vol.Optional(CONF_SHOPPING_LIST, description=suggested(CONF_SHOPPING_LIST)): (
                     selector.EntitySelector(selector.EntitySelectorConfig(domain="todo"))
                 ),
-                vol.Required(
-                    CONF_SHOPPING_LANGUAGE, default=current[CONF_SHOPPING_LANGUAGE]
-                ): selector.SelectSelector(
+                vol.Required(CONF_LANGUAGE, default=current[CONF_LANGUAGE]): selector.SelectSelector(
                     selector.SelectSelectorConfig(
-                        options=list(SHOPPING_LANGUAGES),
+                        options=list(LANGUAGES),
                         mode=selector.SelectSelectorMode.DROPDOWN,
-                        translation_key=CONF_SHOPPING_LANGUAGE,
+                        translation_key=CONF_LANGUAGE,
                     )
                 ),
                 vol.Optional(CONF_PANTRY, description=suggested(CONF_PANTRY)): (

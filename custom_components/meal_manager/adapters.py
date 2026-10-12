@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-import json
+from collections.abc import Callable
 import logging
-from pathlib import Path
 from typing import Any
 
 from homeassistant.core import HomeAssistant
@@ -13,17 +12,14 @@ from homeassistant.helpers import selector
 from homeassistant.helpers.storage import Store
 import voluptuous as vol
 
-from .const import DOMAIN, EVENT_PREFIX, USER_RECIPES_FILE
-from .core.catalog import parse_recipes
-from .core.llm import build_instructions, parse_recipe
-from .core.models import MealRequest, Recipe
-from .core.shopping import IngredientInfo, Package, ShoppingItem
+from .const import DOMAIN, EVENT_PREFIX
+from .core.llm import Rejected, build_instructions, parse_recipe, retry_instructions
+from .core.models import Ingredient, MealRequest, Recipe
+from .core.shopping import ShoppingItem, build_shopping_instructions, parse_shopping_list
 
 _LOGGER = logging.getLogger(__name__)
 
 STORAGE_VERSION = 1
-BUILTIN_RECIPES = Path(__file__).parent / "data" / "recipes.json"
-BUILTIN_INGREDIENTS = Path(__file__).parent / "data" / "ingredients.json"
 AI_ATTEMPTS = 3
 
 
@@ -60,44 +56,6 @@ def state_reader(hass: HomeAssistant):
         return state.attributes.get(attribute) if attribute else state.state
 
     return read
-
-
-def load_recipes(config_dir: str) -> list[Recipe]:
-    """Load built-in recipes plus optional user recipes (blocking, run in executor)."""
-    recipes: list[Recipe] = []
-    sources = [(BUILTIN_RECIPES, "builtin"), (Path(config_dir) / USER_RECIPES_FILE, "user")]
-    for path, name in sources:
-        if not path.is_file():
-            continue
-        try:
-            items = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, ValueError) as err:
-            _LOGGER.error("Cannot read recipes from %s: %s", path, err)
-            continue
-        parsed, errors = parse_recipes(items if isinstance(items, list) else [], name)
-        for error in errors:
-            _LOGGER.warning("Skipping invalid recipe in %s: %s", path, error)
-        recipes.extend(parsed)
-    return recipes
-
-
-def load_ingredients() -> dict[str, IngredientInfo]:
-    """Translations and supermarket sections of known ingredients (blocking, run in executor)."""
-    raw = json.loads(BUILTIN_INGREDIENTS.read_text(encoding="utf-8"))
-
-    def package(data: dict[str, Any] | None) -> Package | None:
-        if not data:
-            return None
-        return Package(float(data["size"]), data["unit"], {"en": data["en"], "de": data["de"]})
-
-    return {
-        name: IngredientInfo(
-            category=data.get("category", "other"),
-            names={"en": name, "de": data.get("de", name)},
-            package=package(data.get("pack")),
-        )
-        for name, data in raw.items()
-    }
 
 
 class HaTodoShoppingList:
@@ -152,36 +110,83 @@ AI_STRUCTURE = vol.Schema(
 )
 
 
+SHOPPING_STRUCTURE = vol.Schema(
+    {vol.Required("items"): selector.TextSelector(selector.TextSelectorConfig(multiline=True))}
+)
+
+
 async def generate_data(hass: HomeAssistant, **kwargs: Any) -> Any:
     """Run an AI Task data generation (the integration is only imported when used)."""
-    from homeassistant.components import ai_task  # noqa: PLC0415 - optional dependency
+    from homeassistant.components import ai_task  # noqa: PLC0415 - imported when used
 
     return await ai_task.async_generate_data(hass, **kwargs)
 
 
-class AiTaskRecipeSource:
-    """Asks a local model through Home Assistant's AI Task integration."""
+class AiTask:
+    """Asks the local model through Home Assistant's AI Task integration and checks the answer.
 
-    def __init__(self, hass: HomeAssistant, entity_id: str | None, preferences: str) -> None:
+    A rejected answer is asked for again, with the reason, up to AI_ATTEMPTS times.
+    """
+
+    def __init__(self, hass: HomeAssistant, entity_id: str | None) -> None:
         self._hass = hass
-        self._entity_id = entity_id
-        self._preferences = preferences
+        self._entity_id = entity_id  # None: the preferred AI Task entity
 
-    async def suggest(self, request: MealRequest) -> Recipe | None:
-        instructions = build_instructions(request, self._preferences)
+    async def ask[T](
+        self, task_name: str, instructions: str, structure: vol.Schema, parse: Callable[[Any], T]
+    ) -> T | None:
+        prompt = instructions
         for _ in range(AI_ATTEMPTS):
             try:
                 result = await generate_data(
                     self._hass,
-                    task_name="Meal Manager",
+                    task_name=task_name,
                     entity_id=self._entity_id,
-                    instructions=instructions,
-                    structure=AI_STRUCTURE,
+                    instructions=prompt,
+                    structure=structure,
                 )
             except (HomeAssistantError, KeyError) as err:
                 _LOGGER.warning("AI Task generation failed: %s", err)
                 return None
-            recipe = parse_recipe(result.data, request)
-            if recipe is not None:
-                return recipe
+            try:
+                return parse(result.data)
+            except Rejected as err:
+                _LOGGER.info("%s: rejected the model's answer, asking again: %s", task_name, err)
+                prompt = retry_instructions(instructions, str(err))
+        _LOGGER.warning("%s: no usable answer from the model after %s attempts", task_name, AI_ATTEMPTS)
         return None
+
+
+class AiTaskRecipeSource:
+    """Every dish comes from the local model."""
+
+    def __init__(self, ai: AiTask, preferences: str, language: str) -> None:
+        self._ai = ai
+        self._preferences = preferences
+        self._language = language
+
+    async def suggest(self, request: MealRequest) -> Recipe | None:
+        instructions = build_instructions(request, self._preferences, self._language)
+        return await self._ai.ask(
+            "Meal Manager recipe", instructions, AI_STRUCTURE, lambda data: parse_recipe(data, request)
+        )
+
+
+class AiTaskShoppingList:
+    """The model writes the shopping list from the summed ingredients."""
+
+    def __init__(self, ai: AiTask) -> None:
+        self._ai = ai
+
+    async def create(
+        self, ingredients: list[Ingredient], pantry: str, language: str
+    ) -> list[ShoppingItem] | None:
+        if not ingredients:
+            return []
+        instructions = build_shopping_instructions(ingredients, pantry, language)
+        return await self._ai.ask(
+            "Meal Manager shopping list",
+            instructions,
+            SHOPPING_STRUCTURE,
+            lambda data: parse_shopping_list(data, ingredients),
+        )

@@ -9,7 +9,6 @@ from datetime import date, datetime, timedelta
 import logging
 import uuid
 
-from .catalog import portion_scale
 from .models import (
     Ban,
     CookedEntry,
@@ -22,6 +21,7 @@ from .models import (
     PlanStatus,
     SeasonMode,
     normalize_title,
+    portion_scale,
 )
 from .ports import EventSink, RecipeSource, StateStore
 from .settings import Setting, SettingsResolver

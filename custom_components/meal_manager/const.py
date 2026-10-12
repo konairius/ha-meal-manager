@@ -7,13 +7,12 @@ from typing import Final
 from .core.shopping import DEFAULT_PANTRY
 
 DOMAIN: Final = "meal_manager"
-VERSION: Final = "0.1.3"
+VERSION: Final = "0.2.0"
 
 URL_BASE: Final = "/meal_manager_static"
 CARD_FILE: Final = "meal-manager-card.js"
 PANEL_URL_PATH: Final = "meal-manager"
 
-USER_RECIPES_FILE: Final = "meal_manager_recipes.json"
 
 # Option keys (config entry options)
 OPT_GENERAL: Final = "general"
@@ -30,8 +29,8 @@ CONF_DEFAULT_DAYS: Final = "default_days"
 CONF_AVOID_RECENT: Final = "avoid_recent"
 CONF_SEASON: Final = "season"
 CONF_PANTRY: Final = "pantry"
-CONF_SHOPPING_LANGUAGE: Final = "shopping_language"
-SHOPPING_LANGUAGES: Final = ("auto", "de", "en")
+CONF_LANGUAGE: Final = "language"
+LANGUAGES: Final = ("de", "en", "auto")
 SEASON_MODES: Final = ("strict", "prefer", "off")
 
 DEFAULT_GENERAL: Final = {
@@ -43,8 +42,8 @@ DEFAULT_GENERAL: Final = {
     CONF_DEFAULT_DAYS: 7,
     CONF_AVOID_RECENT: 10,
     CONF_SEASON: "strict",
-    CONF_PANTRY: ", ".join(DEFAULT_PANTRY),
-    CONF_SHOPPING_LANGUAGE: "auto",
+    CONF_PANTRY: DEFAULT_PANTRY,
+    CONF_LANGUAGE: "de",
 }
 
 EVENT_PREFIX: Final = f"{DOMAIN}_"

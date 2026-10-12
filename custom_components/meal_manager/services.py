@@ -5,14 +5,13 @@ from __future__ import annotations
 from collections.abc import Awaitable, Callable
 
 from homeassistant.core import HomeAssistant, ServiceCall, ServiceResponse, SupportsResponse
-from homeassistant.exceptions import ServiceValidationError
+from homeassistant.exceptions import HomeAssistantError, ServiceValidationError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.util import dt as dt_util
 import voluptuous as vol
 
-from .const import CONF_PANTRY, CONF_SHOPPING_LANGUAGE, CONF_SHOPPING_LIST, DOMAIN
+from .const import CONF_PANTRY, CONF_SHOPPING_LIST, DOMAIN
 from .core.planner import MAX_DAYS, MealPlanner, PlannerError
-from .core.shopping import DEFAULT_PANTRY, build_shopping_list, parse_pantry
 
 ATTR_MEAL_ID = "meal_id"
 ATTR_SLOT = "slot"
@@ -110,19 +109,14 @@ async def _shopping_list(hass: HomeAssistant, call: ServiceCall) -> ServiceRespo
 
     planner = _planner(hass)
     data = loaded_data(hass)
-    language = data.general.get(CONF_SHOPPING_LANGUAGE, "auto") if data else "auto"
-    if language not in ("de", "en"):
-        language = "de" if hass.config.language.startswith("de") else "en"
-    pantry = parse_pantry(data.general.get(CONF_PANTRY, "")) if data else frozenset(DEFAULT_PANTRY)
-    shopping = build_shopping_list(
-        planner.shopping_list(draft=call.data[ATTR_DRAFT]),
-        data.ingredients if data else {},
-        pantry,
-        language,
-    )
+    assert data is not None  # _planner raised otherwise
+    ingredients = planner.shopping_list(draft=call.data[ATTR_DRAFT])
+    shopping = await data.shopping.create(ingredients, data.general.get(CONF_PANTRY, ""), data.language)
+    if shopping is None:
+        raise HomeAssistantError(translation_domain=DOMAIN, translation_key="shopping_failed")
     items = [i.display() for i in shopping]
-    target = call.data.get(ATTR_ENTITY_ID) or (data.general.get(CONF_SHOPPING_LIST) if data else None)
-    if target and data:
+    target = call.data.get(ATTR_ENTITY_ID) or data.general.get(CONF_SHOPPING_LIST)
+    if target:
         await data.todo.replace(target, shopping)
     return {"items": items, "entity_id": target}
 

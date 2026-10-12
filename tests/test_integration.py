@@ -22,6 +22,51 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     return
 
 
+class FakeAiTask:
+    """Stands in for ai_task.async_generate_data: scripted answers first, then good ones."""
+
+    def __init__(self) -> None:
+        self.calls: list[dict] = []
+        self.scripted: list[dict | Exception] = []
+        self._dish = 0
+
+    async def __call__(self, hass, **kwargs):
+        self.calls.append(kwargs)
+        if self.scripted:
+            answer = self.scripted.pop(0)
+            if isinstance(answer, Exception):
+                raise answer
+            return SimpleNamespace(data=answer)
+        if "shopping" in kwargs["task_name"]:
+            lines = [
+                line[2:]
+                for line in kwargs["instructions"].splitlines()
+                if line.startswith("- ") and "|" not in line
+            ]
+            products = {line.split(" ", 2)[2].capitalize(): line.split(" ", 2)[0] for line in lines}
+            return SimpleNamespace(
+                data={"items": "\n".join(f"{name} | {amount} Stück" for name, amount in products.items())}
+            )
+        self._dish += 1
+        return SimpleNamespace(
+            data={
+                "title": f"Gericht {self._dish}",
+                "minutes": 30,
+                "kcal": 600,
+                "health": 3,
+                "ingredients": f"0.5 | pcs | Zwiebel\n100 | g | Zutat {self._dish}",
+                "steps": "Kochen.",
+            }
+        )
+
+
+@pytest.fixture(autouse=True)
+def model():
+    fake = FakeAiTask()
+    with patch("custom_components.meal_manager.adapters.generate_data", fake):
+        yield fake
+
+
 async def setup(hass: HomeAssistant, **overrides) -> MockConfigEntry:
     options = default_options()
     options.update(overrides)
@@ -40,11 +85,6 @@ async def test_config_flow_single_instance(hass: HomeAssistant) -> None:
     await hass.async_block_till_done()
     again = await hass.config_entries.flow.async_init(DOMAIN, context={"source": config_entries.SOURCE_USER})
     assert again["type"] is FlowResultType.ABORT
-
-
-async def test_bundled_recipes_load(hass: HomeAssistant) -> None:
-    entry = await setup(hass)
-    assert entry.runtime_data.catalog.count() > 100
 
 
 async def test_full_cycle(hass: HomeAssistant) -> None:
@@ -97,9 +137,8 @@ async def test_mark_cooked_by_slot_and_errors(hass: HomeAssistant) -> None:
     assert hass.states.get("sensor.meal_manager_plan_status").attributes["cooked"] == 1
 
 
-async def test_shopping_list_to_todo(hass: HomeAssistant) -> None:
-    """The list is German, buyable, and replaces what was added before instead of duplicating it."""
-    hass.config.language = "de"
+async def test_shopping_list_to_todo(hass: HomeAssistant, model: FakeAiTask) -> None:
+    """The model writes the list; sending it again replaces what was added before."""
     todo: dict[str, dict] = {
         "Klopapier": {"summary": "Klopapier", "uid": "Klopapier", "status": "needs_action"}
     }
@@ -129,7 +168,9 @@ async def test_shopping_list_to_todo(hass: HomeAssistant) -> None:
     )
     assert response["entity_id"] == "todo.shopping"
     assert response["items"] and set(response["items"]) | {"Klopapier"} == set(todo)
-    assert not any(i.startswith(("Salz", "Wasser", "water", "salt")) for i in response["items"])
+    assert any(i.startswith("Zwiebel: ") for i in response["items"])
+    prompt = model.calls[-1]["instructions"]
+    assert "Write it in German" in prompt and "Salz" in prompt  # language and pantry
 
     again = await hass.services.async_call(
         DOMAIN, "add_to_shopping_list", {}, blocking=True, return_response=True
@@ -163,38 +204,36 @@ async def test_websocket_subscription(hass: HomeAssistant, hass_ws_client) -> No
     assert view["draft"]["meals"][0]["slot"] == "breakfast"
 
 
-async def test_ai_task_source_with_fallback(hass: HomeAssistant) -> None:
-    answers = iter(
-        [
-            {
-                "title": "Model Porridge",
-                "minutes": 10,
-                "kcal": 400,
-                "health": 4,
-                "ingredients": "50 | g | oats\n200 | ml | milk",
-                "steps": "Cook.",
-            },
-        ]
-    )
-
-    async def fake_generate(hass, **kwargs):
-        try:
-            data = next(answers)
-        except StopIteration:
-            from homeassistant.exceptions import HomeAssistantError  # noqa: PLC0415
-
-            raise HomeAssistantError("model offline") from None
-        return SimpleNamespace(data=data)
-
-    with patch("custom_components.meal_manager.adapters.generate_data", fake_generate):
-        entry = await setup(
-            hass, **{OPT_GENERAL: {**default_options()[OPT_GENERAL], "ai_task_entity": "ai_task.local"}}
-        )
-        await hass.services.async_call(DOMAIN, "generate_plan", {"days": 1}, blocking=True)
+async def test_rejected_answers_are_asked_again_with_the_reason(
+    hass: HomeAssistant, model: FakeAiTask
+) -> None:
+    model.scripted = [
+        {"title": "Zitronenlachs", "minutes": 30, "ingredients": "5 | unit | Zitrone"},
+        {"title": "Zitronenlachs", "minutes": 30, "ingredients": "150 | g | Lachs\n0.5 | pcs | Zitrone"},
+    ]
+    entry = await setup(hass)
+    await hass.services.async_call(DOMAIN, "generate_plan", {"days": 1}, blocking=True)
     draft = entry.runtime_data.planner.state.draft
-    assert draft.meals[0].recipe.title == "Model Porridge"
-    assert draft.meals[0].recipe.source == "ai"
-    assert all(m.recipe.source == "builtin" for m in draft.meals[1:])
+    assert draft.meals[0].recipe.title == "Zitronenlachs"
+    assert (
+        "rejected: ingredients not written as 'quantity | g/ml/pcs | name': 5 | unit | Zitrone"
+        in (model.calls[1]["instructions"])
+    )
+    assert "Write the title, ingredient names and steps in German" in model.calls[0]["instructions"]
+    assert model.calls[0]["entity_id"] is None  # the preferred AI Task entity
+
+
+async def test_no_usable_answer_fails_generation(hass: HomeAssistant, model: FakeAiTask) -> None:
+    from homeassistant.exceptions import HomeAssistantError  # noqa: PLC0415
+
+    model.scripted = [HomeAssistantError("model offline")]
+    await setup(hass)
+    events = []
+    hass.bus.async_listen("meal_manager_generation_failed", events.append)
+    with pytest.raises(ServiceValidationError):
+        await hass.services.async_call(DOMAIN, "generate_plan", {"days": 1}, blocking=True)
+    await hass.async_block_till_done()
+    assert events
 
 
 async def test_options_flow_override(hass: HomeAssistant) -> None:

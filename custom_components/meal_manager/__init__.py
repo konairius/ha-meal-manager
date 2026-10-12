@@ -18,12 +18,12 @@ from homeassistant.util import dt as dt_util
 
 from . import services, websocket_api
 from .adapters import (
+    AiTask,
     AiTaskRecipeSource,
+    AiTaskShoppingList,
     HaEventSink,
     HaStateStore,
     HaTodoShoppingList,
-    load_ingredients,
-    load_recipes,
     state_reader,
 )
 from .const import (
@@ -32,6 +32,7 @@ from .const import (
     CONF_AUTO_NEW_PLAN,
     CONF_AVOID_RECENT,
     CONF_DEFAULT_DAYS,
+    CONF_LANGUAGE,
     CONF_PREFERENCES,
     CONF_SEASON,
     CONF_SHOW_PANEL,
@@ -43,13 +44,9 @@ from .const import (
     URL_BASE,
     VERSION,
 )
-from .core.catalog import RecipeCatalog
 from .core.models import SeasonMode
 from .core.planner import MealPlanner, PlannerOptions
-from .core.ports import RecipeSource
 from .core.settings import PlannerSettings, SettingsResolver
-from .core.shopping import IngredientInfo
-from .core.sources import FallbackSource
 
 PLATFORMS = [Platform.CALENDAR, Platform.SENSOR]
 CONFIG_SCHEMA = cv.config_entry_only_config_schema(DOMAIN)
@@ -60,10 +57,10 @@ class MealManagerData:
     """Runtime objects of a config entry."""
 
     planner: MealPlanner
-    catalog: RecipeCatalog
     general: dict
+    language: str  # of generated recipes and the shopping list
     resolver: Callable[[], SettingsResolver]
-    ingredients: dict[str, IngredientInfo]
+    shopping: AiTaskShoppingList
     todo: HaTodoShoppingList
 
 
@@ -72,6 +69,13 @@ type MealManagerConfigEntry = ConfigEntry[MealManagerData]
 
 def general_options(entry: ConfigEntry) -> dict:
     return {**DEFAULT_GENERAL, **entry.options.get(OPT_GENERAL, {})}
+
+
+def content_language(hass: HomeAssistant, configured: str) -> str:
+    """'de' or 'en' for generated recipes and shopping lists; 'auto' follows Home Assistant."""
+    if configured in ("de", "en"):
+        return configured
+    return "de" if hass.config.language.startswith("de") else "en"
 
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
@@ -87,14 +91,9 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 
 async def async_setup_entry(hass: HomeAssistant, entry: MealManagerConfigEntry) -> bool:
     general = general_options(entry)
-    recipes = await hass.async_add_executor_job(load_recipes, hass.config.config_dir)
-    catalog = RecipeCatalog(recipes)
-    source: RecipeSource = catalog
-    if general[CONF_AI_TASK_ENTITY]:
-        source = FallbackSource(
-            AiTaskRecipeSource(hass, general[CONF_AI_TASK_ENTITY], general[CONF_PREFERENCES]),
-            catalog,
-        )
+    language = content_language(hass, general[CONF_LANGUAGE])
+    ai = AiTask(hass, general[CONF_AI_TASK_ENTITY] or None)
+    source = AiTaskRecipeSource(ai, general[CONF_PREFERENCES], language)
 
     read_state = state_reader(hass)
 
@@ -115,13 +114,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: MealManagerConfigEntry) 
         ),
     )
     await planner.async_load()
-    ingredients = await hass.async_add_executor_job(load_ingredients)
     entry.runtime_data = MealManagerData(
         planner=planner,
-        catalog=catalog,
         general=general,
+        language=language,
         resolver=resolver,
-        ingredients=ingredients,
+        shopping=AiTaskShoppingList(ai),
         todo=HaTodoShoppingList(hass),
     )
 

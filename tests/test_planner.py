@@ -17,7 +17,7 @@ from custom_components.meal_manager.core.settings import (
     ValueSource,
 )
 
-from .fakes import FixedClock, MemoryStore, RecordingEvents, catalog
+from .fakes import FakeModel, FixedClock, MemoryStore, RecordingEvents
 
 NOW = datetime(2026, 10, 12, 9, 0)
 
@@ -30,7 +30,7 @@ def make(
     settings = settings or PlannerSettings()
     planner = MealPlanner(
         store=store,
-        source=catalog(),
+        source=FakeModel(),
         resolver=lambda: SettingsResolver(settings, lambda *_: None),
         events=events,
         clock=FixedClock(NOW),
@@ -143,7 +143,7 @@ async def test_runs_out_of_recipes() -> None:
         PlannerSettings(slots=slots, defaults={Setting.MEALS_PER_DAY: ValueSource(value=4)})
     )
     with pytest.raises(PlannerError, match="no_recipe"):
-        await planner.generate_draft(days=6)  # only 5 snacks exist
+        await planner.generate_draft(days=6)  # the model knows only 5 snacks
     assert events.names() == ["generation_failed"]
     assert planner.generating is False
 

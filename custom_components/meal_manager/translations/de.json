@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Meal Manager",
-        "description": "Plant Mahlzeiten lokal aus der mitgelieferten Rezeptsammlung. Portionen, Aufwand, Kalorien, Gesundheitsgrad und Mahlzeiten pro Tag danach unter Konfigurieren einstellen."
+        "description": "Plant Mahlzeiten mit einem lokalen Modell über AI Task (z. B. Ollama). Portionen, Aufwand, Kalorien, Gesundheitsgrad und Mahlzeiten pro Tag danach unter Konfigurieren einstellen."
       }
     },
     "abort": {
@@ -25,10 +25,10 @@
       "general": {
         "title": "Allgemein",
         "data": {
-          "ai_task_entity": "Lokale AI-Task-Entität (optional)",
+          "ai_task_entity": "AI-Task-Entität",
           "preferences": "Vorlieben des Haushalts",
           "shopping_list": "Einkaufsliste",
-          "shopping_language": "Sprache der Einkaufsliste",
+          "language": "Sprache von Rezepten und Einkaufsliste",
           "pantry": "Immer vorrätig",
           "default_days": "Tage pro Plan",
           "avoid_recent": "Zuletzt gekochte Gerichte vermeiden",
@@ -37,12 +37,12 @@
           "auto_new_plan": "Neuen Plan vorschlagen, wenn alles gekocht ist"
         },
         "data_description": {
-          "ai_task_entity": "Leer lassen, um nur die mitgelieferten Rezepte zu nutzen. Wenn gesetzt, erzeugt diese Entität (z. B. ein lokales Ollama-Modell) die Gerichte, die mitgelieferten Rezepte sind der Ersatz.",
+          "ai_task_entity": "Erzeugt jedes Gericht und die Einkaufsliste, z. B. ein lokales Ollama-Modell. Leer = die bevorzugte AI-Task-Entität (Einstellungen → System → Allgemein).",
           "preferences": "Freitext für die AI-Task-Entität: Ernährung, Abneigungen, Küchen, Geräte.",
           "shopping_list": "To-do-Liste, die die Zutaten erhält.",
           "avoid_recent": "Anzahl der zuletzt gekochten Gerichte, die in neuen Plänen vermieden werden.",
-          "season": "Saisonkalender für Mitteleuropa: Streng lässt Gerichte mit frischen Zutaten außerhalb der Saison weg (z. B. Spargel im Oktober), Bevorzugen stuft sie nur herab.",
-          "pantry": "Kommt nicht auf die Einkaufsliste. Durch Komma getrennt; passt auf eine Zutat (z. B. olive oil, Olivenöl) oder einen ganzen Bereich: spices (Gewürze), herbs (Kräuter), dairy, ..."
+          "season": "Mitteleuropa. Nur saisonal: das Modell darf nur frische Zutaten verwenden, die gerade Saison haben (z. B. kein Spargel im Oktober). Bevorzugen: es soll.",
+          "pantry": "Wird dem Modell mitgegeben, das diese Dinge nicht auf die Einkaufsliste setzt."
         }
       },
       "defaults": {
@@ -255,11 +255,11 @@
         "off": "Saison ignorieren"
       }
     },
-    "shopping_language": {
+    "language": {
       "options": {
-        "auto": "Wie Home Assistant",
         "de": "Deutsch",
-        "en": "Englisch"
+        "en": "Englisch",
+        "auto": "Wie Home Assistant"
       }
     }
   },
@@ -303,7 +303,7 @@
       "message": "Ein Plan kann 1 bis {max} Tage umfassen."
     },
     "no_recipe": {
-      "message": "Kein Rezept passt zu {slot} am {day}. Gesperrte Gerichte freigeben oder eigene Rezepte hinzufügen."
+      "message": "Das AI-Task-Modell hat kein brauchbares Rezept für {slot} am {day} geliefert. Prüfe die AI-Task-Entität und das Log."
     },
     "no_draft": {
       "message": "Es gibt keinen Planvorschlag."
@@ -325,6 +325,9 @@
     },
     "not_banned": {
       "message": "{title} ist nicht gesperrt."
+    },
+    "shopping_failed": {
+      "message": "Das AI-Task-Modell hat keine brauchbare Einkaufsliste geliefert. Prüfe die AI-Task-Entität und das Log."
     }
   },
   "services": {
