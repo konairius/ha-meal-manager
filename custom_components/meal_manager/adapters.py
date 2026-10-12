@@ -17,11 +17,13 @@ from .const import DOMAIN, EVENT_PREFIX, USER_RECIPES_FILE
 from .core.catalog import parse_recipes
 from .core.llm import build_instructions, parse_recipe
 from .core.models import MealRequest, Recipe
+from .core.shopping import IngredientInfo, Package, ShoppingItem
 
 _LOGGER = logging.getLogger(__name__)
 
 STORAGE_VERSION = 1
 BUILTIN_RECIPES = Path(__file__).parent / "data" / "recipes.json"
+BUILTIN_INGREDIENTS = Path(__file__).parent / "data" / "ingredients.json"
 AI_ATTEMPTS = 3
 
 
@@ -77,6 +79,65 @@ def load_recipes(config_dir: str) -> list[Recipe]:
             _LOGGER.warning("Skipping invalid recipe in %s: %s", path, error)
         recipes.extend(parsed)
     return recipes
+
+
+def load_ingredients() -> dict[str, IngredientInfo]:
+    """Translations and supermarket sections of known ingredients (blocking, run in executor)."""
+    raw = json.loads(BUILTIN_INGREDIENTS.read_text(encoding="utf-8"))
+
+    def package(data: dict[str, Any] | None) -> Package | None:
+        if not data:
+            return None
+        return Package(float(data["size"]), data["unit"], {"en": data["en"], "de": data["de"]})
+
+    return {
+        name: IngredientInfo(
+            category=data.get("category", "other"),
+            names={"en": name, "de": data.get("de", name)},
+            package=package(data.get("pack")),
+        )
+        for name, data in raw.items()
+    }
+
+
+class HaTodoShoppingList:
+    """Writes the shopping list to a to-do entity, replacing what it wrote last time.
+
+    Open items this integration added before are removed first, so pressing the button twice or
+    after a change of plan does not duplicate anything. Items the household added itself, and
+    items already ticked off, are left alone.
+    """
+
+    def __init__(self, hass: HomeAssistant) -> None:
+        self._hass = hass
+        self._store: Store[dict[str, Any]] = Store(hass, STORAGE_VERSION, f"{DOMAIN}.shopping")
+
+    async def replace(self, entity_id: str, items: list[ShoppingItem]) -> None:
+        stored = await self._store.async_load() or {}
+        previous = set(stored.get(entity_id, []))
+        response = await self._hass.services.async_call(
+            "todo",
+            "get_items",
+            {"status": ["needs_action"]},
+            target={"entity_id": entity_id},
+            blocking=True,
+            return_response=True,
+        )
+        open_items = {i["summary"]: i["uid"] for i in (response or {}).get(entity_id, {}).get("items", [])}
+        if stale := [uid for summary, uid in open_items.items() if summary in previous]:
+            await self._hass.services.async_call(
+                "todo", "remove_item", {"item": stale}, target={"entity_id": entity_id}, blocking=True
+            )
+        added: list[str] = []
+        for item in items:
+            summary = item.display()
+            if summary in open_items and summary not in previous:
+                continue  # the household already has exactly this on the list
+            await self._hass.services.async_call(
+                "todo", "add_item", {"item": summary}, target={"entity_id": entity_id}, blocking=True
+            )
+            added.append(summary)
+        await self._store.async_save({**stored, entity_id: added})
 
 
 AI_STRUCTURE = vol.Schema(

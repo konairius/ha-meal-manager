@@ -28,6 +28,8 @@
           "ai_task_entity": "Local AI Task entity (optional)",
           "preferences": "Household preferences",
           "shopping_list": "Shopping list",
+          "shopping_language": "Language of the shopping list",
+          "pantry": "Always in stock",
           "default_days": "Days per plan",
           "avoid_recent": "Avoid recently cooked dishes",
           "show_panel": "Show Meal plan in the sidebar",
@@ -39,7 +41,8 @@
           "preferences": "Free text sent to the AI Task entity: diet, dislikes, cuisines, equipment.",
           "shopping_list": "To-do list that receives the ingredients.",
           "avoid_recent": "Number of most recently cooked dishes to avoid in new plans.",
-          "season": "Central European seasons: strict leaves out dishes with fresh produce that is out of season (e.g. asparagus in October), prefer only ranks them lower."
+          "season": "Central European seasons: strict leaves out dishes with fresh produce that is out of season (e.g. asparagus in October), prefer only ranks them lower.",
+          "pantry": "Not put on the shopping list. Comma separated; matches an ingredient (e.g. olive oil, Olivenöl) or a whole section: spices, herbs, dairy, ..."
         }
       },
       "defaults": {
@@ -250,6 +253,13 @@
         "strict": "Only in season",
         "prefer": "Prefer in season",
         "off": "Ignore seasons"
+      }
+    },
+    "shopping_language": {
+      "options": {
+        "auto": "Like Home Assistant",
+        "de": "German",
+        "en": "English"
       }
     }
   },

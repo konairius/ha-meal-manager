@@ -28,6 +28,8 @@
           "ai_task_entity": "Lokale AI-Task-Entität (optional)",
           "preferences": "Vorlieben des Haushalts",
           "shopping_list": "Einkaufsliste",
+          "shopping_language": "Sprache der Einkaufsliste",
+          "pantry": "Immer vorrätig",
           "default_days": "Tage pro Plan",
           "avoid_recent": "Zuletzt gekochte Gerichte vermeiden",
           "show_panel": "Essensplan in der Seitenleiste anzeigen",
@@ -39,7 +41,8 @@
           "preferences": "Freitext für die AI-Task-Entität: Ernährung, Abneigungen, Küchen, Geräte.",
           "shopping_list": "To-do-Liste, die die Zutaten erhält.",
           "avoid_recent": "Anzahl der zuletzt gekochten Gerichte, die in neuen Plänen vermieden werden.",
-          "season": "Saisonkalender für Mitteleuropa: Streng lässt Gerichte mit frischen Zutaten außerhalb der Saison weg (z. B. Spargel im Oktober), Bevorzugen stuft sie nur herab."
+          "season": "Saisonkalender für Mitteleuropa: Streng lässt Gerichte mit frischen Zutaten außerhalb der Saison weg (z. B. Spargel im Oktober), Bevorzugen stuft sie nur herab.",
+          "pantry": "Kommt nicht auf die Einkaufsliste. Durch Komma getrennt; passt auf eine Zutat (z. B. olive oil, Olivenöl) oder einen ganzen Bereich: spices (Gewürze), herbs (Kräuter), dairy, ..."
         }
       },
       "defaults": {
@@ -250,6 +253,13 @@
         "strict": "Nur saisonal",
         "prefer": "Saisonal bevorzugen",
         "off": "Saison ignorieren"
+      }
+    },
+    "shopping_language": {
+      "options": {
+        "auto": "Wie Home Assistant",
+        "de": "Deutsch",
+        "en": "Englisch"
       }
     }
   },

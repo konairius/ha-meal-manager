@@ -20,8 +20,10 @@ from .const import (
     CONF_AUTO_NEW_PLAN,
     CONF_AVOID_RECENT,
     CONF_DEFAULT_DAYS,
+    CONF_PANTRY,
     CONF_PREFERENCES,
     CONF_SEASON,
+    CONF_SHOPPING_LANGUAGE,
     CONF_SHOPPING_LIST,
     CONF_SHOW_PANEL,
     DEFAULT_GENERAL,
@@ -31,6 +33,7 @@ from .const import (
     OPT_OVERRIDES,
     OPT_SLOTS,
     SEASON_MODES,
+    SHOPPING_LANGUAGES,
 )
 from .core.settings import (
     DAY_SCOPED,
@@ -171,6 +174,7 @@ class MealManagerOptionsFlow(OptionsFlow):
             general[CONF_AVOID_RECENT] = int(general[CONF_AVOID_RECENT])
             for key in (CONF_AI_TASK_ENTITY, CONF_SHOPPING_LIST):
                 general[key] = user_input.get(key) or None
+            general[CONF_PANTRY] = user_input.get(CONF_PANTRY, "")  # empty: everything is bought
             return self._save(OPT_GENERAL, general)
 
         current = {**DEFAULT_GENERAL, **self._options[OPT_GENERAL]}
@@ -189,6 +193,18 @@ class MealManagerOptionsFlow(OptionsFlow):
                 ),
                 vol.Optional(CONF_SHOPPING_LIST, description=suggested(CONF_SHOPPING_LIST)): (
                     selector.EntitySelector(selector.EntitySelectorConfig(domain="todo"))
+                ),
+                vol.Required(
+                    CONF_SHOPPING_LANGUAGE, default=current[CONF_SHOPPING_LANGUAGE]
+                ): selector.SelectSelector(
+                    selector.SelectSelectorConfig(
+                        options=list(SHOPPING_LANGUAGES),
+                        mode=selector.SelectSelectorMode.DROPDOWN,
+                        translation_key=CONF_SHOPPING_LANGUAGE,
+                    )
+                ),
+                vol.Optional(CONF_PANTRY, description=suggested(CONF_PANTRY)): (
+                    selector.TextSelector(selector.TextSelectorConfig(multiline=True))
                 ),
                 vol.Required(CONF_DEFAULT_DAYS, default=current[CONF_DEFAULT_DAYS]): (
                     selector.NumberSelector(
